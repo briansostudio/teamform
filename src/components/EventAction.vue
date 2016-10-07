@@ -15,8 +15,19 @@ export default {
     }
   },
   methods: {
-  	say: function(){
-  		console.log(this.eventName);
+  	say: () => {
+  		if (this.eventName == '') {
+        $('.ui.big.icon.input').popup({
+          on: 'manual',
+          position: 'top center',
+          title: 'Event name cannot be empty',
+          content: 'Please correct and retry'
+        })
+        $('.ui.big.icon.input').popup('toggle')
+      }
+      else {
+        alert(this.eventName)
+      }
   	}
   },
   props: ['eventName']

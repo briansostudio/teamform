@@ -5,7 +5,7 @@
       </div>
       <div class="row">
         <div class="ui big icon input">
-          <input type="text" v-model="eventInput" placeholder="Enter keyword to find your event">
+          <input type="text" v-model="eventInput" v-on:focus="hideWarning" placeholder="Enter keyword to find your event">
           <i class="search icon"></i>
         </div>
       </div>
@@ -25,6 +25,11 @@ export default {
   },
   components: {
     AppTitle, EventAction
+  },
+  methods: {
+    hideWarning : () => {
+      $('.ui.big.icon.input').popup('hide');
+    }
   }
 }
 </script>
