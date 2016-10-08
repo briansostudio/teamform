@@ -2,23 +2,35 @@
 	<div class="large ui buttons">
         <button class="ui positive button" v-on:click="createEvent">{{createEventTitle}}</button>
         <div class="or"></div>
-        <button class="ui button">{{manageEventTitle}}</button>
+        <button class="ui button" v-on:click="loadEvent">{{manageEventTitle}}</button>
     </div>
 </template>
 
 <script>
+import Firebase from 'firebase'
+
 export default {
+  created: function(){
+	const fb = Firebase.initializeApp({
+		apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",
+		authDomain: "teamform-14254.firebaseapp.com",
+		databaseURL: "https://teamform-14254.firebaseio.com",
+		storageBucket: "teamform-14254.appspot.com",
+		messagingSenderId: "250682606003"
+	})
+	this.db = fb.database()
+  },
   data () {
     return {
       createEventTitle: 'Create Event',
-      manageEventTitle: 'Manage Your Event'
+      manageEventTitle: 'Manage Your Event',
+      db: null
     }
-  },
-  firebase: {
   },
   methods: {
   	createEvent: function(){
   		if (this.isInputValid()) {
+  			console.log(this.db)
   			console.log(this.name)
   		}
   	},
@@ -28,14 +40,8 @@ export default {
   		}
   	},
   	isInputValid: function(){
-  		if (this.name == '') {
-  			$('.ui.big.icon.input').popup({
-          		on: 'manual',
-          		position: 'top center',
-          		title: 'Event name cannot be empty',
-          		content: 'Please correct and retry'
-        	})
-        	$('.ui.big.icon.input').popup('toggle')
+  		if (!this.name) {
+  			this.$emit('invalidate')
         	return false
   		}
   		else{

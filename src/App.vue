@@ -9,7 +9,7 @@
           <i class="search icon"></i>
         </div>
       </div>
-      <EventAction v-bind:name="eventInput"></EventAction>
+      <EventAction v-bind:name="eventInput" v-on:invalidate="warningPrompt"></EventAction>
   </div>
 </template>
 
@@ -29,7 +29,16 @@ export default {
   methods: {
     hideWarning : () => {
       $('.ui.big.icon.input').popup('hide');
-    }
+    },
+    warningPrompt: () => {
+		$('.ui.big.icon.input').popup({
+			on: 'manual',
+			position: 'top center',
+			title: 'Event name cannot be empty',
+			content: 'Please correct and retry'
+		})
+		$('.ui.big.icon.input').popup('toggle')
+	}
   }
 }
 </script>
