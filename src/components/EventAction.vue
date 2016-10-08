@@ -1,6 +1,6 @@
 <template>
 	<div class="large ui buttons">
-        <button class="ui positive button" v-on:click="say">{{createEventTitle}}</button>
+        <button class="ui positive button" v-on:click="createEvent">{{createEventTitle}}</button>
         <div class="or"></div>
         <button class="ui button">{{manageEventTitle}}</button>
     </div>
@@ -14,22 +14,35 @@ export default {
       manageEventTitle: 'Manage Your Event'
     }
   },
+  firebase: {
+  },
   methods: {
-  	say: () => {
-  		if (this.eventName == '') {
-        $('.ui.big.icon.input').popup({
-          on: 'manual',
-          position: 'top center',
-          title: 'Event name cannot be empty',
-          content: 'Please correct and retry'
-        })
-        $('.ui.big.icon.input').popup('toggle')
-      }
-      else {
-        alert(this.eventName)
-      }
+  	createEvent: function(){
+  		if (this.isInputValid()) {
+  			console.log(this.name)
+  		}
+  	},
+  	loadEvent: function(){
+  		if (this.isInputValid()) {
+  			console.log(this.name)
+  		}
+  	},
+  	isInputValid: function(){
+  		if (this.name == '') {
+  			$('.ui.big.icon.input').popup({
+          		on: 'manual',
+          		position: 'top center',
+          		title: 'Event name cannot be empty',
+          		content: 'Please correct and retry'
+        	})
+        	$('.ui.big.icon.input').popup('toggle')
+        	return false
+  		}
+  		else{
+  			return true
+  		}
   	}
   },
-  props: ['eventName']
+  props: ['name']
 }
 </script>

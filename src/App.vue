@@ -9,7 +9,7 @@
           <i class="search icon"></i>
         </div>
       </div>
-      <EventAction v-bind:eventName="eventInput"></EventAction>
+      <EventAction v-bind:name="eventInput"></EventAction>
   </div>
 </template>
 
