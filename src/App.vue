@@ -4,13 +4,15 @@
         <AppTitle></AppTitle>
       </div>
       <div class="row">
-        <div class="ui big icon input">
-          <input type="text" v-model="eventInput" v-on:focus="hideWarning" placeholder="Enter keyword to find your event">
-          <i class="search icon"></i>
+        <div class="ui search">
+          <div class="ui big icon input">
+            <input class="prompt" type="text" v-model="eventInput" @focus="hideWarning" placeholder="Enter keyword to find your event">
+            <i class="search icon"></i>
+          </div>
         </div>
       </div>
       <div class="row">
-        <event-action :name="eventInput" v-on:invalidate="warningPrompt"></event-action>
+        <event-action :name="eventInput" @invalidate="warningPrompt"></event-action>
       </div>
   </div>
 </template>
@@ -55,8 +57,12 @@ html {
   margin-top: 15%;
 }
 
-.ui.big.icon.input {
-  width: 50%;
+.ui.search {
+  min-width: 50%;
+}
+
+.ui.big.icon.input{
+  min-width: 80%;
 }
 
 </style>

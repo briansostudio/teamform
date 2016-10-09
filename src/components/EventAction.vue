@@ -1,8 +1,8 @@
 <template>
 	<div class="large ui buttons">
-		<button class="ui positive button" v-on:click="createEvent">{{createEventTitle}}</button>
+		<button class="ui positive button" @click="createEvent">{{createEventTitle}}</button>
 		<div class="or"></div>
-		<button class="ui button" v-on:click="loadEvent">{{manageEventTitle}}</button>
+		<button class="ui button" @click="loadEvent">{{manageEventTitle}}</button>
 	</div>
 </template>
 

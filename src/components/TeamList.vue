@@ -12,9 +12,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="team in teams">
+					<tr v-for="(team, index) in teams">
 						<td>{{team.name}}</td>
-						<td class="center aligned">{{team.id}}</td>
+						<td class="center aligned">{{index}}</td>
 						<td class="center aligned">
 							<a class="ui teal circular label">{{team.size}}</a>
 						</td>
@@ -39,24 +39,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-    	teams: [
-    		{
-    			id: '816599ec',
-    			name: 'Team A',
-    			size: 6
-    		},
-    		{
-    			id: '564becc2',
-    			name: 'Team B',
-    			size: 8
-    		},
-    	]
-    }
-  },
-  methods: {
-  },
-  props: []
+	props: ['teams']
 }
 </script>

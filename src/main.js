@@ -41,5 +41,8 @@ const app = new Vue({
 	firebase: {
 		root: db.ref('/'),
 		events: db.ref('/events')
+	},
+	data: {
+		db : db
 	}
 }).$mount('#app')
