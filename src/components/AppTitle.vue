@@ -18,6 +18,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1.ui.center.aligned.icon.header{
-  color: #42b983;
+  color: #00FA9A;
+  font-family: 'Varela Round', sans-serif;
 }
 </style>

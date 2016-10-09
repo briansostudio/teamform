@@ -5,10 +5,10 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th>Team ID</th>
-						<th>Preferred team size</th>
-						<th>Current team members</th>
-						<th>Team Page</th>
+						<th class="center aligned">Team ID</th>
+						<th class="center aligned">Preferred team size</th>
+						<th class="center aligned">Current team members</th>
+						<th class="center aligned">Team Page</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,7 +26,7 @@
 						</td>
 						<td class="center aligned">
 							<button class="ui labeled icon button">
-								<i class="check circle icon"></i>
+								<i class="add user icon"></i>
 								Manage
 							</button>
 						</td>

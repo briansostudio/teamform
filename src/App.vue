@@ -9,7 +9,9 @@
           <i class="search icon"></i>
         </div>
       </div>
-      <EventAction v-bind:name="eventInput" v-on:invalidate="warningPrompt"></EventAction>
+      <div class="row">
+        <event-action :name="eventInput" v-on:invalidate="warningPrompt"></event-action>
+      </div>
   </div>
 </template>
 
@@ -47,10 +49,6 @@ export default {
 
 html {
   height: 100%;
-}
-
-* {
-  font-family: 'Varela Round', sans-serif;
 }
 
 .event-page {

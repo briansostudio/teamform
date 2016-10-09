@@ -1,54 +1,85 @@
 <template>
 	<div class="large ui buttons">
-        <button class="ui positive button" v-on:click="createEvent">{{createEventTitle}}</button>
-        <div class="or"></div>
-        <button class="ui button" v-on:click="loadEvent">{{manageEventTitle}}</button>
-    </div>
+		<button class="ui positive button" v-on:click="createEvent">{{createEventTitle}}</button>
+		<div class="or"></div>
+		<button class="ui button" v-on:click="loadEvent">{{manageEventTitle}}</button>
+	</div>
 </template>
 
 <script>
-import Firebase from 'firebase'
-
 export default {
-  created: function(){
-	const fb = Firebase.initializeApp({
-		apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",
-		authDomain: "teamform-14254.firebaseapp.com",
-		databaseURL: "https://teamform-14254.firebaseio.com",
-		storageBucket: "teamform-14254.appspot.com",
-		messagingSenderId: "250682606003"
-	})
-	this.db = fb.database()
-  },
-  data () {
-    return {
-      createEventTitle: 'Create Event',
-      manageEventTitle: 'Manage Your Event',
-      db: null
-    }
-  },
-  methods: {
-  	createEvent: function(){
-  		if (this.isInputValid()) {
-  			console.log(this.db)
-  			console.log(this.name)
-  		}
-  	},
-  	loadEvent: function(){
-  		if (this.isInputValid()) {
-  			console.log(this.name)
-  		}
-  	},
-  	isInputValid: function(){
-  		if (!this.name) {
-  			this.$emit('invalidate')
-        	return false
-  		}
-  		else{
-  			return true
-  		}
-  	}
-  },
-  props: ['name']
+	data () {
+		return {
+			createEventTitle: 'Create Event',
+			manageEventTitle: 'Manage Your Event',
+			events: this.$root.$firebaseRefs.events,
+			event: {}
+		}
+	},
+	methods: {
+		createEvent: function(){
+			if (this.isInputValid()) {
+				const _this = this
+				this.events.once("value").then((snapshot) => {
+					for (var key in snapshot.val()){
+						if (snapshot.val()[key] == _this.name) {
+							swal(
+								'Event create failed',
+								'The event name has already been taken, please try again',
+								'error'
+							)
+							return
+						}
+						continue
+					}
+					let eventKey = _this.events.push(_this.name).key
+					_this.event[eventKey] = {
+						name: _this.name,
+						size: {
+							max: 10,
+							min: 1
+						}
+					}
+					_this.$root.$firebaseRefs.root.update(_this.event)
+					swal(
+						'Event created',
+						'Hit OK to proceed to your event page',
+						'success'
+					).then(function() {
+						_this.$router.push({ name: 'event', params : { id: eventKey }})
+					})
+				})
+			}
+		},
+		loadEvent: function(){
+			if (this.isInputValid()) {
+				const _this = this
+				this.events.once("value").then((snapshot) => {
+					for (var key in snapshot.val()){
+						if (snapshot.val()[key] == _this.name) {
+							_this.$router.push({ name: 'event', params : { id: key }})
+							return
+						}
+						continue
+					}
+					swal(
+						'Event not found',
+						'The event name entered is does not exist, please try again',
+						'error'
+					)
+				})
+			}
+		},
+		isInputValid: function(){
+			if (!this.name) {
+				this.$emit('invalidate')
+					return false
+			}
+			else{
+				return true
+			}
+		}
+	},
+	props: ['name']
 }
 </script>
