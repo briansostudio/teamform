@@ -8,3 +8,7 @@ before_script:
 
 script:
   - npm run build
+
+cache:
+  directories:
+    - node_modules
