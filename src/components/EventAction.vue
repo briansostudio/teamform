@@ -64,7 +64,7 @@ export default {
 					}
 					swal(
 						'Event not found',
-						'The event name entered is does not exist, please try again',
+						'The event name entered does not exist, please try again',
 						'error'
 					)
 				})
