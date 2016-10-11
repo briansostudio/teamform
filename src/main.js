@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import Login from './Login'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -15,20 +16,25 @@ const fb = Firebase.initializeApp({
 	storageBucket: "teamform-14254.appspot.com",
 	messagingSenderId: "250682606003"
 })
-
+const auth = fb.auth();
 const db = fb.database()
 
 const routes = [
 	{
 		path: '/',
 		name: 'home',
-		component: App 
+		component: App
 	},
 	{
 		path: '/event/:id',
 		name: 'event',
 		component: Event
-	}
+	},
+  {
+    path: '/event/:id/login',
+    name: 'login',
+    component: Login
+  }
 ]
 
 const router = new VueRouter({
@@ -43,6 +49,7 @@ const app = new Vue({
 		events: db.ref('/events')
 	},
 	data: {
+	  auth: auth,
 		db : db
 	}
 }).$mount('#app')

@@ -46,7 +46,7 @@ export default {
 						'Hit OK to proceed to your event page',
 						'success'
 					).then(function() {
-						_this.$router.push({ name: 'event', params : { id: eventKey }})
+						_this.$router.push({ name: 'login', params : { id: eventKey }})
 					})
 				})
 			}
