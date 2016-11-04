@@ -26,11 +26,12 @@ describe('TimeInterval', () => {
     expect(t.end).equal(500);
     expect(t.length).equal(200);
 
+    expect(()=>new TimeInterval(-100, 300)).throw();
     expect(()=>new TimeInterval(500, 300)).throw();
   });
   it('shift correctly', () => {
     var t = new TimeInterval(100, 200);
-    t.shift(3000);
+    t = t.shift(3000);
     expect(t.start).equal(3100);
     expect(t.end).equal(3200);
     expect(t.length).equal(100);
@@ -45,68 +46,75 @@ describe('TimeInterval', () => {
     expect(t2.equal(t3)).equal(true);
     expect(t3.equal(t1)).equal(true);
   });
-  it('combine overlapped interval correctly', ()=>{
+  describe('combine overlapped interval correctly', ()=>{
     var t1, t2, t3;
 
-    //case 1
-    t1 = new TimeInterval(0, 200);
-    t2 = new TimeInterval(100, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(1);
-    t3 = t3[0];
-    expect(t3.start).equal(0);
-    expect(t3.end).equal(300);
+    it('case 1',()=>{
+      t1 = new TimeInterval(0, 200);
+      t2 = new TimeInterval(100, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(0);
+      expect(t3.end).equal(300);
+    });
 
-    //case 2
-    t1 = new TimeInterval(100, 200);
-    t2 = new TimeInterval(150, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(1);
-    t3 = t3[0];
-    expect(t3.start).equal(100);
-    expect(t3.end).equal(300);
+    it('case 2',()=> {
+      t1 = new TimeInterval(100, 200);
+      t2 = new TimeInterval(150, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(100);
+      expect(t3.end).equal(300);
+    });
 
-    //case 3
-    t1 = new TimeInterval(100, 200);
-    t2 = new TimeInterval(50, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(1);
-    t3 = t3[0];
-    expect(t3.start).equal(50);
-    expect(t3.end).equal(300);
+    it('case 3',()=> {
+      t1 = new TimeInterval(100, 200);
+      t2 = new TimeInterval(50, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(50);
+      expect(t3.end).equal(300);
+    });
 
-    //case 4
-    t1 = new TimeInterval(100, 1000);
-    t2 = new TimeInterval(150, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(1);
-    t3 = t3[0];
-    expect(t3.start).equal(100);
-    expect(t3.end).equal(1000);
+    it('case 4',()=> {
+      t1 = new TimeInterval(100, 1000);
+      t2 = new TimeInterval(150, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(100);
+      expect(t3.end).equal(1000);
+    });
   });
-  it('combine separated intervals correctly', ()=>{
+  describe('combine separated intervals correctly', ()=>{
     var t1, t2, t3;
 
-    //case 1
-    t1 = new TimeInterval(0, 100);
-    t2 = new TimeInterval(100, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(1);
-    t3 = t3[0];
-    expect(t3.start).equal(0);
-    expect(t3.end).equal(300);
+    it('case 1',()=>{
+      t1 = new TimeInterval(0, 100);
+      t2 = new TimeInterval(100, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(0);
+      expect(t3.end).equal(300);
+    });
 
-    //case 2
-    t1 = new TimeInterval(0, 100);
-    t2 = new TimeInterval(101, 300);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(2);
+    it('case 2',()=>{
+      t1 = new TimeInterval(0, 100);
+      t2 = new TimeInterval(101, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(2);
+    });
 
-    //case 2
-    t1 = new TimeInterval(500, 3000);
-    t2 = new TimeInterval(0, 100);
-    t3 = t1.combine(t2);
-    expect(t3.length).equal(2);
+    it('case 3',()=>{
+      t1 = new TimeInterval(500, 3000);
+      t2 = new TimeInterval(0, 100);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(2);
+    });
   });
   it('check time overlap', ()=>{
     var t1, t2, t3;

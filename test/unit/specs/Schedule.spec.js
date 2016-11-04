@@ -13,6 +13,13 @@ describe('Schedule', () => {
       new TimeInterval(400),
     ]);
     expect(s.intervals.length).equal(4);
+
+    let shouldThrowError = ()=> {
+      s = new Schedule([
+        new TimeInterval(Number.MAX_SAFE_INTEGER)
+      ]);
+    };
+    expect(shouldThrowError).throw();
   });
   it('calculate total time in a schedule', ()=>{
     var s = new Schedule([
@@ -21,7 +28,7 @@ describe('Schedule', () => {
       new TimeInterval(300),
       new TimeInterval(400),
     ]);
-    expect(s.totalTime).equal(400);
+    expect(s.calculateTotalTime()).equal(400);
 
     s = new Schedule([
       new TimeInterval(100, 400),//300
@@ -29,7 +36,13 @@ describe('Schedule', () => {
       new TimeInterval(300),//300 - 200
       new TimeInterval(400, 600),//200
     ]);
-    expect(s.totalTime).equal(900);
+    expect(s.calculateTotalTime()).equal(900);
+  });
+  it('caculate remaining time in a week', ()=>{
+    var s = new Schedule([
+      new TimeInterval(7*86400*1000)
+    ]);
+    expect(s.calculateRemainingTimeInWeek()).equal(0);
   });
   it('combine two schedules', ()=>{
     var s1 = new Schedule([
