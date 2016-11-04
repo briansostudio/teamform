@@ -88,6 +88,22 @@ describe('TimeInterval', () => {
       expect(t3.start).equal(100);
       expect(t3.end).equal(1000);
     });
+
+    it('should remove 0 length intervals case 1', ()=>{
+      t1 = new TimeInterval(100, 200);
+      t2 = new TimeInterval(300, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(1);
+      t3 = t3[0];
+      expect(t3.start).equal(100);
+      expect(t3.end).equal(200);
+    });
+    it('should remove 0 length intervals case 2', ()=>{
+      t1 = new TimeInterval(100, 100);
+      t2 = new TimeInterval(300, 300);
+      t3 = t1.combine(t2);
+      expect(t3.length).equal(0);
+    });
   });
   describe('combine separated intervals correctly', ()=>{
     var t1, t2, t3;
