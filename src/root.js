@@ -4,9 +4,11 @@ import Event from './Event'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
+import VueFullCalendar from 'vue-full-calendar';
 
 Vue.use(VueRouter);
 Vue.use(VueFire);
+Vue.use(VueFullCalendar);
 
 const fb = Firebase.initializeApp({
   apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",
