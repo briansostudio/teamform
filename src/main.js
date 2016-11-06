@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import Manage from './Manage'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -28,6 +29,11 @@ const routes = [
 		path: '/event/:id',
 		name: 'event',
 		component: Event
+	},
+	{
+		path: '/manage/:teamid',
+		name: 'manage',
+		component: Manage
 	}
 ]
 
