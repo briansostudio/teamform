@@ -2,6 +2,7 @@
  * Created by brianso on 4/11/2016.
  */
 import TimeInterval from './time-interval'
+import Resolve from './schedule-resolve-helper'
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -66,12 +67,8 @@ class Schedule{
    * @return Schedule - the resolved Schedule
    */
   resolve(){
-    // an algorithm in c++
-    // http://www.geeksforgeeks.org/merging-intervals/
-    let result = [];
-
-
-
+    let result = Resolve(this.intervals);
+    result = result.map(t => new TimeInterval(t));
     return new Schedule(result);
   }
 

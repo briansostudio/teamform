@@ -1,4 +1,3 @@
-
 import { Schedule, TimeInterval } from 'src/lib/schedule';
 
 describe('Schedule', () => {
