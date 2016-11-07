@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import Event from './Event'
 import Auth from './Auth'
+import Login from './Login'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -24,7 +25,6 @@ const fb = Firebase.initializeApp({
     storageBucket: "comp3111-266ca.appspot.com",
     messagingSenderId: "1061138167888"
 })
-
 const auth = fb.auth();
 const db = fb.database()
 
@@ -43,7 +43,12 @@ const routes = [
 		path: '/login',
 		name: 'auth',
 		component: Auth
-    }
+    },
+	{
+		path: '/event/:id/login',
+		name: 'login',
+		component: Login
+	}
 ]
 
 const router = new VueRouter({
