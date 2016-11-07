@@ -1,12 +1,12 @@
 <template>
-  <form class="auth-form" v-on:submit.prevent="signUpStatue ? signUpWithPassword() : signInWithPassword()">
+  <form class="auth-form" v-on:submit.prevent="onSubmitButtonClick()">
     <div v-show="!admin">
       <button type="submit" class="ui teal tag label user" v-on:click="admin = true">User</button>
     </div>
     <div v-show="admin">
       <button type="submit" class="ui red tag label admin" v-on:click="admin = false">admin</button>
     </div>
-    <h1>{{signUpStatue ? 'Sign up' : 'Sign in'}}</h1>
+    <h1>{{title}}</h1>
     <div class="row event-page">
           <AppTitle></AppTitle>
       </div>
@@ -36,7 +36,7 @@
     </div>
     <div v-show="!signUpStatue" class="clearfix btn-group">
       <button class="ui positive button" type="submit">Sign in</button>
-      <button class="ui positive button" type="button" v-on:click="signUpStatue = true">Sign up</button>
+      <button class="ui positive button" type="button" v-on:click="onSignUpButtonClick()">Sign up</button>
     </div>
     <div v-show="signUpStatue">
       <button type="submit" class="ui positive button signup-submit">Sign up</button>
@@ -68,8 +68,29 @@ export default
         admin:false
       }
     },
+    computed: {
+      title(){
+        return this.signUpStatue ? 'Sign up' : 'Sign in';
+      }
+    },
     methods: {
+      isEmail()
+      {
+        
+      },
+      isPasswordMatchWithConfirmPassword()
+      {
+        
+      },
+      onSignUpButtonClick(){
+        this.signUpStatue = true;
+      },
+      onSubmitButtonClick(){
+        return this.signUpStatue ? signUpWithPassword() : signInWithPassword();
+      },
+      signInWithProvider(provider){
 
+      }
     },
     components:{
       AppTitle,Rating,
