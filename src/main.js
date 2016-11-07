@@ -5,7 +5,6 @@ import Auth from './Auth'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
-import AuthMethod from './AuthMethod'
 
 Vue.use(VueRouter)
 Vue.use(VueFire)
@@ -26,25 +25,25 @@ const fb = Firebase.initializeApp({
     messagingSenderId: "1061138167888"
 })
 
-
+const auth = fb.auth();
 const db = fb.database()
 
 const routes = [
 	{
 		path: '/',
 		name: 'home',
-		component: App 
+		component: App
 	},
 	{
 		path: '/event/:id',
 		name: 'event',
 		component: Event
 	},
-	{
-		path: '/auth',
+    {
+		path: '/login',
 		name: 'auth',
 		component: Auth
-	}
+    }
 ]
 
 const router = new VueRouter({
@@ -59,6 +58,7 @@ const app = new Vue({
 		events: db.ref('/events')
 	},
 	data: {
-		db : db,
+	  auth: auth,
+		db : db
 	}
 }).$mount('#app')
