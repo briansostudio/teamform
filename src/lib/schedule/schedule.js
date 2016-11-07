@@ -82,11 +82,11 @@ class Schedule{
    *    start, end, count
    *  where count indicates how many overlapping of this interval
    */
-  project(){
-    // possible inspiration
-    // http://stackoverflow.com/questions/4322649/range-splitting-problem
-    return [[],[],[],[],[],[],[]];
-  }
+  // project(){
+  //   // possible inspiration
+  //   // http://stackoverflow.com/questions/4322649/range-splitting-problem
+  //   return [[],[],[],[],[],[],[]];
+  // }
 
   print(){
     for(let t of this.intervals){
