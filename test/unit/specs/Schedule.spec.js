@@ -91,6 +91,27 @@ describe('Schedule', () => {
     expect(intervalSorted[1].start).equal(1200);
     expect(intervalSorted[1].end).equal(1700);
   });
+  it('resolve a schedule and remove any 0 length time interval', ()=>{
+    //resolve is combining all overlapped time interval
+    var s = new Schedule([
+      new TimeInterval(100),
+      new TimeInterval(100,100),
+      new TimeInterval(300,300),
+    ]);
+    var result = s.resolve();
+    expect(result.intervals.length).equal(1);
+    expect(result.intervals[0].start).equal(0);
+    expect(result.intervals[0].end).equal(100);
+
+    s = new Schedule([
+      new TimeInterval(100, 100),
+      new TimeInterval(100, 200),
+    ]);
+    result = s.resolve();
+    expect(result.intervals.length).equal(1);
+    expect(result.intervals[0].start).equal(100);
+    expect(result.intervals[0].end).equal(200);
+  });
   it('project a schedule', ()=>{
     //project return a new 2d array of time intervals that are not overlapped
     //the first dimension represent the day of week, 0 for sunday, 1 for monday and so on..

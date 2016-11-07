@@ -10,6 +10,15 @@ function compareInterval(a, b)
   return a.start - b.start;
 }
 
+function remove0LengthIntervals(arr){
+  let result = [];
+  for(let t of arr){
+    if(t.start < t.end)
+      result.push(t);
+  }
+  return result;
+}
+
 export default function(arr){
   let n = arr.length;
   //copy array
@@ -42,5 +51,5 @@ export default function(arr){
       s.push(top);
     }
   }
-  return s;
+  return remove0LengthIntervals(s);
 }
