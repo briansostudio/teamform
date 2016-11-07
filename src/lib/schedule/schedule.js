@@ -87,6 +87,12 @@ class Schedule{
     // http://stackoverflow.com/questions/4322649/range-splitting-problem
     return [[],[],[],[],[],[],[]];
   }
+
+  print(){
+    for(let t of this.intervals){
+      console.log(`[${t.start},${t.end}]`);
+    }
+  }
 }
 
 export default Schedule;
