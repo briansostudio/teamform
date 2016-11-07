@@ -65,10 +65,19 @@ class TimeInterval {
     }
 
     if(maxStart <= minEnd){
-      return [new TimeInterval(minStart, maxEnd)];
+      return TimeInterval.removeZeroLength([new TimeInterval(minStart, maxEnd)]);
     }else{
-      return [this, other];
+      return TimeInterval.removeZeroLength([this, other]);
     }
+  }
+  static removeZeroLength(arr){
+    var result = [];
+    for(let t of arr){
+      if(t.start < t.end){
+        result.push(t);
+      }
+    }
+    return result;
   }
 }
 export default TimeInterval;
