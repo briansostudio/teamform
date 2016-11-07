@@ -26,9 +26,6 @@ export default function(arr){
     return {start:t.start, end:t.end}
   });
   arr = arr.sort(compareInterval);
-  for(let t of arr){
-    console.log(`[${t.start},${t.end}]`);
-  }
   let s = [];
   s.push(arr[0]);
 
