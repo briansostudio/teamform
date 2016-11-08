@@ -31,12 +31,10 @@ export default {
             eventDate: Math.trunc(Date.parse(this.Date) / 1000)
         }
     },
-    ready() {
-       
+    ready() { 
     },
     props:['Date'],
     computed: {
-
             seconds() {
                 if(this.eventDate - this.now > 0)
                 {
@@ -45,48 +43,40 @@ export default {
                 }
                 else
                 {
+                    swal(
+						'Event Registration Ended',
+						'Deadline: ' + this.Date ,
+						'error'
+					)
                     return 0;
                 }
             },
             minutes() {
                 if(this.eventDate - this.now >0)
-                {
                     return Math.trunc((this.eventDate - this.now) / 60) % 60;
-                }
                 else
-                {
                     return 0;
-                }
             },
             hours() {
-
                 if(this.eventDate - this.now >0)
-                {
                    return Math.trunc((this.eventDate - this.now) / 60 / 60) % 24;
-                }
                 else
-                {
                     return 0;
-                }
             },
             days() {
-
                 if(this.eventDate - this.now >0)
                 {
                     return Math.trunc((this.eventDate - this.now) / 60 / 60 / 24);
                 }
                 else
-                {
                     return 0;
-                }
             }
-    }
+    },
+    
 }
-
 </script>
 
 <style>
-
 
 h1{
   color: #396;
