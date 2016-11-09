@@ -31,23 +31,24 @@ export default {
             eventDate: Math.trunc(Date.parse(this.Date) / 1000)
         }
     },
-    ready() { 
+    mounted() { 
+        window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
     },
     props:['Date'],
     computed: {
             seconds() {
                 if(this.eventDate - this.now > 0)
                 {
-                    window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
+                    
                     return (this.eventDate - this.now) % 60;
                 }
                 else
                 {
-                    swal(
-						'Event Registration Ended',
-						'Deadline: ' + this.Date ,
-						'error'
-					)
+                    // swal(
+					// 	'Event Registration Ended',
+					// 	'Deadline: ' + this.Date ,
+					// 	'error'
+					// )
                     return 0;
                 }
             },
@@ -72,6 +73,9 @@ export default {
                     return 0;
             }
     },
+    created() {
+            alert("I am Here");
+  }
     
 }
 </script>
