@@ -12,22 +12,22 @@
       </div>
     <div class="container">
       <div v-show="!admin" class="ui input">
-      	<input type="email" name="email" id="email" placeholder="Email" required v-model.trim="email">
+      	<input class="prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email">
       </div>
     </div>
     <div class="container">
       <div class="ui input">
-      	<input type="password" name="password" id="password" placeholder="Password" required v-model.trim="password">
+      	<input class="prompt" type="password" name="password" id="password" placeholder="Password" required v-model.trim="password">
       </div>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
       <div class="ui input">
-      	<input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" v-model.trim="confirmPassword">
+      	<input class="prompt" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" v-model.trim="confirmPassword">
       </div>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
       <div class="ui input">
-      	<input type="text" name="username" id="username" placeholder="Username" v-model.trim="username">
+      	<input class="prompt" type="text" name="username" id="username" placeholder="Username" v-model.trim="username">
       </div>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
@@ -40,6 +40,7 @@
     </div>
     <div v-show="signUpStatue">
       <button type="submit" class="ui positive button signup-submit">Sign up</button>
+      <button type="submit" class="ui positive button signup-submit" v-on:click="onBackButtonClick()">Back</button>
     </div>
     <div v-show="!admin" class="ui horizontal divider">
     Or
@@ -74,23 +75,52 @@ export default
       }
     },
     methods: {
+      //checking
       isEmail()
       {
-        
+        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+        if (this.email == '' || !re.test(this.email))
+        {
+          alert('Please enter a valid email address.');
+          return false;
+        }
+        else 
+          return true;
       },
       isPasswordMatchWithConfirmPassword()
       {
-        
+        if (this.password == '' || this.password == this.confirmPassword)
+          return false;
+        else 
+          return true;
       },
+      isUsernameInput()
+      {
+        if (this.username == '')
+          return false;
+        else 
+          return true;
+      },
+      //function
       onSignUpButtonClick(){
         this.signUpStatue = true;
+      },
+      onBackButtonClick(){
+        this.signUpStatue = false;
       },
       onSubmitButtonClick(){
         return this.signUpStatue ? signUpWithPassword() : signInWithPassword();
       },
+      signUpWithPassword(){
+
+      },
+      signInWithPassword(){
+
+      },
       signInWithProvider(provider){
 
       }
+      
     },
     components:{
       AppTitle,Rating,
@@ -104,9 +134,8 @@ export default
     width: 550px;
     height: 600px;
     max-width: 100%;
-    margin: 25vh auto 15px;
+    margin: 10vh auto 15px;
     background: #fff;
-    padding: 20px;
     border-radius: 2px;
     box-shadow: 0 0px 0px #ccc;
   }
