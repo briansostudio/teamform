@@ -47,8 +47,7 @@ export default {
     computed: {
             seconds() {
                 if(this.eventDate - this.now > 0)
-                {
-                    
+                {  
                     return (this.eventDate - this.now) % 60;
                 }
                 else
