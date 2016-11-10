@@ -4,6 +4,7 @@ import Event from './Event'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
+import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueFire);
@@ -28,6 +29,11 @@ const routes = [
     path: '/event/:id',
     name: 'event',
     component: Event
+  },
+  {
+    path: '/schedule/',
+    name: 'schedule',
+    component: Schedule
   }
 ];
 
