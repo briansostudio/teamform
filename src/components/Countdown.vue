@@ -32,7 +32,16 @@ export default {
         }
     },
     mounted() { 
-        window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
+        var intervalID = window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
+        if(this.seconds == 0)
+        {
+            swal(
+			    'Event Registration Ended',
+			    'Deadline: ' + this.Date ,
+                'error'
+			);
+            window.clearInterval(intervalID);
+        }
     },
     props:['Date'],
     computed: {
@@ -44,11 +53,6 @@ export default {
                 }
                 else
                 {
-                    // swal(
-					// 	'Event Registration Ended',
-					// 	'Deadline: ' + this.Date ,
-					// 	'error'
-					// )
                     return 0;
                 }
             },
@@ -72,10 +76,7 @@ export default {
                 else
                     return 0;
             }
-    },
-    created() {
-            alert("I am Here");
-  }
+    }
     
 }
 </script>
