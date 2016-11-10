@@ -20,6 +20,10 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
+  .fc .fc-event{
+    background:#1abc9c;
+    border: 1px solid #1abc9c;
+  }
 </style>
 <script>
   require('fullcalendar/dist/fullcalendar.css');
