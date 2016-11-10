@@ -61,6 +61,12 @@
         }
       },
 
+      defaultDate:{
+        default(){
+          return undefined;
+        }
+      },
+
       callback: {
         default() {
           return function(){
@@ -73,7 +79,7 @@
     mounted() {
       const cal = $(this.$el),
         self = this;
-      console.log(cal);
+
       $(this.$el).fullCalendar({
         header: this.header,
         defaultView: this.defaultView,
@@ -84,6 +90,7 @@
         timeFormat: 'HH:mm',
         events: self.events,
         eventSources: self.eventSources,
+        defaultDate: this.defaultDate,
 
         eventRender(event, element) {
           if (this.sync) {
