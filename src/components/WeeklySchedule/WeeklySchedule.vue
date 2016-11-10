@@ -15,24 +15,33 @@
   var schedule1 = new Schedule([
     new TimeInterval(0,86400 * 1000)
   ]);
-
+  var schedule2 = new Schedule([
+    new TimeInterval(86400 * 1000 + 3000 * 1000,86400 * 1000 + 6000 * 1000)
+  ]);
   export default {
     data(){
       return {
-        schedules:[schedule1],
+        schedules:[schedule1, schedule2],
         colorIndex: 0,
         baseDate: new Date(BASE_DATE),
       }
     },
     computed:{
       events(){
-        return this.schedules[0].intervals.map((interval) => {
-          return {
-            start:BASE_DATE + interval.start,
-            end:BASE_DATE + interval.end,
-            color: this.getColor()
-          };
-        });
+        this.colorIndex = 0;
+        var renderData = [];
+        for(let schedule of this.schedules){
+          let color = this.getColor();
+          for(let interval of schedule.intervals){
+            renderData.push({
+              start:BASE_DATE + interval.start,
+              end:BASE_DATE + interval.end,
+              color: color
+            });
+          }
+        }
+        console.log(renderData);
+        return renderData;
       }
     },
     methods:{
@@ -40,11 +49,20 @@
         return colors[(this.colorIndex++) % colors.length];
       },
       callback(event, interval){
-        console.log(event);
-        console.log(interval.start.toString());
-        console.log(interval.end.toString());
-        //var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
-        //console.log(event, ti);
+        var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
+        switch(event){
+          case "event-created":
+            if(this.editable)
+              this.schedules[0].intervals.push(ti);
+            break;
+        }
+      }
+    },
+    props: {
+      "editable":{
+        default(){
+          return false;
+        }
       }
     },
     components:{FullCalendar}
