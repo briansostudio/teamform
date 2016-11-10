@@ -25,7 +25,7 @@
 							</button>
 						</td>
 						<td class="center aligned">
-							<button class="ui labeled icon button">
+							<button @click="manageTeam(index)" class="ui labeled icon button">
 								<i class="add user icon"></i>
 								Manage
 							</button>
@@ -39,6 +39,11 @@
 
 <script>
 export default {
+	methods: {
+		manageTeam: function(index){
+			this.$router.push({ name: 'manage', params : { teamid: index }})
+		}
+	},
 	props: ['teams']
 }
 </script>
