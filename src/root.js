@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import MemberList from './MemberList'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
+import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueFire);
@@ -28,7 +30,17 @@ const routes = [
     path: '/event/:id',
     name: 'event',
     component: Event
-  }
+  },
+  {
+    path: '/schedule/',
+    name: 'schedule',
+    component: Schedule
+  },
+  {
+	path: '/memberList/:teamid',
+	name: 'memberList',
+	component: MemberList
+　}
 ];
 
 const router = new VueRouter({
