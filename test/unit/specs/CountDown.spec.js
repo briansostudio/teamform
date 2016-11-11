@@ -13,7 +13,7 @@ describe('Countdown.vue', () => {
   });
 
   it('should check date equal', ()=>{
-      const vm = new Vue(CountDown).$mount();
+      const vm = new Vue(Countdown).$mount();
       vm.now = Math.trunc(Date.parse("16 June 2016 00:00:00 GMT") / 1000);
       vm.eventDate = Math.trunc(Date.parse("16 June 2016 00:00:00 GMT") / 1000);
       expect(vm.seconds).equal(0);

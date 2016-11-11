@@ -35,11 +35,11 @@ export default {
         var intervalID = window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
         if(this.seconds == 0)
         {
-            swal(
-			    'Event Registration Ended',
-			    'Deadline: ' + this.Date ,
-                'error'
-			);
+            // swal(
+			//     'Event Registration Ended',
+			//     'Deadline: ' + this.Date ,
+            //     'error'
+			// );
             window.clearInterval(intervalID);
         }
     },
