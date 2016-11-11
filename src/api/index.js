@@ -14,6 +14,22 @@ export default {
 			cb(error)
 		})
 	},
+	socialLogin:function(type, cb){
+		let provider
+		switch(type){
+			case 'Github':
+				provider = new auth.GithubAuthProvider()
+			case 'Google':
+				provider = new auth.GoogleAuthProvider()
+		}
+		auth.signInWithRedirect(provider)
+		getRedirectResult().then( (result) => {
+			const token = result.credential.accessToken
+			cb(token)
+		} ).catch( (error) => {
+			console.log(error)
+		})
+	},
 	getTeamsFromEvent: function(eventId,cb){
 		db.ref(eventId).on('value', (snapshot) => {
 			cb(snapshot.val(), null)
