@@ -7,8 +7,11 @@ import VueFire from 'vuefire'
 import Firebase from 'firebase'
 import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
 
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 Vue.use(VueRouter);
 Vue.use(VueFire);
+
 
 const fb = Firebase.initializeApp({
   apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",

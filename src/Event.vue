@@ -61,6 +61,7 @@
 <script>
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
+import swal from 'sweetalert2'
 
 export default {
 	created: function(){
