@@ -1,7 +1,30 @@
 <template>
   <div></div>
 </template>
-
+<style>
+  .fc table{
+    background:#ddd;
+  }
+  .fc th, .fc td{
+    border-width: 0 !important;
+  }
+  .fc table th.fc-widget-header{
+    color: #666;
+    background:#ddd;
+  }
+  .fc table td.fc-widget-content{
+    color:#777;
+    background:#eee;
+  }
+  th.fc-day-header.fc-widget-header{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .fc .fc-event{
+    background:#1abc9c;
+    border: 1px solid #1abc9c;
+  }
+</style>
 <script>
   require('fullcalendar/dist/fullcalendar.css');
   require('fullcalendar');
@@ -42,9 +65,9 @@
       header: {
         default() {
           return {
-            left:   'prev,next today',
-            center: 'title',
-            right:  'month,agendaWeek,agendaDay'
+            left:   '',
+            center: '',
+            right:  ''
           }
         },
       },
@@ -88,9 +111,13 @@
         selectHelper: this.selectHelper,
         aspectRatio: 2,
         timeFormat: 'HH:mm',
+        axisFormat: 'HH:mm',
+        slotLabelFormat: 'HH:mm',
         events: self.events,
         eventSources: self.eventSources,
         defaultDate: this.defaultDate,
+        columnFormat: 'dd',
+        allDaySlot: false,
 
         eventRender(event, element) {
           if (this.sync) {
