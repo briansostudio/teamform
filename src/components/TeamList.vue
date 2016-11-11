@@ -19,7 +19,7 @@
 							<a class="ui teal circular label">{{team.size}}</a>
 						</td>
 						<td class="center aligned">
-							<button class="ui labeled icon button">
+							<button @click="loadTeamMember(index)" class="ui labeled icon button">
 								<i class="unhide icon"></i>
 								View
 							</button>
@@ -42,6 +42,9 @@ export default {
 	methods: {
 		manageTeam: function(index){
 			this.$router.push({ name: 'manage', params : { teamid: index }})
+		},
+		loadTeamMember: function(indexid){
+			this.$router.push({ name: 'memberList', params : { teamid: indexid }})
 		}
 	},
 	props: ['teams']
