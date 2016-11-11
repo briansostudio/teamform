@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import MemberList from './MemberList'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -34,7 +35,12 @@ const routes = [
     path: '/schedule/',
     name: 'schedule',
     component: Schedule
-  }
+  },
+  {
+	path: '/memberList/:teamid',
+	name: 'memberList',
+	component: MemberList
+　}
 ];
 
 const router = new VueRouter({
