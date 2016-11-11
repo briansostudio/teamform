@@ -7,7 +7,7 @@
       <div class="row">
         <div class="ui search">
           <div class="ui big icon input">
-            <input class="prompt" type="text" v-model="eventInput" @focus="hideWarning" placeholder="Enter keyword to find your event">
+            <el-input class="prompt" type="text" v-model="eventInput" @focus="hideWarning" placeholder="Enter keyword to find your event">
             <i class="search icon"></i>
           </div>
         </div>
