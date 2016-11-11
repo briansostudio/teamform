@@ -1,5 +1,5 @@
 <template>
-
+    <div>
         <div id="clockdiv">
                 <h1 v-if="eventDate-now < 0">Event ended</h1>
                 <h1 v-if="eventDate-now > 0">Time remaining:</h1>
@@ -23,6 +23,8 @@
     
 </template>
 <script>
+import swal from 'sweetalert2';
+
 export default {
 
     data() {
@@ -35,11 +37,11 @@ export default {
         var intervalID = window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
         if(this.seconds == 0)
         {
-            // swal(
-			//     'Event Registration Ended',
-			//     'Deadline: ' + this.Date ,
-            //     'error'
-			// );
+            swal(
+			    'Event Registration Ended',
+			    'Deadline: ' + this.Date ,
+                'error'
+			);
             window.clearInterval(intervalID);
         }
     },
