@@ -25,6 +25,7 @@ const fb = Firebase.initializeApp({
     storageBucket: "comp3111-266ca.appspot.com",
     messagingSenderId: "1061138167888"
 })
+
 const auth = fb.auth();
 const db = fb.database()
 

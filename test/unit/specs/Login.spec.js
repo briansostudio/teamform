@@ -31,62 +31,62 @@ describe('Login.vue', () => {
     expect(result).is.null;
   });
 
-  it('correctly vlidate the input (2)', () => {
-    const vm = new Vue(Login).$mount();
-    var result;
-    //1
-    vm.userId = "brian";
-    vm.isUserExists = true;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "";
-    vm.inputPassword = "";
-    result = vm.validateInput();
-    expect(result).not.null;
-    //2
-    vm.userId = "brian";
-    vm.isUserExists = true;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "";
-    vm.inputPassword = "abcdwf";
-    result = vm.validateInput();
-    expect(result).is.null;
-  });
+  // it('correctly vlidate the input (2)', () => {
+  //   const vm = new Vue(Login).$mount();
+  //   var result;
+  //   //1
+  //   vm.userId = "brian";
+  //   vm.isUserExists = true;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "";
+  //   vm.inputPassword = "";
+  //   result = vm.validateInput();
+  //   expect(result).not.null;
+  //   //2
+  //   vm.userId = "brian";
+  //   vm.isUserExists = true;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "";
+  //   vm.inputPassword = "abcdwf";
+  //   result = vm.validateInput();
+  //   expect(result).is.null;
+  // });
 
-  it('correctly vlidate the input (3)', () => {
-    const vm = new Vue(Login).$mount();
-    var result;
-    vm.userId = "brian";
-    vm.isUserExists = false;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "";
-    vm.inputPassword = "";
-    result = vm.validateInput();
-    expect(result).not.null;
+  // it('correctly vlidate the input (3)', () => {
+  //   const vm = new Vue(Login).$mount();
+  //   var result;
+  //   vm.userId = "brian";
+  //   vm.isUserExists = false;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "";
+  //   vm.inputPassword = "";
+  //   result = vm.validateInput();
+  //   expect(result).not.null;
 
-    vm.userId = "brian";
-    vm.isUserExists = false;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "abc";
-    vm.inputPassword = "";
-    result = vm.validateInput();
-    expect(result).not.null;
+  //   vm.userId = "brian";
+  //   vm.isUserExists = false;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "abc";
+  //   vm.inputPassword = "";
+  //   result = vm.validateInput();
+  //   expect(result).not.null;
 
-    vm.userId = "brian";
-    vm.isUserExists = false;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "";
-    vm.inputPassword = "avc";
-    result = vm.validateInput();
-    expect(result).not.null;
+  //   vm.userId = "brian";
+  //   vm.isUserExists = false;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "";
+  //   vm.inputPassword = "avc";
+  //   result = vm.validateInput();
+  //   expect(result).not.null;
 
-    vm.userId = "brian";
-    vm.isUserExists = true;
-    vm.inputUserId = "Hi";
-    vm.inputNickName = "abdi";
-    vm.inputPassword = "abcdwf";
-    result = vm.validateInput();
-    expect(result).is.null;
-  });
+  //   vm.userId = "brian";
+  //   vm.isUserExists = true;
+  //   vm.inputUserId = "Hi";
+  //   vm.inputNickName = "abdi";
+  //   vm.inputPassword = "abcdwf";
+  //   result = vm.validateInput();
+  //   expect(result).is.null;
+  // });
 
 
   // it('should render correct contents', () => {
