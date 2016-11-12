@@ -25,7 +25,7 @@ class Schedule{
     //validation
     for(let interval of this.intervals){
       if(interval.end > WEEK){
-        throw new Error(`Schedule: time interval(${interval}) out of bound`);
+        throw new Error(`Schedule: time interval end value(${interval.end}) larger than the week limit`);
       }
     }
   }
@@ -96,11 +96,11 @@ class Schedule{
   //   return [[],[],[],[],[],[],[]];
   // }
 
-  print(){
-    for(let t of this.intervals){
-      console.log(`[${t.start},${t.end}]`);
-    }
-  }
+  // print(){
+  //   for(let t of this.intervals){
+  //     console.log(`[${t.start},${t.end}]`);
+  //   }
+  // }
 }
 
 export default Schedule;

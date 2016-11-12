@@ -95,11 +95,11 @@
       },
       callback(event, interval){
         if(!this.editMode)
-          return;
+          return false;
         if(this.mergeMode)
-          return;
+          return false;
         if(event !== "event-created" && interval.user_id !== this.currentUserId)
-          return;
+          return false;
         console.log(event);
         var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
         switch(event){

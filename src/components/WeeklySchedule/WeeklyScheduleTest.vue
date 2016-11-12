@@ -1,5 +1,5 @@
 <template>
-  <WeeklySchedule style="width:80%; margin:0 auto;" :users="users" :currentUserId="currentUserId" :editMode="true"></WeeklySchedule>
+  <WeeklySchedule ref="weeklySchedule" style="width:80%; margin:0 auto;" :users="users" :currentUserId="currentUserId" :editMode="true"></WeeklySchedule>
 </template>
 <script>
   import {Schedule, TimeInterval, Consts} from '../../lib/schedule'
@@ -16,6 +16,10 @@
           },
           ":intervalId-2": {
             start: Consts.FRIDAY + Consts.HOUR * 9,
+            end: Consts.FRIDAY + Consts.HOUR * 12
+          },
+          ":intervalId-3": {
+            start: Consts.FRIDAY + Consts.HOUR * 14,
             end: Consts.FRIDAY + Consts.HOUR * 17
           }
         }
