@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import AdminPage from './AdminPage'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -28,6 +29,11 @@ const routes = [
     path: '/event/:id',
     name: 'event',
     component: Event
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPage
   }
 ];
 
