@@ -136,7 +136,7 @@
         },
 
         eventDrop(event) {
-          self.callback('event-drop', event)
+          return self.callback('event-drop', event)
         },
 
         eventResize(event) {

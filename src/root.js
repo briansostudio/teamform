@@ -4,7 +4,7 @@ import Event from './Event'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
-import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
+import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueFire);

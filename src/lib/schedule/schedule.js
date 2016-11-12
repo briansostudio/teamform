@@ -4,11 +4,19 @@
 import TimeInterval from './time-interval'
 import Resolve from './schedule-resolve-helper'
 
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
-const WEEK = 7 * DAY;
+export const SECOND = 1000;
+export const MINUTE = 60 * SECOND;
+export const HOUR = 60 * MINUTE;
+export const DAY = 24 * HOUR;
+export const WEEK = 7 * DAY;
+export const SUNDAY = 0 * DAY;
+export const MONDAY = 1 * DAY;
+export const TUESDAY = 2 * DAY;
+export const WEDNESDAY = 3 * DAY;
+export const THURSDAY = 4 * DAY;
+export const FRIDAY = 5 * DAY;
+export const SATURDAY = 6 * DAY;
+
 
 class Schedule{
   constructor(intervals){
