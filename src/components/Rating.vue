@@ -1,15 +1,17 @@
 <template id="template-star-rating">
     <div class="star-rating">
+        <h3 class="ui left aligned header">{{skillName}}</h3>
         <label
                 class="star-rating__star"
                 v-for="rating in ratings"
                 v-bind:class="{'is-selected': ((value >= rating) && value != null), 'is-disabled': disabled}"
                 v-on:mouseout="star_out"
-                v-on:click="set(rating)">
+                v-on:click="set(rating)"
+                v-on:mouseover="star_over(rating)">
             <input
                     class="star-rating star-rating__checkbox"
                     type="radio"
-                    v-bind:name="name"
+                    v-bind:name="skillName"
                     v-bind:value="rating"
                     v-bind:required="required"
                     v-bind:disabled="disabled"
@@ -28,13 +30,21 @@
             };
         },
         props: {
-            'name': String,
+            'skillName': String,
             'value': null,
             'id': String,
             'disabled': String,
             'required': Boolean,
         },
         methods: {
+            star_over: function (index) {
+                if (this.disabled) {
+                    return;
+                }
+
+                this.temp_value = this.value;
+                this.value = index;
+            },
             star_out: function() {
                 if (this.disabled=="true") {
                     return;
@@ -50,7 +60,7 @@
                 this.temp_value = value;
                 this.value = value;
             }
-        }
+        },
     }
 
 </script>
