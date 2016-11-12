@@ -98,7 +98,7 @@
           return;
         if(this.mergeMode)
           return;
-        if(interval.user_id !== this.currentUserId)
+        if(event !== "event-created" && interval.user_id !== this.currentUserId)
           return;
         console.log(event);
         var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
