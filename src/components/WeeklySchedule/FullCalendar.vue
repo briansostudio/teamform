@@ -2,6 +2,9 @@
   <div></div>
 </template>
 <style>
+  .fc .fc-toolbar{
+    display:none;
+  }
   .fc table{
     background:#ddd;
   }

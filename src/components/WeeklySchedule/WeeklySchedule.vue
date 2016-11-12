@@ -8,7 +8,11 @@
       </div>
       totalHours : {{totalHours}} |
       availableHours : {{availableHours}} |
+
+    </div>
+    <div v-if="selectedInterval !== null" class="ui right floated compact segment">
       selectedInterval: {{selectedInterval.start}} - {{selectedInterval.end}}
+      <input class="ui button" type="button" value="remove" @click="removeSelectedInterval()">
     </div>
   </div>
 </template>
@@ -34,7 +38,7 @@
     computed:{
       selectedInterval(){
         console.log(this.selectedIntervalId);
-        return this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] || {};
+        return this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] || null;
       },
       resolved(){
         let intervals = [];
@@ -90,6 +94,9 @@
       }
     },
     methods:{
+      removeSelectedInterval(){
+        this.$delete(this.users[this.currentUserId].schedule.intervals,this.selectedIntervalId);
+      },
       getColor(){
         return colors[(this.colorIndex++) % colors.length];
       },
