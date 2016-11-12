@@ -35,7 +35,7 @@
         <span class="error" v-show="errorUsername">* Username cannot be empty</span>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
-      <Rating skillName="Speed"></Rating>
+      <Rating skillName="Speed" value="3"></Rating>
     </div>
     <div v-show="!signUpStatue" class="clearfix btn-group">
       <button class="ui positive button" type="submit">Sign in</button>

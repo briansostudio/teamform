@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App'
 import Event from './Event'
 import Auth from './Auth'
-import Login from './Login'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
@@ -45,11 +44,11 @@ const routes = [
 		name: 'auth',
 		component: Auth
     },
-	{
-		path: '/event/:id/login',
-		name: 'login',
-		component: Login
-	}
+	// {
+	// 	path: '/event/:id/login',
+	// 	name: 'login',
+	// 	component: Login
+	// }
 ]
 
 const router = new VueRouter({
