@@ -35,7 +35,7 @@
 		</div>
 		<div class="row">
 			<div class="ui large action input">
-			<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
+				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
 				<button class="ui teal left labeled icon button" @click="addTeam">
 					<i class="add user icon"></i>
 					Add Team
@@ -55,6 +55,7 @@
 				</h2>
 			</div>
 		</div>
+		<div class = "footer"></div>
   </div>
 </template>
 
@@ -119,9 +120,12 @@ export default {
 
 <style>
 	.event-page {
-		margin-top: 10%;
+		margin-top: 5%;
 	}
 	.add-team-input{
 		width: 100%;
+	}
+	.footer{
+		margin-bottom: 5%;
 	}
 </style>

@@ -15,21 +15,37 @@
       <div class="row">
         <event-action :name="eventInput" @invalidate="warningPrompt"></event-action>
       </div>
+      <div class="row">
+        <div>
+        </div>
+        <h2 class="ui header">
+          <i class="fa fa-calendar-o"></i>
+          <div class="content">
+          Event List
+          </div>
+        </h2>
+      </div>
+      <div>
+        <EventList :events = "events">
+        </EventList>
+      </div>
   </div>
 </template>
 
 <script>
 import AppTitle from './components/AppTitle'
 import EventAction from './components/EventAction'
+import EventList from './components/EventList'
 import Countdown from './components/Countdown'
 export default {
   data() {
     return {
-      eventInput: ''
+      eventInput: '',
+      events: [{name: "comp3111", teamNum: '5'},{name: "comp3511", teamNum: '3'},{name: "comp3711", teamNum: '6'}],
     }
   },
   components: {
-    AppTitle, EventAction ,Countdown
+    AppTitle, EventAction, EventList, Countdown
   },
   methods: {
     hideWarning : () => {
