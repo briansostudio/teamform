@@ -4,11 +4,19 @@
 import TimeInterval from './time-interval'
 import Resolve from './schedule-resolve-helper'
 
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
-const WEEK = 7 * DAY;
+export const SECOND = 1000;
+export const MINUTE = 60 * SECOND;
+export const HOUR = 60 * MINUTE;
+export const DAY = 24 * HOUR;
+export const WEEK = 7 * DAY;
+export const SUNDAY = 0 * DAY;
+export const MONDAY = 1 * DAY;
+export const TUESDAY = 2 * DAY;
+export const WEDNESDAY = 3 * DAY;
+export const THURSDAY = 4 * DAY;
+export const FRIDAY = 5 * DAY;
+export const SATURDAY = 6 * DAY;
+
 
 class Schedule{
   constructor(intervals){
@@ -17,7 +25,7 @@ class Schedule{
     //validation
     for(let interval of this.intervals){
       if(interval.end > WEEK){
-        throw new Error(`Schedule: time interval(${interval}) out of bound`);
+        throw new Error(`Schedule: time interval end value(${interval.end}) larger than the week limit`);
       }
     }
   }
@@ -88,11 +96,11 @@ class Schedule{
   //   return [[],[],[],[],[],[],[]];
   // }
 
-  print(){
-    for(let t of this.intervals){
-      console.log(`[${t.start},${t.end}]`);
-    }
-  }
+  // print(){
+  //   for(let t of this.intervals){
+  //     console.log(`[${t.start},${t.end}]`);
+  //   }
+  // }
 }
 
 export default Schedule;

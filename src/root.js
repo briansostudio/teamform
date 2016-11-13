@@ -7,7 +7,7 @@ import MemberList from './MemberList'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
-import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
+import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue';
 import Auth from './Auth'
 
 import 'sweetalert2/dist/sweetalert2.min.css';
