@@ -2,13 +2,16 @@ import * as types from '../mutation-types'
 import api from '../../api'
 
 const state = {
-    event: {
-        team_size:{
-            min: 0,
-            max: 5
-        }
+    id: '',
+    name: '',
+    description: '',
+    limits: {
+        min: 0,
+        max: 5
     },
-    status: null
+    qualities: [],
+    teams: [],
+    members: []
 }
 
 const mutations = {

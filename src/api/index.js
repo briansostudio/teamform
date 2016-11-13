@@ -5,7 +5,12 @@ const auth = fb.auth()
 
 export default {
 	register: function(user, cb){
-		auth.createUserWithEmailAndPassword(user.email, user.password).then( () => cb() ).catch((error) => {
+		auth.createUserWithEmailAndPassword(user.email, user.password).then( (user) => {
+			db.ref('users/'+user.uid).update({
+				name:user.name
+			})
+			cb()
+		} ).catch((error) => {
 			cb(error)
 		})
 	},
@@ -25,6 +30,7 @@ export default {
 		auth.signInWithRedirect(provider)
 		getRedirectResult().then( (result) => {
 			const token = result.credential.accessToken
+			db.ref('users/').update(result.user)
 			cb(token)
 		} ).catch( (error) => {
 			console.log(error)
@@ -46,7 +52,7 @@ export default {
 	},
 	createEvent:function(name){
 		let key = db.ref('events').push(name).key;
-		return db.ref(key).update({
+		return db.ref('reference'+key).update({
 			name: name,
 			size: {
 				max: 10,

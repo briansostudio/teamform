@@ -3,10 +3,14 @@ import api from '../../api'
 
 // initial team state
 const state = {
-    members: [],
-    join_request: [],
-    name: '',
-    size: 0,
+	id: '',
+	name: '',
+	description: '',
+	members: [],
+	requests: [],
+	tags: [],
+	leader: '',
+	size: 0
 }
 
 const getters = {
@@ -16,40 +20,40 @@ const getters = {
 // mutations for individual team
 
 const mutation = {
-    [types.ADD_TO_TEAM] (state, { request }){
-        
-    },
-    [types.INCREASE_TEAMSIZE] (state, { size }){
-        state.size = size
-    },
-    [types.DECREASE_TEAMSIZE] (state, { size }){
-        state.size = size
-    },
-    [types.ADD_JOIN_REQUEST] (state, {requests}){
-        for(req in requests){
-            state.join_request.push(req)
-        }
-    }
-    
+	[types.ADD_TO_TEAM] (state, { request }){
+		
+	},
+	[types.INCREASE_TEAMSIZE] (state, { size }){
+		state.size = size
+	},
+	[types.DECREASE_TEAMSIZE] (state, { size }){
+		state.size = size
+	},
+	[types.ADD_JOIN_REQUEST] (state, {requests}){
+		for(req in requests){
+			state.join_request.push(req)
+		}
+	}
+	
 }
 
 const actions = {
-    addJoinRequest({commit, state}, payload){
-        const requests = payload
-        commit(types.ADD_JOIN_REQUEST, { requests })
-    },
-    increaseSize({commit, state}, payload){
-        const size = payload
-        commit(types.INCREASE_TEAMSIZE, { size })
-    },
-    decreaseSize({commit, state}, payload){
-        const size = payload
-        commit(types.DECREASE_TEAMSIZE, { size })
-    },
-    approveJoinRequest({commit, state}, payload){
-        const request = payload
-        commit(types.ADD_TO_TEAM, { request })
-    }
+	addJoinRequest({commit, state}, payload){
+		const requests = payload
+		commit(types.ADD_JOIN_REQUEST, { requests })
+	},
+	increaseSize({commit, state}, payload){
+		const size = payload
+		commit(types.INCREASE_TEAMSIZE, { size })
+	},
+	decreaseSize({commit, state}, payload){
+		const size = payload
+		commit(types.DECREASE_TEAMSIZE, { size })
+	},
+	approveJoinRequest({commit, state}, payload){
+		const request = payload
+		commit(types.ADD_TO_TEAM, { request })
+	}
 }
 
 export default {

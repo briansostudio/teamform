@@ -2,7 +2,15 @@ import * as types from '../mutation-types'
 import api from '../../api'
 
 const state = {
-    member: {}
+    id: '',
+    name: '',
+    schedule: {
+      intervals: {}
+    }
+}
+
+const getters = {
+  
 }
 
 const mutations = {
