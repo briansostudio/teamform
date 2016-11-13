@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import AdminPage from './AdminPage'
 import Manage from './Manage'
 import MemberList from './MemberList'
 import VueRouter from 'vue-router'
@@ -35,6 +36,11 @@ const routes = [
     path: '/event/:id',
     name: 'event',
     component: Event
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPage
   },
   {
     path: '/manage/:teamid',
