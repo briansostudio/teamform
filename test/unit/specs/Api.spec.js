@@ -9,7 +9,7 @@ function testAsync(asyncFn){
 }
 
 describe("Api",()=>{
-    describe("register",() => {
+    describe.skip("register",() => {
         let user = {
             name:"test",
             email:`${Math.random()}@test.com`,
