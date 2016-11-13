@@ -19,7 +19,7 @@ const getters = {
 
 // mutations for individual team
 
-const mutation = {
+const mutations = {
 	[types.ADD_TO_TEAM] (state, { request }){
 		
 	},

@@ -5,11 +5,11 @@ const auth = fb.auth()
 
 export default {
 	register: function(user, cb){
-		auth.createUserWithEmailAndPassword(user.email, user.password).then( (user) => {
-			db.ref('users/'+user.uid).update({
-				name:user.name
-			})
-			cb()
+		auth.createUserWithEmailAndPassword(user.email, user.password).then( (fbUser) => {
+			db.ref('users/'+fbUser.uid).set({
+				name: user.name
+			});
+			cb();			
 		} ).catch((error) => {
 			cb(error)
 		})
@@ -51,8 +51,8 @@ export default {
 		})
 	},
 	createEvent:function(name){
-		let key = db.ref('events').push(name).key;
-		return db.ref('reference'+key).update({
+		let key = db.ref('reference').push(name).key;
+		return db.ref('events/'+key).set({
 			name: name,
 			size: {
 				max: 10,
