@@ -3,6 +3,7 @@
       <div class="row event-page">
         <AppTitle></AppTitle>
       </div>
+      <Countdown date="16 June 2016 03:02:01 GMT"></countdown>
       <div class="row">
         <div class="ui search">
           <div class="ui big icon input">
@@ -35,7 +36,7 @@
 import AppTitle from './components/AppTitle'
 import EventAction from './components/EventAction'
 import EventList from './components/EventList'
-
+import Countdown from './components/Countdown'
 export default {
   data() {
     return {
@@ -44,7 +45,7 @@ export default {
     }
   },
   components: {
-    AppTitle, EventAction, EventList
+    AppTitle, EventAction, EventList, Countdown
   },
   methods: {
     hideWarning : () => {
