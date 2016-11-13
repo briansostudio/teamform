@@ -1,11 +1,11 @@
 <template>
   <div class="ui centered grid">
       <div class="row event-page">
-        <h1>Event Admininstrative Panel</h1>
+        <h1>Event Management Panel</h1>
       </div>
       <div class ="row event-detail">
 				<div class="eight wide column">
-					<EventDetails></eventdetails>
+					<EventDetails></EventDetails>
 				</div>
 				<div class="eight wide column">
 		  			<EventModificationForm></EventModificationForm>
@@ -13,7 +13,7 @@
       </div>
 
         <div class="row">
-			<TeamList v-if="event.hasOwnProperty('teams')" v-bind:teams="event.teams"></TeamList>
+			<TeamList v-if="event.hasOwnProperty('teams')" :teams="event.teams"></TeamList>
 			<div v-else class="ui piled segment">
 				<h2 class="ui icon header">
 					<i class="hide icon"></i>
@@ -29,15 +29,10 @@
 </template>
 
 <script>
-import TeamSizeControl from './components/TeamSizeControl'
-import TeamList from './components/TeamList'
 import EventModificationForm from './components/EventModificationForm'
 import EventDetails from './components/EventDetails'
 
 export default {
-created: function(){
-		this.fetchEvent()
-		},
 	data(){
 		return {
 			event: {
@@ -50,23 +45,8 @@ created: function(){
 			teamName: ''
 		}
 	},
-	methods:{
-		fetchEvent: function(){
-			let _this = this
-			let ref = this.$root.$firebaseRefs.root
-			ref.on('value', (snapshot) => {
-				_this.event = snapshot.child(_this.$route.params.id).val()
-			})
-		},
-		updateEvent: function(){
-			let update = {}
-			let ref = this.$root.$firebaseRefs.root
-			update[this.$route.params.id] = this.event
-			ref.update(update)
-		}
-	},
 	components:{
-		TeamSizeControl, TeamList, EventModificationForm, EventDetails
+		EventModificationForm, EventDetails
 	}
 }
 
