@@ -39,12 +39,12 @@ import EventList from './components/EventList'
 export default {
   data() {
     return {
-      eventInput: ''
+      eventInput: '',
       events: [{name: "comp3111", teamNum: '5'},{name: "comp3511", teamNum: '3'},{name: "comp3711", teamNum: '6'}],
     }
   },
   components: {
-    AppTitle, EventAction
+    AppTitle, EventAction, EventList
   },
   methods: {
     hideWarning : () => {
