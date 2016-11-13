@@ -1,12 +1,20 @@
 import Vue from 'vue'
 import App from './App'
 import Event from './Event'
+import AdminPage from './AdminPage'
+import Manage from './Manage'
+import MemberList from './MemberList'
 import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
+import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue';
+import Auth from './Auth'
+
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.use(VueRouter);
 Vue.use(VueFire);
+
 
 const fb = Firebase.initializeApp({
   apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",
@@ -28,6 +36,31 @@ const routes = [
     path: '/event/:id',
     name: 'event',
     component: Event
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPage
+  },
+  {
+    path: '/manage/:teamid',
+    name: 'manage',
+    component: Manage
+  },
+  {
+    path: '/schedule/',
+    name: 'schedule',
+    component: Schedule
+  },
+  {
+	path: '/memberList/:teamid',
+	name: 'memberList',
+	component: MemberList
+　},
+  {
+    path: '/login',
+    name: 'auth',
+    component: Auth
   }
 ];
 
