@@ -2,6 +2,9 @@
   <div></div>
 </template>
 <style>
+  .fc .fc-toolbar{
+    display:none;
+  }
   .fc table{
     background:#ddd;
   }
@@ -84,6 +87,12 @@
         }
       },
 
+      defaultDate:{
+        default(){
+          return undefined;
+        }
+      },
+
       callback: {
         default() {
           return function(){
@@ -96,7 +105,7 @@
     mounted() {
       const cal = $(this.$el),
         self = this;
-      console.log(cal);
+
       $(this.$el).fullCalendar({
         header: this.header,
         defaultView: this.defaultView,
@@ -109,20 +118,9 @@
         slotLabelFormat: 'HH:mm',
         events: self.events,
         eventSources: self.eventSources,
+        defaultDate: this.defaultDate,
         columnFormat: 'dd',
         allDaySlot: false,
-
-        eventRender(event, element) {
-          if (this.sync) {
-            self.events = cal.fullCalendar('clientEvents')
-          }
-        },
-
-        eventDestroy(event) {
-          if (this.sync) {
-            self.events = cal.fullCalendar('clientEvents')
-          }
-        },
 
         eventClick(event) {
           self.callback('event-selected', event)
@@ -150,34 +148,35 @@
       events: {
         deep: true,
         handler(val) {
-          $(this.$el).fullCalendar('rerenderEvents')
+          $(this.$el).fullCalendar('removeEvents');
+          $(this.$el).fullCalendar('addEventSource', this.events);
         },
       }
     },
 
-    events: {
-      'remove-event'(event) {
-        $(this.$el).fullCalendar('removeEvents', event._id)
-      },
-      'rerender-events'(event) {
-        $(this.$el).fullCalendar('rerenderEvents')
-      },
-      'refetch-events'(event) {
-        $(this.$el).fullCalendar('refetchEvents')
-      },
-      'render-event'(event) {
-        $(this.$el).fullCalendar('renderEvent', event)
-      },
-      'reload-events'() {
-        $(this.$el).fullCalendar('removeEvents')
-        $(this.$el).fullCalendar('addEventSource', this.events)
-      },
-      'rebuild-sources'() {
-        $(this.$el).fullCalendar('removeEvents')
-        this.eventSources.map(event => {
-          $(this.$el).fullCalendar('addEventSource', event)
-        })
-      },
-    },
+//    events: {
+//      'remove-event'(event) {
+//        $(this.$el).fullCalendar('removeEvents', event._id)
+//      },
+//      'rerender-events'(event) {
+//        $(this.$el).fullCalendar('rerenderEvents')
+//      },
+//      'refetch-events'(event) {
+//        $(this.$el).fullCalendar('refetchEvents')
+//      },
+//      'render-event'(event) {
+//        $(this.$el).fullCalendar('renderEvent', event)
+//      },
+//      'reload-events'() {
+//        $(this.$el).fullCalendar('removeEvents')
+//        $(this.$el).fullCalendar('addEventSource', this.events)
+//      },
+//      'rebuild-sources'() {
+//        $(this.$el).fullCalendar('removeEvents')
+//        this.eventSources.map(event => {
+//          $(this.$el).fullCalendar('addEventSource', event)
+//        })
+//      },
+//    },
   }
 </script>
