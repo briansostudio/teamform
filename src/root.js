@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import VueFire from 'vuefire'
 import Firebase from 'firebase'
 import Schedule from './components/WeeklySchedule/WeeklySchedule.vue';
+import Auth from './Auth'
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 
@@ -43,7 +44,12 @@ const routes = [
 	path: '/memberList/:teamid',
 	name: 'memberList',
 	component: MemberList
-　}
+　},
+  {
+    path: '/login',
+    name: 'auth',
+    component: Auth
+  }
 ];
 
 const router = new VueRouter({
