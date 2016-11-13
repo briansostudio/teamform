@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="ui centered grid">
+    <ForkMe></ForkMe>
       <div class="row event-page">
         <AppTitle></AppTitle>
       </div>
@@ -22,6 +23,7 @@
 import AppTitle from './components/AppTitle'
 import EventAction from './components/EventAction'
 import Countdown from './components/Countdown'
+import ForkMe from './components/ForkMe'
 export default {
   data() {
     return {
@@ -29,7 +31,7 @@ export default {
     }
   },
   components: {
-    AppTitle, EventAction ,Countdown
+    AppTitle, EventAction ,Countdown,ForkMe
   },
   methods: {
     hideWarning : () => {
