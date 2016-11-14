@@ -82,11 +82,11 @@ export default {
 	},
 	methods:{
 		fetchEvent: function(){
-			let _this = this
-			let ref = this.$root.$firebaseRefs.root
-			ref.on('value', (snapshot) => {
-				_this.event = snapshot.child(_this.$route.params.id).val()
-			})
+//			let _this = this
+//			let ref = this.$root.$firebaseRefs.root
+//			ref.on('value', (snapshot) => {
+//				_this.event = snapshot.child(_this.$route.params.id).val()
+//			})
 		},
 		updateEvent: function(){
 			let update = {}
