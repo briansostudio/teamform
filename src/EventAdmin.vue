@@ -1,5 +1,5 @@
 <template>
-  <div class="ui centered grid">
+  <div class="ui centered grid stackable">
       <div class="row event-page">
         <h1>Event Management Panel</h1>
       </div>
@@ -12,9 +12,9 @@
 				</div>
       </div>
 
-        <div class="row">
+        <div class="row event-detail">
 			<TeamList v-if="event.hasOwnProperty('teams')" :teams="event.teams"></TeamList>
-			<div v-else class="ui piled segment">
+			<div v-else class="ui piled segment page">
 				<h2 class="ui icon header">
 					<i class="hide icon"></i>
 					<div class="content">

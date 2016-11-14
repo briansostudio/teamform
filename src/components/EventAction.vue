@@ -45,7 +45,7 @@ export default {
 			if(this.isCreate){
 				this.createEvent()
 			}
-			else 
+			else
 			{
 				this.loadEvent()
 			}
@@ -79,19 +79,19 @@ export default {
 button.action-btn:focus { outline: none; }
 button.action-btn{
   display:inline-block;
-	
+
 	font:normal normal 300 1.3em 'Open Sans';
-	text-decoration:none;	
-	
+	text-decoration:none;
+
 	color:rgba(28, 190, 131, 1);
 	background-color:transparent;
 	border:1px solid rgba(28, 190, 131, 1);
 	border-radius:100px;
-	
+
 	padding: .3em 1.2em;
 	margin:5px;
-			
-	background-size: 200% 100%;	
+
+	background-size: 200% 100%;
 	background-image: linear-gradient(to right, transparent 50%, rgba(28, 190, 131, 1) 50%);
 	transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
 }
@@ -100,5 +100,8 @@ button.action-btn:hover{
 	color:rgba(255, 255, 255, 1);
 	background-color:rgba(28, 190, 131, 1);
 	background-position: -100% 100%;
+}
+.large.ui.buttons > .ui.button:hover {
+  box-shadow: 0 14px 13px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
 }
 </style>

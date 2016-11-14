@@ -12,7 +12,7 @@
       </div>
     <div class="container">
       <div v-show="!admin" class="ui input email">
-      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()"> 
+      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()">
       </div>
         <span class="error" v-show="errorEmail">* invalid email</span>
     </div>
@@ -55,12 +55,12 @@
       <a href="#" v-on:click.prevent="signInWithProvider('github')"><i class="fa fa-github-square" aria-hidden="true" style="font-size:48px"></i></a>
     </div>
   </form>
-  
+
 </template>
 <script>
-import AppTitle from './components/AppTitle'
-import Rating from './components/Rating'
-export default 
+import AppTitle from './AppTitle'
+import Rating from './Rating'
+export default
 {
 
     data () {
@@ -98,7 +98,7 @@ export default
           this.errorEmail = false;
           // $(".ui.input.email").removeClass(" error");
           return true;
-        } 
+        }
       },
       passwordLength()
       {
@@ -122,12 +122,12 @@ export default
           // $(".ui.input.confirmPassword").addClass(" error");
           return false;
         }
-        else 
+        else
         {
           this.errorConfirmPassword = false;
           // $(".ui.input.confirmPassword").removeClass(" error");
           return true;
-        }  
+        }
       },
       isUsernameInput()
       {
@@ -137,12 +137,12 @@ export default
           // $(".ui.input.username").addClass(" error");
           return false;
         }
-        else 
+        else
         {
           this.errorUsername = false;
           // $(".ui.input.username").removeClass(" error");
           return true;
-        } 
+        }
       },
       //function
       swapAdminClick()
@@ -179,13 +179,13 @@ export default
       signInWithProvider(provider){
 
       }
-      
+
     },
     components:{
       AppTitle,Rating,
     }
 }
-  
+
 </script>
 
 <style>
@@ -233,7 +233,7 @@ export default
   }
   .auth-form hr{
     margin-top: 20px;
- 
+
   }
   .auth-form .social-providers{
     text-align: center;
@@ -246,7 +246,7 @@ export default
   }
   .fa-facebook-square {
 	  color:#3b5998
-  } 
+  }
   .fa-twitter-square {
 	  color:#00aced
   }
