@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Auth from 'src/Auth'
+import Auth from 'src/components/Auth'
 
 describe('Auth.vue', () => {
   it('should validae email address', ()=>{
@@ -11,7 +11,7 @@ describe('Auth.vue', () => {
       vm.email = "abc@gmail.com";
       expect(vm.isEmail()).equal(true);
   });
-  
+
   it('should reject invalid email address', ()=>{
       const vm = new Vue(Auth).$mount();
       vm.email = ";123@gma";
@@ -27,9 +27,9 @@ describe('Auth.vue', () => {
       vm.password = "1234567";
       expect(vm.passwordLength()).equal(true);
       vm.password = "12345";
-      expect(vm.passwordLength()).equal(false); 
+      expect(vm.passwordLength()).equal(false);
       vm.password = "";
-      expect(vm.passwordLength()).equal(false);      
+      expect(vm.passwordLength()).equal(false);
   });
 
   it('should check password matching correctly', ()=>{
@@ -39,7 +39,7 @@ describe('Auth.vue', () => {
       expect(vm.isPasswordMatchWithConfirmPassword()).equal(true);
       vm.password = "abcde";
       vm.confirmPassword = "abcd";
-      expect(vm.isPasswordMatchWithConfirmPassword()).equal(false);      
+      expect(vm.isPasswordMatchWithConfirmPassword()).equal(false);
   });
 
   it('username not empty', ()=>{
@@ -47,14 +47,14 @@ describe('Auth.vue', () => {
       vm.username = "clement";
       expect(vm.isUsernameInput()).equal(true);
       vm.username = "";
-      expect(vm.isUsernameInput()).equal(false);   
+      expect(vm.isUsernameInput()).equal(false);
       vm.username = "N";
-      expect(vm.isUsernameInput()).equal(true);    
+      expect(vm.isUsernameInput()).equal(true);
   });
 
   it('should check the title', ()=>{
       const vm = new Vue(Auth).$mount();
-      expect(vm.title).equal('Sign in');   
+      expect(vm.title).equal('Sign in');
   });
 
 });

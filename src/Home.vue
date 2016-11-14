@@ -1,6 +1,7 @@
 <template>
   <div class="ui centered grid">
       <fork-me></fork-me>
+      <BasicUserStatus></basicuserstatus>
       <div class="row event-page">
         <app-title></app-title>
       </div>
@@ -39,6 +40,7 @@ import EventAction from './components/EventAction'
 import EventList from './components/EventList'
 import Countdown from './components/Countdown'
 import ForkMe from './components/ForkMe'
+
 export default {
   data() {
     return {
