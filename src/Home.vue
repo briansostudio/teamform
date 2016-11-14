@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="ui centered grid">
-    <ForkMe></ForkMe>
+  <div class="ui centered grid">
+      <fork-me></fork-me>
       <div class="row event-page">
-        <AppTitle></AppTitle>
+        <app-title></app-title>
       </div>
       <Countdown date="16 June 2016 03:02:01 GMT"></countdown>
       <div class="row">
