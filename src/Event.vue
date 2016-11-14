@@ -1,6 +1,6 @@
 <template>
 	<div class="ui centered grid">
-		<BasicUserStatus></basicuserstatus>
+		<BasicUserStatus></BasicUserStatus>
 		<div class="row event-page">
 			<h1>Event Name: {{event.name}}</h1>
 		</div>
@@ -64,7 +64,7 @@
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import swal from 'sweetalert2'
-import basicuserstatus from './components/BasicUserStatus'
+import BasicUserStatus from './components/BasicUserStatus'
 
 export default {
 	created: function(){
