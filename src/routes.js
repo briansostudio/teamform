@@ -1,10 +1,10 @@
 import Home from './Home'
 import Event from './Event'
-import AdminPage from './AdminPage'
-import Manage from './Manage'
-import MemberList from './MemberList'
-import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue'
-import Auth from './Auth'
+import EventAdmin from './EventAdmin'
+import TeamManagement from './TeamManagement'
+import Team from './Team'
+import User from './User';
+import Login from './Login'
 
 const routes = [
   {
@@ -13,35 +13,35 @@ const routes = [
     component: Home
   },
   {
-    path: '/event/:id',
+    path: '/event/:eventId',
     name: 'event',
     component: Event
   },
   {
-    path: '/admin',
-    name: 'admin',
-    component: AdminPage
+    path: '/event/:eventId/admin',
+    name: 'event admin',
+    component: EventAdmin
   },
   {
-    path: '/manage/:teamid',
-    name: 'manage',
-    component: Manage
+    path: '/event/:eventId/team/:teamId/',
+    name: 'team',
+    component: Team
   },
   {
-    path: '/schedule/',
-    name: 'schedule',
-    component: Schedule
+    path: '/event/:eventId/team/:teamId/manage',
+    name: 'team management',
+    component: TeamManagement
   },
   {
-	path: '/memberList/:teamid',
-	name: 'memberList',
-	component: MemberList
-　},
+    path: '/event/:eventId/user/:userId/',
+    name: 'user',
+    component: User
+  },
   {
-    path: '/login',
+    path: '/event/:eventId/login',
     name: 'auth',
-    component: Auth
+    component: Login
   }
-]
+];
 
 export default routes;
