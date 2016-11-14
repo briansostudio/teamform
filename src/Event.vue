@@ -37,14 +37,14 @@
 		<div class="row">
 			<div class="ui large action input">
 				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
-				<button class="ui teal left labeled icon button" @click="addTeam">
+				<button class="ui teal left labeled icon button">
 					<i class="add user icon"></i>
 					Add Team
 				</button>
 			</div>
 		</div>
 		<div class="row">
-			<TeamList v-if="event.hasOwnProperty('teams')" v-bind:teams="event.teams"></TeamList>
+			<TeamList v-if="event.hasOwnProperty('teams')"></TeamList>
 			<div v-else class="ui piled segment">
 				<h2 class="ui icon header">
 					<i class="hide icon"></i>
@@ -56,6 +56,8 @@
 				</h2>
 			</div>
 		</div>
+		<EventOverview :events = "event">
+		</EventOverview>
 		<div class = "footer"></div>
   </div>
 </template>
@@ -63,23 +65,26 @@
 <script>
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
+import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
 import BasicUserStatus from './components/BasicUserStatus'
 
 export default {
-	created: function(){
-		this.fetchEvent()
-		},
 	data(){
 		return {
 			event: {
-				name: '',
+				name: 'Sing K',
 				size: {
 					max: 10,
 					min: 1
-				}
-			},
-			teamName: ''
+				},
+				description: 'Toxic boys join Together :)',
+				teamName: [
+					{name: 'BrainSoStudio', numMember: '6'},
+					{name: 'Ka D orange skin team',  numMember: '7'},
+					{name: 'Tim Team',  numMember: '10'}
+				]
+			}
 		}
 	},
 	methods:{
@@ -115,7 +120,7 @@ export default {
 		}
 	},
 	components:{
-		TeamSizeControl, TeamList, BasicUserStatus
+		TeamSizeControl, TeamList, EventOverview, BasicUserStatus
 	}
 }
 </script>
