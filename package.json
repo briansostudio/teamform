@@ -13,6 +13,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "babel-plugin-component": "^0.6.0",
     "babel-polyfill": "^6.16.0",
     "bcrypt": "^0.8.7",
     "firebase": "^3.4.1",
