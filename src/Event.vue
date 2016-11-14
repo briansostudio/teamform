@@ -1,5 +1,6 @@
 <template>
 	<div class="ui centered grid">
+		<BasicUserStatus></BasicUserStatus>
 		<div class="row event-page">
 			<h1>Event Name: {{event.name}}</h1>
 		</div>
@@ -63,6 +64,7 @@
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import swal from 'sweetalert2'
+import BasicUserStatus from './components/BasicUserStatus'
 
 export default {
 	created: function(){
@@ -82,11 +84,11 @@ export default {
 	},
 	methods:{
 		fetchEvent: function(){
-			let _this = this
-			let ref = this.$root.$firebaseRefs.root
-			ref.on('value', (snapshot) => {
-				_this.event = snapshot.child(_this.$route.params.id).val()
-			})
+//			let _this = this
+//			let ref = this.$root.$firebaseRefs.root
+//			ref.on('value', (snapshot) => {
+//				_this.event = snapshot.child(_this.$route.params.id).val()
+//			})
 		},
 		updateEvent: function(){
 			let update = {}
@@ -113,7 +115,7 @@ export default {
 		}
 	},
 	components:{
-		TeamSizeControl, TeamList
+		TeamSizeControl, TeamList, BasicUserStatus
 	}
 }
 </script>
