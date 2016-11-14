@@ -3,9 +3,8 @@ import Event from './Event'
 import AdminPage from './AdminPage'
 import Manage from './Manage'
 import MemberList from './MemberList'
-import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue';
+import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue'
 import Auth from './Auth'
-
 
 const routes = [
   {

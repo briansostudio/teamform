@@ -1,5 +1,5 @@
 <template>
-    <div class="abc">
+    <div class="page">
     <div class="ui piled segment">
         <form class="ui form">
 			<h3 class="ui dividing header">Event Details Modification</h3>
@@ -76,8 +76,7 @@ export default {
         text-align: left;
     }
 
-    .abc{
-        
+    .page{
+        padding:0%
     }
-
 </style>
