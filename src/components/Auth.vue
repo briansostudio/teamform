@@ -168,10 +168,10 @@ export default
         this.signUpStatue = false;
       },
       onSubmitButtonClick(){
-        return this.signUpStatue ? signUpWithPassword() : signInWithPassword();
+        return this.signUpStatue ? this.signUpWithPassword() : signInWithPassword();
       },
       signUpWithPassword(){
-
+        this.$store.dispatch('register',{name:this.username, email:this.email, password:this.password});
       },
       // signInWithPassword(){
 
