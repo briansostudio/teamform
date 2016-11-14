@@ -6,7 +6,6 @@ import Team from './Team'
 import User from './User';
 import Login from './Login'
 
-
 const routes = [
   {
     path: '/',

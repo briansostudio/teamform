@@ -1,5 +1,5 @@
 <template>
-    <div class="abc">
+    <div class="page">
     <div class="ui piled segment">
         <form class="ui form">
 			<h3 class="ui dividing header">Event Details Modification</h3>
@@ -76,15 +76,15 @@ export default {
         text-align: left;
     }
 
-    .abc{
-        
+    .page{
+        padding:0%
     }
 
     .ui.teal.button {
         box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
     }
-    
-    .ui.teal.button:hover {
-    box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
+
+    .ui.teal.button:hover {  
+        box-shadow: 0 14px 26px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
     }
 </style>
