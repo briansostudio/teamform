@@ -5,6 +5,7 @@ import Manage from './Manage'
 import MemberList from './MemberList'
 import Schedule from './components/WeeklySchedule/WeeklyScheduleTest.vue';
 import Auth from './Auth'
+import Team from './Team'
 
 
 const routes = [
@@ -14,7 +15,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/event/:id',
+    path: '/event',
     name: 'event',
     component: Event
   },
@@ -42,6 +43,11 @@ const routes = [
     path: '/login',
     name: 'auth',
     component: Auth
+  },
+  {
+    path: '/team',
+    name: 'team',
+    component: Team
   }
 ]
 
