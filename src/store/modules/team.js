@@ -3,7 +3,7 @@ import api from '../../api'
 
 // initial team state
 const state = {
-	id: { parent: '', self: '' },
+	id: '',
 	name: '',
 	description: '',
 	members: [],
@@ -38,7 +38,7 @@ const mutations = {
 }
 
 const actions = {
-	addJoinRequest({commit, state}, payload){
+	addJoinRequest({commit, state, rootState}, payload){
 		const requests = payload
 		commit(types.ADD_JOIN_REQUEST, { requests })
 	},
