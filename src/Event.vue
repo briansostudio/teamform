@@ -91,8 +91,8 @@ export default {
 					description: 'so happy together~~'
 				},
 				'101' : {
-					name: 'I love Grace',
-					description: 'Brian So loves Grace'
+					name: 'Android Studio',
+					description: 'This is the team for Android lovers!!'
 				}
 			}
 		}
