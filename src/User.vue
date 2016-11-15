@@ -1,21 +1,46 @@
 <template>
     <div class="User">
-      <WeeklyScheduleTest></WeeklyScheduleTest>
+      <UserStatus :user="viewingUser"></UserStatus>
+      <WeeklySchedule :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
     </div>
 </template>
 
 <script>
-  import WeeklyScheduleTest from './components/WeeklySchedule/WeeklyScheduleTest.vue'
+  import UserStatus from './components/UserStatus.vue'
+  import WeeklySchedule from './components/WeeklySchedule/WeeklySchedule.vue'
+  import { mapGetters } from 'vuex'
+
+
   export default {
       data(){
-          return {}
+          return {
+            userId:null
+          }
       },
-      computed: {},
+      mounted(){
+        this.userId = this.$route.params.userId;
+        this.$store.dispatch("observeUser",{userId:this.userId});
+      },
+      beforeDestroy(){
+        this.$store.dispatch("stopObserveUser",{userId:this.userId});
+      },
+      computed: {
+        scheduleUsers(){
+          let viewingUser = this.viewingUser;
+          return {
+            [viewingUser.id]:viewingUser
+          }
+        },
+        ...mapGetters([
+          "viewingUser",
+          "isViewingCurrentUser"
+        ])
+      },
       methods: {
-        
+
       },
       props: {},
-      components: {WeeklyScheduleTest}
+      components: {UserStatus, WeeklySchedule}
   }
 </script>
 

@@ -1,7 +1,8 @@
+import {sleepingSchedule} from '../../../lib/schedule/schedule';
+
 export default {
   mockMember(){
     return {
-      observer: 0,
       id: '',
       name: 'loading',
       description: 'loading',
@@ -11,9 +12,7 @@ export default {
       team: {
 
       },
-      schedule: {
-        intervals:{}
-      }
+      schedule: sleepingSchedule()
     }
   }
 }

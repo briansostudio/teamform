@@ -27,6 +27,7 @@ export default {
         message: "You have already registered in this event"
       }
     }
+    userData.id = user.uid;
     await this.getFireBaseRef(user.uid, eventId).set(userData);
     return user.uid;
   },
@@ -53,7 +54,7 @@ export default {
     })
   },
   getAuthUserId(){
-    return auth.currentUser.uid;
+    return auth.currentUser ? auth.currentUser.uid : null;
   },
   getFireBaseRef(userId, eventId){
     return db.ref(`events/${eventId}/members/${userId}`);
