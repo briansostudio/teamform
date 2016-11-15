@@ -1,7 +1,7 @@
 <template>
     <el-row>
       <div>
-        <el-slider v-model="value6" @change="PorkLegoGuy" show-input>
+        <el-slider v-model="value6" @change="updateSkill1" show-input>
         </el-slider>
       </div>
     </el-row>
@@ -16,10 +16,7 @@ export default ({
       }
     },
   methods: {
-      PorkLegoGuy(value)
-        {
-        console.log(value)
-
+      updateSkill1(value) {
         app.radarData = {
      		labels: ["Web", "Android", "iOS", "UI Design", "Server", "Custom 1", "Custom 2"],
      		datasets: [{
