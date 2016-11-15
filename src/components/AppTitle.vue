@@ -1,16 +1,16 @@
 <template>
 	<h1 class="ui center aligned icon header">
 	  <i class="circular users icon"></i>
-	  {{title}}
+	  {{ title }}
 	</h1>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  data () {
-    return {
-      title: 'Teamform'
-    }
+  computed: {
+    ...mapGetters({title :'applicationName'})
   }
 }
 </script>
