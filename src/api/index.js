@@ -10,7 +10,7 @@ export default {
 			cb(null, error)
 		})
 	},
-	getAllEvents:function(cb){
+	getAllEvents:function(){
 		db.ref('events').on('value', (snapshot) => {
 			cb(snapshot.val(), null)
 		}, (error) => {
@@ -19,13 +19,16 @@ export default {
 	},
 	createEvent:function(name){
 		let key = db.ref('reference').push(name).key;
-		return db.ref('events/'+key).set({
+		return db.ref(`events/${key}`).set({
 			name: name,
 			size: {
 				max: 10,
 				min: 1
 			}
 		}).then(()=>key);
+	},
+	updateEvent:function(id, properties){
+		db.ref(`event/${id}`).update(properties)
 	},
 	updateTeam:function(event, update, cb){
 		db.ref(event+'/teams').update(update)
@@ -46,6 +49,6 @@ export default {
 		}
 		let snapshot = await db.ref('/events').once('value');
 		return !! find(snapshot.val(), record=>record === name);
-	}
+	},
 }
 
