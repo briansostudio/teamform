@@ -3,7 +3,7 @@ import api from '../../api'
 
 // initial team state
 const state = {
-	id: '',
+	id: { parent: '', self: '' },
 	name: '',
 	description: '',
 	members: [],
@@ -14,7 +14,10 @@ const state = {
 }
 
 const getters = {
-
+	teamName: state => state.name,
+	teamDescription: state => state.description,
+	teamTags: state => state.tags,
+	teamSize: state => state.size
 }
 
 // mutations for individual team
@@ -23,13 +26,10 @@ const mutations = {
 	[types.ADD_TO_TEAM] (state, { request }){
 		
 	},
-	[types.INCREASE_TEAMSIZE] (state, { size }){
+	[types.MODIFY_TEAMSIZE] (state, { size }){
 		state.size = size
 	},
-	[types.DECREASE_TEAMSIZE] (state, { size }){
-		state.size = size
-	},
-	[types.ADD_JOIN_REQUEST] (state, {requests}){
+	[types.ADD_JOIN_REQUEST] (state, { requests }){
 		for(req in requests){
 			state.join_request.push(req)
 		}
@@ -42,13 +42,9 @@ const actions = {
 		const requests = payload
 		commit(types.ADD_JOIN_REQUEST, { requests })
 	},
-	increaseSize({commit, state}, payload){
+	modifyTeamSize({commit, state}, payload){
 		const size = payload
-		commit(types.INCREASE_TEAMSIZE, { size })
-	},
-	decreaseSize({commit, state}, payload){
-		const size = payload
-		commit(types.DECREASE_TEAMSIZE, { size })
+		commit(types.MODIFY_TEAMSIZE, { size })
 	},
 	approveJoinRequest({commit, state}, payload){
 		const request = payload
