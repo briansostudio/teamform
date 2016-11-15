@@ -1,40 +1,33 @@
 import {fb, db, auth} from './firebase'
 
 export default {
-  async register({eventId, name, email, password}){
+  async register(eventId, {email, password}, userData){
     let user;
     try{
-      user = await auth.createUserWithEmailAndPassword(email, password);
+      user = await auth.signInWithEmailAndPassword(email, password);
     }catch(err){
-      if(err.code !== "auth/email-already-in-use"){
-        throw err;
-      }
-      try{
-        user = await auth.signInWithEmailAndPassword(email, password);
-      }catch(err){
-        if(err.code === "auth/wrong-password"){
-          throw {
-            code: "app/email-already-in-use",
-            message: "This email already registered in our app"
-          };
-        }
-        throw err;
-      }
+      if(err.code === "auth/user-not-found"){
+        //create new user
+        user = await auth.createUserWithEmailAndPassword(email, password);
 
-      let exist = await this.getFireBaseRef(user.uid, eventId).once("value");
-      console.log(exist.val());
-      if(exist.val() !== null){
+      }else if(err.code === "auth/wrong-password"){
         throw {
-          code: "app/user-already-register",
-          message: "You have already registered in this event"
-        }
+          code: "app/email-already-in-use",
+          message: "This email already registered in our app"
+        };
+      }else{
+        throw err;
       }
     }
-
-    let data = {
-      name: name
-    };
-    await this.getFireBaseRef(user.uid, eventId).set(data);
+    let exist = await this.getFireBaseRef(user.uid, eventId).once("value");
+    console.log(exist.val());
+    if(exist.val() !== null){
+      throw {
+        code: "app/user-already-register",
+        message: "You have already registered in this event"
+      }
+    }
+    await this.getFireBaseRef(user.uid, eventId).set(userData);
     return user.uid;
   },
   login:function(user, cb){

@@ -10,15 +10,20 @@ export default {
   register({state, commit, rootState, dispatch}, {name, email, password}){
 
     let eventId = util.eventId(rootState);
-    api.register({eventId, name, email, password}).then((userId)=>{
+    let user = lib.mockMember();
+    user.name = name;
+    user.description = "no description yet";
+
+
+    api.register(eventId, {email, password}, user).then((userId)=>{
       dispatch("observeUser", {userId});
-      
+
       router.push(`/event/${eventId}/user/${userId}/`)
     },(err)=>{
       if(err.code && err.message){
-        commit(types.LOGIN_ERROR,{message: err.message});
+        commit(types.LOGIN_ERROR,err);
       }else{
-        commit(types.LOGIN_ERROR,{message:"System error: " + err.message});
+        commit(types.LOGIN_ERROR,err);
       }
     })
   },
@@ -33,7 +38,7 @@ export default {
       let ref = api.getFireBaseRef(userId, eventId);
 
       let value = ref.on("value",(snapshot)=>{
-        commit(types.UPDATED,{snapshot})
+        commit(types.UPDATED,{userId, user:snapshot.val()})
       });
 
       observers[userId] = {
@@ -50,9 +55,9 @@ export default {
       ref.off("value", value)
     }
   },
-  beginReceiveUpdateForCurrentUser(context){
+  observeCurrentUser({dispatch}){
     let userId = api.getAuthUserId();
-    this.beginReceiveUpdateForUser(context, {userId})
+    dispatch("observeUser", {userId});
   },
   getUser({state,rootState}, payload){
 
