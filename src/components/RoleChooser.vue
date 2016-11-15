@@ -29,6 +29,6 @@ export default {
 			},
             role: '1'
         }
-    }
+    },
 }
 </script>
