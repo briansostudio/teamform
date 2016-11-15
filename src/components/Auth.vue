@@ -1,78 +1,56 @@
 <template>
-  <form class="auth-form" v-on:submit.prevent="onSubmitButtonClick()">
+  <div>
   <!--title of the auth form-->
-
-    <!--user input form-->
-    <div class="container">
-      <div v-show="!admin" class="ui input email">
-      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()">
+    <div v-show="!signUpStatue">
+      <div>
+        <button class="ui google plus labeled icon button">
+        <i class="google plus icon"></i>
+          Sign in with Google
+        </button>
       </div>
-      <div class="ui warning message" v-show="errorEmail">
-          <div class="header">
-            * invalid email!
-          </div>
-            Please enter a valid email
+      <br>
+      <div>
+        <button class="ui github labeled icon button">
+        <i class="github icon"></i>
+          Sign in with Github
+        </button>
       </div>
-    </div>
-    <div class="container">
-      <div class="ui input password">
-      	<input class="password-prompt" type="password" name="password" id="password" placeholder="Password" required v-model.trim="password" v-on:input="passwordLength()">
+        <div v-show="!admin" class="ui horizontal divider">
+        Or
       </div>
-          <div class="ui warning message" v-show="errorPasswordMin">
-            <div class="header">
-              * Password is too short!
-            </div>
-              Please enter a longer email
-          </div>
-        <span class="error" v-show="errorPasswordMin"></span>
-    </div>
-    <div v-show="signUpStatue && !admin" class="container">
-      <div class="ui input confirmPassword">
-      	<input class="confirmpassword-prompt" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" v-model.trim="confirmPassword" v-on:input="isPasswordMatchWithConfirmPassword()">
-      </div>
-        <div class="ui warning message" v-show="errorConfirmPassword">
-          <div class="header">
-            * Not match with password!
-          </div>
-              Password and confirm password must be the same
-        </div>
-    </div>
-    <div v-show="signUpStatue && !admin" class="container">
-      <div class="ui input username">
-      	<input class="username-prompt" type="text" name="username" id="username" placeholder="Username" v-model.trim="username" v-on:input="isUsernameInput()">
-      </div>
-        <div class="ui warning message" v-show="errorUsername">
-          <div class="header">
-            * Username cannot be empty!
-          </div>
-            Please enter back the username
-        </div>
     </div>
 
-    <!--login button-->
-    <div v-show="!signUpStatue" class="clearfix btn-group">
-      <button class="ui positive button" type="submit">Sign in</button>
-      <button class="ui positive button" type="button" v-on:click="onSignUpButtonClick()">Sign up</button>
+    <div v-show="!signUpStatue">
+      <span>Sign in using username and password</span>
     </div>
-    <div v-show="signUpStatue">
-      <button type="submit" class="ui positive button signup-submit">Sign up</button>
-      <button type="submit" class="ui positive button signup-submit" v-on:click="onBackButtonClick()">Back</button>
-    </div>
-    <div v-show="!admin" class="ui horizontal divider">
-    Or
-    </div>
-    <div v-show="!admin" class="social-providers">
-      <a href="#" v-on:click.prevent="signInWithProvider('facebook')"><i class="fa fa-facebook-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('twitter')"><i class="fa fa-twitter-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('google')"><i class="fa fa-google-plus-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('github')"><i class="fa fa-github-square" aria-hidden="true" style="font-size:48px"></i></a>
-    </div>
-  </form>
+
+    <br>
+    <el-row type="flex" class="row-bg" justify="space-between">
+      <el-col :span="16" :offset="3">
+        <el-form class="" ref="form" :model="form" label-width="90px">
+          <el-form-item label="Username">
+            <el-input ></el-input>
+          </el-form-item>
+
+          <el-form-item label="Password">
+            <el-input ></el-input>
+          </el-form-item>
+
+          <el-form-item label="Confirm password">
+            <el-input ></el-input>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+
+    <span v-show="!signUpStatue">Not a member?
+      <el-button size="mini" v-on:click="onSignUpButtonClick()">Register</el-button>
+    </span>
+  </div>
 
 </template>
 <script>
 import AppTitle from './AppTitle'
-import Rating from './Rating'
 export default
 {
 
@@ -195,7 +173,7 @@ export default
 
     },
     components:{
-      AppTitle,Rating,
+      AppTitle,
     },
     props:['admin']
 }
@@ -203,35 +181,6 @@ export default
 </script>
 
 <style>
-  .auth-form{
-    max-width: 70%;
-    margin: 10vh auto 15px;
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0 0px 0px #ccc;
-  }
-  .container
-  {
-	  margin: auto;
-    width: 100%;
-  }
-
-  .ui.teal.tag.label
-  {
-    margin: 10px;
-    font-size:17px
-  }
-  .ui.red.tag.label
-  {
-    margin: 10px;
-    font-size:16px
-  }
-  .auth-form h1{
-    font-weight: 500;
-  }
-  .auth-form > div {
-    margin-top: 15px;
-  }
   button.ui.positive.button {
     font-size: 18px;
     background: #28d6ac;

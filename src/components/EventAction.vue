@@ -5,7 +5,7 @@
 		</div>
 		<div>
 			<el-dialog title="Enter selected event page" v-model="dialogVisible" size="small">
-				<el-steps :space="200" :active="1">
+				<el-steps :space="200" :active="1" >
 					<el-step title="Step One" description="Choose Your Identity"></el-step>
 					<el-step title="Step Two" description="Authenticate"></el-step>
 					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
@@ -14,7 +14,7 @@
 				<Auth v-if="test" :admin="role"></Auth>
 				<role-chooser v-else></role-chooser>
 				<span slot="footer" class="dialog-footer">
-					<el-button type="primary" @click="enterAuthPage">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
+					<el-button type="primary" @click.native="next">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
 					<el-button @click.native="dialogVisible = false">Close</el-button>
 				</span>
 			</el-dialog>
@@ -31,7 +31,8 @@ export default {
 		return {
 			event: {},
 			dialogVisible : false,
-			test: false
+			test: false,
+			active:0
 		}
 	},
 	computed:{
@@ -72,10 +73,10 @@ export default {
 				return true
 			}
 		},
-		enterAuthPage: function(){
+		next: function(){
 			this.test = true;
-			this.active = 2;
-
+			console.log('next')
+			active++;
 		}
 	},
 	props: ['name', 'isCreate']
