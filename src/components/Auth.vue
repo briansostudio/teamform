@@ -50,10 +50,8 @@
 
 </template>
 <script>
-import AppTitle from './AppTitle'
 export default
 {
-
     data () {
       return {
         email: '',
@@ -62,96 +60,12 @@ export default
         username: '',
         signUpStatue: false,
         // admin:0,
-        errorEmail:false,
-        errorPasswordMin:false,
-        errorConfirmPassword:false,
-        errorUsername: false
       }
     },
     computed: {
-      title(){
-        return this.signUpStatue ? 'Sign up' : 'Sign in';
-      }
+
     },
     methods: {
-      //checking
-      isEmail()
-      {
-        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-        if (this.email == '' || !re.test(this.email))
-        {
-          this.errorEmail = true;
-          // $(".ui.input.email").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorEmail = false;
-          // $(".ui.input.email").removeClass(" error");
-          return true;
-        }
-      },
-      passwordLength()
-      {
-        if(this.password.length<6)
-        {
-          this.errorPasswordMin = true;
-          // $(".ui.input.password").addClass(" error");
-          return false;
-        }
-        else{
-          this.errorPasswordMin = false;
-          // $(".ui.input.password").removeClass(" error");
-          return true;
-        }
-      },
-      isPasswordMatchWithConfirmPassword()
-      {
-        if (this.password == '' || this.password != this.confirmPassword)
-        {
-          this.errorConfirmPassword = true;
-          // $(".ui.input.confirmPassword").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorConfirmPassword = false;
-          // $(".ui.input.confirmPassword").removeClass(" error");
-          return true;
-        }
-      },
-      isUsernameInput()
-      {
-        if (this.username == '')
-        {
-          this.errorUsername = true;
-          // $(".ui.input.username").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorUsername = false;
-          // $(".ui.input.username").removeClass(" error");
-          return true;
-        }
-      },
-      //function
-      swapAdminClick()
-      {
-        this.admin = true;
-        this.errorEmail = false;
-        this.errorPasswordMin = false;
-        // $(".ui.input.email").removeClass(" error");
-        // $(".ui.input.password").removeClass(" error");
-      },
-      swapUserClick()
-      {
-        this.admin = false;
-        this.errorEmail = false;
-        this.errorPasswordMin = false;
-        // $(".ui.input.email").removeClass(" error");
-        // $(".ui.input.password").removeClass(" error");
-      },
       onSignUpButtonClick(){
         this.signUpStatue = true;
       },
@@ -164,70 +78,12 @@ export default
       signUpWithPassword(){
 
       },
-      // signInWithPassword(){
-
-      // },
       signInWithProvider(provider){
 
       }
 
     },
-    components:{
-      AppTitle,
-    },
     props:['admin']
 }
 
 </script>
-
-<style>
-  button.ui.positive.button {
-    font-size: 18px;
-    background: #28d6ac;
-    color: #fff;
-    width: 45%;
-    margin-left: 10px;
-  }
-  .ui.input
-  {
-  	 width: 100%;
-  }
-  .auth-form hr{
-    margin-top: 20px;
-
-  }
-  .auth-form .social-providers{
-    text-align: center;
-  }
-
-  .auth-form .social-providers a{
-    color: #41b883;
-    font-size: 36px;
-    padding: 4px;
-  }
-  .fa-facebook-square {
-	  color:#3b5998
-  }
-  .fa-twitter-square {
-	  color:#00aced
-  }
-  .fa-google-plus-square {
-	  color:#dd4b39
-  }
-  .fa-github-square {
-	  color:#000000
-  }
-
-  .fa{
-    transition: all 0.2s ease-in-out;
-  }
-  .fa:hover {
-    opacity: .7;
-  }
-  .error
-  {
-    margin-bottom: 5px;
-    font-size:150%;
-    color:red;
-  }
-</style>

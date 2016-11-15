@@ -1,21 +1,12 @@
 <template>
-	<div class="ui labeled button" tabindex="0">
-		<div class="ui button">
-			{{ type == 'max' ? 'Maximum' : 'Minimum'}} Team Size
-		</div>
-		<span class="ui basic label">
-			{{size}}
-		</span>
+	<div>
+		{{ type == 'max' ? 'Maximum' : 'Minimum'}} Team Size
+		<el-input-number :value="size" :min="1"></el-input-number>
 	</div>
 </template>
 
 <script>
 export default {
-	watch: {
-		size: function(value){
-			this.$emit('valueChanged')
-		}
-	},
 	props: ['type', 'size']
 }
 </script>

@@ -4,7 +4,7 @@
 			<button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
 		</div>
 		<div>
-			<el-dialog title="Enter selected event page" v-model="dialogVisible" size="small">
+			<el-dialog title="Enter selected event page" v-model="isLoginModalPresenting" size="small">
 				<el-steps :space="200" :active="1" >
 					<el-step title="Step One" description="Choose Your Identity"></el-step>
 					<el-step title="Step Two" description="Authenticate"></el-step>
@@ -15,7 +15,7 @@
 				<role-chooser v-else></role-chooser>
 				<span slot="footer" class="dialog-footer">
 					<el-button type="primary" @click.native="next">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
-					<el-button @click.native="dialogVisible = false">Close</el-button>
+					<el-button @click.native="toggleLoginModal">Close</el-button>
 				</span>
 			</el-dialog>
 		</div>
@@ -25,12 +25,12 @@
 <script>
 import RoleChooser from './RoleChooser'
 import Auth from './Auth'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
 	data () {
 		return {
 			event: {},
-			dialogVisible : false,
 			test: false,
 			active:0
 		}
@@ -38,30 +38,26 @@ export default {
 	computed:{
 		buttonTitle(){
 			return this.isCreate ? 'Create Event' : 'Discover Your Event'
-		}
+		},
+		...mapGetters(['isLoginModalPresenting'])
 	},
 	components: {
 		RoleChooser,Auth
 	},
 	methods: {
+		...mapActions(['toggleLoginModal']),
 		multiplexUserOption: function(){
 			if(this.isCreate){
 				this.createEvent()
 			}
 			else
 			{
-				this.loadEvent()
+				this.$store.dispatch('toggleLoginModal')
 			}
 		},
 		createEvent: function(){
 			if (this.isInputValid()){
 				console.log('test')
-			}
-		},
-		loadEvent: function(){
-			if (this.isInputValid()) {
-				this.dialogVisible = true
-				console.log('test2')
 			}
 		},
 		isInputValid: function(){
