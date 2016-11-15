@@ -11,9 +11,10 @@
 					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
 				</el-steps>
 				<br>
-				<role-chooser></role-chooser>
+				<Auth v-if="test" :admin="role"></Auth>
+				<role-chooser v-else></role-chooser>
 				<span slot="footer" class="dialog-footer">
-					<el-button type="primary">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
+					<el-button type="primary" @click="enterAuthPage">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
 					<el-button @click.native="dialogVisible = false">Close</el-button>
 				</span>
 			</el-dialog>
@@ -23,13 +24,14 @@
 
 <script>
 import RoleChooser from './RoleChooser'
+import Auth from './Auth'
 
 export default {
 	data () {
 		return {
 			event: {},
 			dialogVisible : false,
-			test: true
+			test: false
 		}
 	},
 	computed:{
@@ -38,7 +40,7 @@ export default {
 		}
 	},
 	components: {
-		RoleChooser
+		RoleChooser,Auth
 	},
 	methods: {
 		multiplexUserOption: function(){
@@ -69,6 +71,11 @@ export default {
 			else{
 				return true
 			}
+		},
+		enterAuthPage: function(){
+			this.test = true;
+			this.active = 2;
+
 		}
 	},
 	props: ['name', 'isCreate']

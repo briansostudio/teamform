@@ -1,17 +1,7 @@
 <template>
   <form class="auth-form" v-on:submit.prevent="onSubmitButtonClick()">
   <!--title of the auth form-->
-    <div v-show="!admin">
-      <button type="submit" class="ui teal tag label user" v-on:click="swapAdminClick()">User</button>
-    </div>
-    <div v-show="admin">
-      <button type="submit" class="ui red tag label admin" v-on:click="swapUserClick()">admin</button>
-    </div>
-    <h1>{{title}}</h1>
 
-    <div class="row event-page">
-          <AppTitle></AppTitle>
-    </div>
     <!--user input form-->
     <div class="container">
       <div v-show="!admin" class="ui input email">
@@ -58,10 +48,7 @@
             Please enter back the username
         </div>
     </div>
-    
-    <div v-show="signUpStatue && !admin" class="container">
-      <Rating skillName="Speed" value="3"></Rating>
-    </div>
+
     <!--login button-->
     <div v-show="!signUpStatue" class="clearfix btn-group">
       <button class="ui positive button" type="submit">Sign in</button>
@@ -217,9 +204,7 @@ export default
 
 <style>
   .auth-form{
-    width: 450px;
-    height: 650px;
-    max-width: 100%;
+    max-width: 70%;
     margin: 10vh auto 15px;
     background: #fff;
     border-radius: 2px;
