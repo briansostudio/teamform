@@ -1,17 +1,15 @@
 import * as types from '../mutation-types'
 
 const state = {
-    errors: {
-        validation: [],
-        system: [],
-        misc: []
-    }
+    validation: [],
+    system: [],
+    misc: []
 }
 
 const getters = {
-    validationErrors: state => state.errors.validation,
-    systemErrors: state => state.errors.system,
-    undefinedErrors: state => state.errors.misc
+    validationErrors: state => state.validation,
+    systemErrors: state => state.system,
+    undefinedErrors: state => state.misc
 }
 
 const actions = {
@@ -28,22 +26,22 @@ const actions = {
 
 const mutations = {
     [types.ERRORS_NOTIFY_INVALIDATED](state, { message }){
-        state.errors.validation.push(message)
+        state.validation.push(message)
     },
     [types.ERRORS_NOTIFY_SYSTEM](state, { message }){
-        state.errors.system.push(message)
+        state.system.push(message)
     },
     [types.ERRORS_NOTIFY_UNDEFINED](state, { message }){
-        state.errors.misc.push(message)
+        state.misc.push(message)
     },
     [types.ERRORS_DISMISS_INVALIDATED](state){
-        state.errors.validation.shift()
+        state.validation.shift()
     },
     [types.ERRORS_DISMISS_SYSTEM](state){
-        state.errors.validation.shift()
+        state.validation.shift()
     },
     [types.ERRORS_DISMISS_UNDEFINED](state){
-        state.errors.validation.shift()
+        state.validation.shift()
     }
 
 }
