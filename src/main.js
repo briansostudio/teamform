@@ -18,4 +18,8 @@ sync(store, router)
 const app = new Vue({
   router,
   store
-}).$mount('#app');
+});
+export default app;
+if(typeof describe === "undefined"){
+  app.$mount("#app");
+}

@@ -21,7 +21,7 @@ const getters = {
 
 const mutations = {
 	[types.ADD_TO_TEAM] (state, { request }){
-		
+
 	},
 	[types.INCREASE_TEAMSIZE] (state, { size }){
 		state.size = size
@@ -30,11 +30,11 @@ const mutations = {
 		state.size = size
 	},
 	[types.ADD_JOIN_REQUEST] (state, {requests}){
-		for(req in requests){
+		for(let req in requests){
 			state.join_request.push(req)
 		}
 	}
-	
+
 }
 
 const actions = {
