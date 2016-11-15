@@ -168,14 +168,14 @@ export default
         this.signUpStatue = false;
       },
       onSubmitButtonClick(){
-        return this.signUpStatue ? this.signUpWithPassword() : signInWithPassword();
+        return this.signUpStatue ? this.signUpWithPassword() : this.signInWithPassword();
       },
       signUpWithPassword(){
-        this.$store.dispatch('register',{name:this.username, email:this.email, password:this.password});
+        this.$store.dispatch('member/register',{name:this.username, email:this.email, password:this.password});
       },
-      // signInWithPassword(){
-
-      // },
+      signInWithPassword(){
+        this.$store.dispatch('member/login', {email:this.email, password:this.password});
+      },
       signInWithProvider(provider){
 
       }

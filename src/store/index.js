@@ -10,8 +10,6 @@ import member from './modules/member'
 import errors from './modules/errors'
 import view from './modules/view'
 
-import member from './modules/member';
-
 Vue.use(Vuex);
 
 const state = {

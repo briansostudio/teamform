@@ -19,22 +19,37 @@ export default {
         throw err;
       }
     }
-    let exist = await this.getFireBaseRef(user.uid, eventId).once("value");
-    console.log(exist.val());
+    await this.assertNotRegisteredInEvent(user.uid, eventId);
+
+    //create user;
+    userData.id = user.uid;
+    await this.getFireBaseRef(user.uid, eventId).set(userData);
+    return user.uid;
+  },
+  async login(eventId, {email, password}, userData){
+    let user;
+    user = await auth.signInWithEmailAndPassword(email, password);
+
+    await this.assertRegisteredInEvent(user.uid, eventId);
+    return user.uid;
+  },
+  async assertRegisteredInEvent(userId, eventId){
+    let exist = await this.getFireBaseRef(userId, eventId).once("value");
+    if(exist.val() === null){
+      throw {
+        code: "app/not-registered-in-event",
+        message: "You have not registered in this event"
+      }
+    }
+  },
+  async assertNotRegisteredInEvent(userId, eventId){
+    let exist = await this.getFireBaseRef(userId, eventId).once("value");
     if(exist.val() !== null){
       throw {
         code: "app/user-already-register",
         message: "You have already registered in this event"
       }
     }
-    userData.id = user.uid;
-    await this.getFireBaseRef(user.uid, eventId).set(userData);
-    return user.uid;
-  },
-  login:function(user, cb){
-    auth.signInWithEmailAndPassword(user.email, user.password).then( () => cb() ).catch((error) => {
-      cb(error)
-    })
   },
   socialLogin:function(type, cb){
     let provider
@@ -53,12 +68,6 @@ export default {
       console.log(error)
     })
   },
-  getAuthUserId(){
-    return auth.currentUser ? auth.currentUser.uid : null;
-  },
-  getFireBaseRef(userId, eventId){
-    return db.ref(`events/${eventId}/members/${userId}`);
-  },
   async getMember(userId, eventId){
     let snapshot = await this.getFireBaseRef(userId, eventId).once("value");
     return snapshot.val();
@@ -69,5 +78,9 @@ export default {
       start: interval.start,
       end: interval.end
     });
-  }
+  },
+  //private use, should not call
+  getFireBaseRef(userId, eventId){
+    return db.ref(`events/${eventId}/members/${userId}`);
+  },
 }
