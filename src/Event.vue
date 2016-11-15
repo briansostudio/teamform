@@ -42,7 +42,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<TeamList v-if="event.hasOwnProperty('teams')" v-bind:teams="event.teams"></TeamList>
 			<div v-else class="ui piled segment">
 				<h2 class="ui icon header">
@@ -54,7 +54,8 @@
 					</div>
 				</h2>
 			</div>
-		</div>
+		</div>-->
+		<TeamList v-bind:teams="teams"></TeamList>
 		<div class = "footer"></div>
   </div>
 </template>
@@ -65,9 +66,6 @@ import TeamList from './components/TeamList'
 import swal from 'sweetalert2'
 
 export default {
-	created: function(){
-		this.fetchEvent()
-		},
 	data(){
 		return {
 			event: {
@@ -77,39 +75,16 @@ export default {
 					min: 1
 				}
 			},
-			teamName: ''
-		}
-	},
-	methods:{
-		fetchEvent: function(){
-			let _this = this
-			let ref = this.$root.$firebaseRefs.root
-			ref.on('value', (snapshot) => {
-				_this.event = snapshot.child(_this.$route.params.id).val()
-			})
-		},
-		updateEvent: function(){
-			let update = {}
-			let ref = this.$root.$firebaseRefs.root
-			update[this.$route.params.id] = this.event
-			ref.update(update)
-		},
-		addTeam: function(){
-			let _this = this
-			let ref = this.$root.db.ref(this.$route.params.id+'/teams')
-			ref.push({
-				name: _this.teamName,
-				size: 5,
-				members: null,
-				leader: null
-			})
-			swal(
-				'Added team to event: '+this.event.name,
-				'The following team, '+_this.teamName+' has been added to your event',
-				'success'
-			).then(function(){
-				_this.teamName = ''
-			})
+			teams:{
+				'100' : {
+					name: 'happy together',
+					description: 'so happy together~~'
+				},
+				'101' : {
+					name: 'I love Grace',
+					description: 'Brian So loves Grace'
+				}
+			}
 		}
 	},
 	components:{
