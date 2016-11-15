@@ -67,5 +67,10 @@ export default {
   },
   getUser({state,rootState}, payload){
 
+  },
+  scheduleIntervalCreate({state, rootState, commit}, {interval}){
+    let eventId = util.eventId(rootState);
+    let userId = util.userId(rootState);
+    
   }
 }

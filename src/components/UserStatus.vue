@@ -1,7 +1,8 @@
 <template>
     <div class="UserStatus">
-      {{name}}
-      {{id}}
+      {{user.name}}
+      {{user.description}}
+      {{user.id}}
     </div>
 </template>
 
@@ -11,12 +12,6 @@
             return {}
         },
         computed: {
-          id(){
-            return this.user ? this.user.id : "loading";
-          },
-          name(){
-            return this.user ? this.user.name : "loading";
-          }
         },
         methods: {},
         props: {

@@ -62,5 +62,12 @@ export default {
   async getMember(userId, eventId){
     let snapshot = await this.getFireBaseRef(userId, eventId).once("value");
     return snapshot.val();
+  },
+  async addIntervalToSchedule(eventId, userId, interval){
+    let ref = this.getFireBaseRef(userId, eventId).child("schedule/intervals");
+    await ref.push({
+      start: interval.start,
+      end: interval.end
+    });
   }
 }

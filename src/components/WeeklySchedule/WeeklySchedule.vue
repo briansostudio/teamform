@@ -111,18 +111,11 @@
         var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
         switch(event){
           case "event-created":
-            let id = Math.random();
-            this.$set(this.users[this.currentUserId].schedule.intervals,id,ti);
-            console.log(this.users[this.currentUserId].schedule.intervals[id]);
-            //this.$dispatch("ScheduleIntervalCreate", this.currentUserId, interval);
+            this.$store.dispatch("scheduleIntervalCreate", {interval});
             break;
           case "event-resize":
           case "event-drop":
-            let intervalToDrop = this.users[this.currentUserId].schedule.intervals[interval.interval_id];
-            intervalToDrop.start = ti.start;
-            intervalToDrop.end = ti.end;
-            console.log(this.users[this.currentUserId].schedule.intervals[interval.interval_id]);
-            //this.$dispatch("ScheduleIntervalMove", this.currentUserId, interval.interval_id);
+            this.$store.dispatch("scheduleIntervalMove", {interval});
             break;
         }
         this.selectedIntervalId = interval.interval_id;
