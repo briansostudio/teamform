@@ -12,7 +12,8 @@
       data(){
           return {
             request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}]
-          },
+          }
+        },
       computed: {},
       methods: {},
       props: {},
