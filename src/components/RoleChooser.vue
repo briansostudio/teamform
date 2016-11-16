@@ -1,7 +1,7 @@
 <template>
     <el-row type="flex" class="row-bg" justify="space-around">
         <el-col :span="9">
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card :body-style="{ padding: '0px' }" @click.native="selectRoleForLogin('organizer')">
                 <img :src="assets.organizerIcon" class="image" style="width: 180px; height:auto">
                 <div style="padding: 14px;">
                     <el-radio class="radio" v-model="displayCurrentRoleSelection" label="organizer">Event Organizer</el-radio>
@@ -9,7 +9,7 @@
             </el-card>
         </el-col>
         <el-col :span="9">
-            <el-card :body-style="{ padding: '0px' }">
+            <el-card :body-style="{ padding: '0px' }" @click.native="selectRoleForLogin('participants')">
                 <img :src="assets.userIcon" class="image" style="width: 180px; height:auto">
                 <div style="padding: 14px;">
                     <el-radio class="radio" v-model="displayCurrentRoleSelection" label="participants">Event Participants</el-radio>
@@ -39,3 +39,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.el-card {
+        cursor: pointer;
+    }
+</style>

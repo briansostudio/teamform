@@ -5,16 +5,16 @@
 		</div>
 		<div>
 			<el-dialog title="Enter selected event page" v-model="isLoginModalPresenting" size="small">
-				<el-steps :space="200" :active="1" >
+				<el-steps :space="200" :active="currentLoginStep" >
 					<el-step title="Step One" description="Choose Your Identity"></el-step>
 					<el-step title="Step Two" description="Authenticate"></el-step>
 					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
 				</el-steps>
 				<br>
-				<Auth v-if="test" :admin="role"></Auth>
+				<Auth v-if="currentLoginStep == 2" :admin="role"></Auth>
 				<role-chooser v-else></role-chooser>
 				<span slot="footer" class="dialog-footer">
-					<el-button type="primary" @click.native="next">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
+					<el-button type="primary" @click.native="stepIncrement">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
 					<el-button @click.native="toggleLoginModal">Close</el-button>
 				</span>
 			</el-dialog>
@@ -39,13 +39,13 @@ export default {
 		buttonTitle(){
 			return this.isCreate ? 'Create Event' : 'Discover Your Event'
 		},
-		...mapGetters(['isLoginModalPresenting'])
+		...mapGetters(['isLoginModalPresenting', 'currentLoginStep'])
 	},
 	components: {
 		RoleChooser,Auth
 	},
 	methods: {
-		...mapActions(['toggleLoginModal']),
+		...mapActions(['toggleLoginModal', 'stepIncrement']),
 		multiplexUserOption: function(){
 			if(this.isCreate){
 				this.createEvent()
@@ -68,11 +68,6 @@ export default {
 			else{
 				return true
 			}
-		},
-		next: function(){
-			this.test = true;
-			console.log('next')
-			active++;
 		}
 	},
 	props: ['name', 'isCreate']
