@@ -1,6 +1,6 @@
 <template>
   <h2 class = "header">List of my Request</h2>
-  <div class = "request list" v-for="(data, index) in events.teamName">
+  <div class = "request list" v-for="(data, index) in requests">
     <el-row type="flex" class="row-bg" justify="space-around">
       <el-col :span="6"><div class="index">{{index+1}}.</div></el-col>
       <el-col :span="6"><div class="request data"> <b>Event:</b> {{data.event}}  <b>Team:</b> {{data.team}}</div></el-col>
