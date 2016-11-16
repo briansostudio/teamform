@@ -1,7 +1,7 @@
 <template>
     <div class="User">
       <WeeklyScheduleTest></WeeklyScheduleTest>
-      <MyRequests :requests = 'request'></MyRequests>
+      <MyRequests :requests = "request"></MyRequests>
     </div>
 </template>
 
