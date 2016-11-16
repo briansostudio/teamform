@@ -11,7 +11,7 @@
   export default {
       data(){
           return {
-            request: [{event: 'Open New Issue', team: 'tim team'}, {event: 'Pull Request', team: 'Team Tim'}]
+            request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}]
           },
       computed: {},
       methods: {},
