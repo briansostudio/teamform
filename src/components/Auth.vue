@@ -1,42 +1,55 @@
 <template>
   <form class="auth-form" v-on:submit.prevent="onSubmitButtonClick()">
-    <div v-show="!admin">
-      <button type="submit" class="ui teal tag label user" v-on:click="swapAdminClick()">User</button>
-    </div>
-    <div v-show="admin">
-      <button type="submit" class="ui red tag label admin" v-on:click="swapUserClick()">admin</button>
-    </div>
-    <h1>{{title}}</h1>
-    <div class="row event-page">
-          <AppTitle></AppTitle>
-      </div>
+  <!--title of the auth form-->
+
+    <!--user input form-->
     <div class="container">
       <div v-show="!admin" class="ui input email">
-      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()"> 
+      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()">
       </div>
-        <span class="error" v-show="errorEmail">* invalid email</span>
+      <div class="ui warning message" v-show="errorEmail">
+          <div class="header">
+            * invalid email!
+          </div>
+            Please enter a valid email
+      </div>
     </div>
     <div class="container">
       <div class="ui input password">
       	<input class="password-prompt" type="password" name="password" id="password" placeholder="Password" required v-model.trim="password" v-on:input="passwordLength()">
       </div>
-        <span class="error" v-show="errorPasswordMin">* Password is too short</span>
+          <div class="ui warning message" v-show="errorPasswordMin">
+            <div class="header">
+              * Password is too short!
+            </div>
+              Please enter a longer email
+          </div>
+        <span class="error" v-show="errorPasswordMin"></span>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
       <div class="ui input confirmPassword">
       	<input class="confirmpassword-prompt" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" v-model.trim="confirmPassword" v-on:input="isPasswordMatchWithConfirmPassword()">
       </div>
-      <span class="error" v-show="errorConfirmPassword">* Not match with password</span>
+        <div class="ui warning message" v-show="errorConfirmPassword">
+          <div class="header">
+            * Not match with password!
+          </div>
+              Password and confirm password must be the same
+        </div>
     </div>
     <div v-show="signUpStatue && !admin" class="container">
       <div class="ui input username">
       	<input class="username-prompt" type="text" name="username" id="username" placeholder="Username" v-model.trim="username" v-on:input="isUsernameInput()">
       </div>
-        <span class="error" v-show="errorUsername">* Username cannot be empty</span>
+        <div class="ui warning message" v-show="errorUsername">
+          <div class="header">
+            * Username cannot be empty!
+          </div>
+            Please enter back the username
+        </div>
     </div>
-    <div v-show="signUpStatue && !admin" class="container">
-      <Rating skillName="Speed" value="3"></Rating>
-    </div>
+
+    <!--login button-->
     <div v-show="!signUpStatue" class="clearfix btn-group">
       <button class="ui positive button" type="submit">Sign in</button>
       <button class="ui positive button" type="button" v-on:click="onSignUpButtonClick()">Sign up</button>
@@ -55,12 +68,12 @@
       <a href="#" v-on:click.prevent="signInWithProvider('github')"><i class="fa fa-github-square" aria-hidden="true" style="font-size:48px"></i></a>
     </div>
   </form>
-  
+
 </template>
 <script>
-import AppTitle from './components/AppTitle'
-import Rating from './components/Rating'
-export default 
+import AppTitle from './AppTitle'
+import Rating from './Rating'
+export default
 {
 
     data () {
@@ -70,7 +83,7 @@ export default
         confirmPassword: '',
         username: '',
         signUpStatue: false,
-        admin:false,
+        // admin:0,
         errorEmail:false,
         errorPasswordMin:false,
         errorConfirmPassword:false,
@@ -98,7 +111,7 @@ export default
           this.errorEmail = false;
           // $(".ui.input.email").removeClass(" error");
           return true;
-        } 
+        }
       },
       passwordLength()
       {
@@ -122,12 +135,12 @@ export default
           // $(".ui.input.confirmPassword").addClass(" error");
           return false;
         }
-        else 
+        else
         {
           this.errorConfirmPassword = false;
           // $(".ui.input.confirmPassword").removeClass(" error");
           return true;
-        }  
+        }
       },
       isUsernameInput()
       {
@@ -137,12 +150,12 @@ export default
           // $(".ui.input.username").addClass(" error");
           return false;
         }
-        else 
+        else
         {
           this.errorUsername = false;
           // $(".ui.input.username").removeClass(" error");
           return true;
-        } 
+        }
       },
       //function
       swapAdminClick()
@@ -179,20 +192,19 @@ export default
       signInWithProvider(provider){
 
       }
-      
+
     },
     components:{
       AppTitle,Rating,
-    }
+    },
+    props:['admin']
 }
-  
+
 </script>
 
 <style>
   .auth-form{
-    width: 550px;
-    height: 600px;
-    max-width: 100%;
+    max-width: 70%;
     margin: 10vh auto 15px;
     background: #fff;
     border-radius: 2px;
@@ -233,7 +245,7 @@ export default
   }
   .auth-form hr{
     margin-top: 20px;
- 
+
   }
   .auth-form .social-providers{
     text-align: center;
@@ -246,7 +258,7 @@ export default
   }
   .fa-facebook-square {
 	  color:#3b5998
-  } 
+  }
   .fa-twitter-square {
 	  color:#00aced
   }
