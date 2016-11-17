@@ -19,7 +19,7 @@
             </td>
             <td class="center aligned">
               <button class="ui labeled icon button">
-                <i class="add user icon"></i>
+                <i class="fa fa-info-circle"></i>
                 View Details
               </button>
             </td>
