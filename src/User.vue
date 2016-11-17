@@ -20,19 +20,9 @@
         request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}]
       }
     },
-    mounted(){
-      this.userId = this.$route.params.userId;
-      this.$store.dispatch("observeUser", {userId: this.userId});
-    },
-    beforeDestroy(){
-      this.$store.dispatch("stopObserveUser", {userId: this.userId});
-    },
     computed: {
       scheduleUsers(){
-        let viewingUser = this.viewingUser;
-        return {
-          [viewingUser.id]: viewingUser
-        }
+        return {[this.viewingUser.id]: this.viewingUser};
       },
       ...mapGetters([
         "viewingUser",

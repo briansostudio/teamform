@@ -12,7 +12,7 @@ const state = {
     },
     criteria: [],
     teams: [],
-    members: [],
+    members: {},
     errors: [],
     due: Date()
 }
@@ -37,7 +37,7 @@ const mutations = {
         state.description = event.description
         state.limits.min = event.teamSize.min
         state.limits.max = event.teamSize.max
-        state.members = util.toArray(event.members);
+        state.members = event.members;
     },
     [types.EVENT_NAME_UPDATED](state, { name }){
         state.name = name

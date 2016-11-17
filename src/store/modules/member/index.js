@@ -1,14 +1,15 @@
 import api from '../../../api'
 import lib from './lib'
 import router from '../../../router'
+import Vue from 'vue';
 
 const state = {
   id: sessionStorage.getItem('firebase.user.uid') || "",
   name: "",
   status: "NO_TEAM", // NO_TEAM, IN_TEAM, LEADER
   schedule: {
-    intervals:[
-    ]
+    intervals:{
+    }
   },
   description: "",
   criteria:[
@@ -58,6 +59,20 @@ const actions = {
       }
     })
   },
+  "schedule/createInterval"({commit, rootState}, {interval}){
+    api.member.addIntervalToSchedule(rootState.event.id, rootState.member.id, interval)
+      .then((id)=>{
+        commit("schedule/INTERVAL_ADDED", {id, interval});
+      });
+  },
+  "schedule/moveInterval"({commit, rootState}, {id, interval}){
+    api.member.updateIntervalInSchedule(rootState.event.id, rootState.member.id, id, interval);
+    commit('schedule/INTERVAL_MOVED', {id, interval});
+  },
+  "schedule/removeInterval"({commit, rootState}, {id}){
+    api.member.removeIntervalFromSchedule(rootState.event.id, rootState.member.id, id);
+    commit('schedule/INTERVAL_REMOVED', {id});
+  }
 };
 
 const mutations = {
@@ -66,6 +81,15 @@ const mutations = {
   },
   ["member/LOGIN_ERROR"](state, {}){
 
+  },
+  ["schedule/INTERVAL_ADDED"](state, {id, interval}){
+    Vue.set(state.schedule.intervals, id, interval);
+  },
+  ["schedule/INTERVAL_MOVED"](state, {id, interval}){
+    state.schedule.intervals[id] = interval;
+  },
+  ["schedule/INTERVAL_REMOVED"](state, {id}){
+    Vue.delete(state.schedule.intervals, id);
   }
 };
 

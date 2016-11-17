@@ -74,10 +74,18 @@ export default {
   },
   async addIntervalToSchedule(eventId, userId, interval){
     let ref = this.getFireBaseRef(userId, eventId).child("schedule/intervals");
-    await ref.push({
+    return ref.push({
       start: interval.start,
       end: interval.end
-    });
+    }).key;
+  },
+  async updateIntervalInSchedule(eventId, userId, intervalId, interval){
+    let ref = this.getFireBaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
+    await ref.set(interval);
+  },
+  async removeIntervalFromSchedule(eventId, userId, intervalId){
+    let ref = this.getFireBaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
+    await ref.remove();
   },
   //private use, should not call
   getFireBaseRef(userId, eventId){

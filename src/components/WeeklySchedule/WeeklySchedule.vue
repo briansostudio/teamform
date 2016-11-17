@@ -14,6 +14,7 @@
       selectedInterval: {{selectedInterval.start}} - {{selectedInterval.end}}
       <input class="ui button" type="button" value="remove" @click="removeSelectedInterval()">
     </div>
+    <div style="clear:both"></div>
   </div>
 </template>
 
@@ -37,7 +38,6 @@
     },
     computed:{
       selectedInterval(){
-        console.log(this.selectedIntervalId);
         return this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] || null;
       },
       resolved(){
@@ -95,7 +95,7 @@
     },
     methods:{
       removeSelectedInterval(){
-        this.$delete(this.users[this.currentUserId].schedule.intervals,this.selectedIntervalId);
+        this.$store.dispatch("schedule/removeInterval", {id:this.selectedIntervalId});
       },
       getColor(){
         return colors[(this.colorIndex++) % colors.length];
@@ -111,11 +111,11 @@
         var ti = new TimeInterval(interval.start.valueOf(), interval.end.valueOf()).shift(-BASE_DATE);
         switch(event){
           case "event-created":
-            this.$store.dispatch("scheduleIntervalCreate", {interval});
+            this.$store.dispatch("schedule/createInterval", {interval: ti});
             break;
           case "event-resize":
           case "event-drop":
-            this.$store.dispatch("scheduleIntervalMove", {interval});
+            this.$store.dispatch("schedule/moveInterval", {id:interval.interval_id, interval: ti});
             break;
         }
         this.selectedIntervalId = interval.interval_id;

@@ -1,12 +1,11 @@
 import lib from '../member/lib'
 
 const state = {
-  viewingUser:lib.mockMember()
 }
 
 const getters = {
-  viewingUser(state){
-    return state.viewingUser;
+  viewingUser(state, getters, rootState){
+    return rootState.event.members[rootState.route.params.userId] || lib.mockMember();
   }
 }
 
