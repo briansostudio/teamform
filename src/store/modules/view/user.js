@@ -1,7 +1,13 @@
+import lib from '../member/lib'
+
 const state = {
+  viewingUser:lib.mockMember()
 }
 
 const getters = {
+  viewingUser(state){
+    return state.viewingUser;
+  }
 }
 
 const actions = {

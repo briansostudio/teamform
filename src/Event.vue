@@ -43,8 +43,8 @@
 				</button>
 			</div>
 		</div>
-		<div class="row">
-			<TeamList v-if="event.hasOwnProperty('teams')"></TeamList>
+		<!-- <div class="row">
+			<TeamList v-if="event.hasOwnProperty('teams')" v-bind:teams="event.teams"></TeamList>
 			<div v-else class="ui piled segment">
 				<h2 class="ui icon header">
 					<i class="hide icon"></i>
@@ -55,9 +55,9 @@
 					</div>
 				</h2>
 			</div>
-		</div>
-		<EventOverview :events = "event">
-		</EventOverview>
+		</div>-->
+		<TeamList v-bind:teams="teams"></TeamList>
+		<EventOverview :events = "event"></EventOverview>
 		<div class = "footer"></div>
   </div>
 </template>
@@ -77,13 +77,23 @@ export default {
 				size: {
 					max: 10,
 					min: 1
+        },
+        description: 'Toxic boys join Together :)',
+        teamName: [
+          {name: 'BrainSoStudio', numMember: '6'},
+          {name: 'Ka D orange skin team',  numMember: '7'},
+          {name: 'Tim Team',  numMember: '10'}
+        ]
+      },
+			teams:{
+				'100' : {
+					name: 'happy together',
+					description: 'so happy together~~'
 				},
-				description: 'Toxic boys join Together :)',
-				teamName: [
-					{name: 'BrainSoStudio', numMember: '6'},
-					{name: 'Ka D orange skin team',  numMember: '7'},
-					{name: 'Tim Team',  numMember: '10'}
-				]
+				'101' : {
+					name: 'Android Studio',
+					description: 'This is the team for Android lovers!!'
+				}
 			}
 		}
 	},
