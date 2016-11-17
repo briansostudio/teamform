@@ -4,11 +4,13 @@ const state = {
     login: {
         isModalPresent: false,
         role: 'participants',
-        step: 1
+        step: 1,
+        isRegister: false
     }
 }
 
 const getters = {
+    isRegister: state => state.login.isRegister,
     isLoginModalPresenting: state => state.login.isModalPresent,
     displayCurrentRoleSelection: state => state.login.role,
     currentLoginStep: state => state.login.step
@@ -24,6 +26,16 @@ const actions = {
     },
     stepIncrement({commit}, payload){
         commit(types.LOGIN_STEP_PROGRESS)
+    },
+    toggleRegister({commit}){
+        commit(types.LOGIN_TOGGLE_REGISTER)
+    },
+    loginOrRegister({commit, dispatch}){
+        if(state.login.isRegister){
+          dispatch("register",{});
+        }else{
+          dispatch("login",{});
+        }
     }
 }
 
@@ -39,6 +51,9 @@ const mutations = {
     },
     [types.LOGIN_STEP_RESET](state){
         state.login.step = 1
+    },
+    [types.LOGIN_TOGGLE_REGISTER](state){
+        state.login.isRegister = !state.login.isRegister;
     }
 }
 

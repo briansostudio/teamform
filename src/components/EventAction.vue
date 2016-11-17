@@ -11,10 +11,10 @@
 					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
 				</el-steps>
 				<br>
-				<Auth v-if="currentLoginStep == 2" :admin="role"></Auth>
+				<Auth v-if="currentLoginStep == 2"></Auth>
 				<role-chooser v-else></role-chooser>
 				<span slot="footer" class="dialog-footer">
-					<el-button type="primary" @click.native="stepIncrement">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
+					<el-button type="primary" @click.native="proceedClick">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
 					<el-button @click.native="toggleLoginModal">Close</el-button>
 				</span>
 			</el-dialog>
@@ -68,7 +68,14 @@ export default {
 			else{
 				return true
 			}
-		}
+		},
+    proceedClick(){
+		  if(currentLoginStep !== 2){
+        this.$store.dispatch("stepIncrement");
+      }else{
+        this.$store.dispatch("loginOrRegister");
+      }
+    }
 	},
 	props: ['name', 'isCreate']
 }
