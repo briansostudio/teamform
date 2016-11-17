@@ -3,7 +3,7 @@ import { Schedule, TimeInterval } from 'src/lib/schedule';
 import WeeklySchedule from 'src/components/WeeklySchedule/WeeklySchedule';
 import WeeklyScheduleTest from 'src/components/WeeklySchedule/WeeklyScheduleTest';
 import Resolve from 'src/lib/schedule/schedule-resolve-helper';
-
+import {Store} from 'vuex';
 
 describe('WeeklySchedule.vue', () => {
 
@@ -25,7 +25,19 @@ describe('WeeklySchedule.vue', () => {
 
   describe('editMode',()=>{
     it('should respond to edit',()=>{
-      const testVm = new Vue(WeeklyScheduleTest).$mount();
+      const store = new Store({
+        state:{},
+        actions:{
+          scheduleIntervalCreate:()=>{},
+          scheduleIntervalMove:()=>{}
+        }
+      });
+      const rootVm = new Vue({
+        store: store,
+        template:`<div><WeeklyScheduleTest ref="testComponent"></WeeklyScheduleTest></div>`,
+        components:{WeeklyScheduleTest}
+      }).$mount();
+      const testVm = rootVm.$refs.testComponent;
       const vm = testVm.$refs.weeklySchedule;
       vm.editMode = true;
       vm.mergeMode = false;

@@ -10,11 +10,11 @@ import member from './modules/member'
 import errors from './modules/errors'
 import view from './modules/view'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
     appName: 'Teamform By BrianSoStudio',
-    
+
 }
 
 export default new Vuex.Store({

@@ -70,7 +70,7 @@ export default {
 			}
 		},
     proceedClick(){
-		  if(currentLoginStep !== 2){
+		  if(this.currentLoginStep !== 2){
         this.$store.dispatch("stepIncrement");
       }else{
         this.$store.dispatch("loginOrRegister");

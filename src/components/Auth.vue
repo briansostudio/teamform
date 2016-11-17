@@ -76,13 +76,24 @@ export default
     computed: {
       ...mapGetters(["isRegister"])
     },
+    watch:{
+      form:{
+        handler(val){
+          this.$store.dispatch('home/loginFormUpdate',val);
+        },
+        deep: true
+      }
+    },
     methods: {
       ...mapActions(["toggleRegister"]),
       onSubmitButtonClick(){
         return this.isRegister ? signUpWithPassword() : signInWithPassword();
       },
       signUpWithPassword(){
-
+        this.$store.dispatch('member/register',{name:this.username, email:this.email, password:this.password});
+      },
+      signInWithPassword(){
+        this.$store.dispatch('member/login', {email:this.email, password:this.password});
       },
       signInWithProvider(provider){
 

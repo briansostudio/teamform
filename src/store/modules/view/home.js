@@ -5,7 +5,13 @@ const state = {
         isModalPresent: false,
         role: 'participants',
         step: 1,
-        isRegister: false
+        isRegister: false,
+        form:{
+          email: '',
+          username: '',
+          password: '',
+          confirmPassword: '',
+        }
     }
 }
 
@@ -30,16 +36,25 @@ const actions = {
     toggleRegister({commit}){
         commit(types.LOGIN_TOGGLE_REGISTER)
     },
-    loginOrRegister({commit, dispatch}){
+    loginOrRegister({commit, state, dispatch}){
+        let name = state.login.form.username;
+        let email = state.login.form.email;
+        let password = state.login.form.password;
         if(state.login.isRegister){
-          dispatch("register",{});
+          dispatch("member/register",{name,email,password});
         }else{
-          dispatch("login",{});
+          dispatch("member/login",{email,password});
         }
+    },
+    "home/loginFormUpdate"({commit},form){
+      commit("home/loginFormUpdate",form, { silent: false });
     }
 }
 
 const mutations = {
+    "home/loginFormUpdate"(state, form){
+      state.login.form = form;
+    },
     [types.LOGIN_TOGGLE_MODAL](state){
         state.login.isModalPresent = !state.login.isModalPresent
     },
