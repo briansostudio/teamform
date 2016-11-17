@@ -23,8 +23,11 @@ const getters = {
 }
 
 const actions = {
-    toggleLoginModal({commit}){
-        commit(types.LOGIN_TOGGLE_MODAL)
+    toggleLoginModal({commit}, show){
+      setTimeout(()=>{
+        commit(types.LOGIN_TOGGLE_MODAL, show);
+      },200);
+
         commit(types.LOGIN_STEP_RESET)
     },
     selectRoleForLogin({commit}, payload){
@@ -55,8 +58,11 @@ const mutations = {
     "home/loginFormUpdate"(state, form){
       state.login.form = form;
     },
-    [types.LOGIN_TOGGLE_MODAL](state){
+    [types.LOGIN_TOGGLE_MODAL](state, show){
+      if(typeof show === "undefined")
         state.login.isModalPresent = !state.login.isModalPresent
+      else
+        state.login.isModalPresent = show;
     },
     [types.LOGIN_SELECT_ROLE](state, role){
         state.login.role = role

@@ -7,17 +7,7 @@
 			<div class="row event-page">
 				<app-title></app-title>
 			</div>
-			<div class="row">
-				<div class="ui search">
-					<div class="ui big icon input">
-						<input class="prompt" type="text" v-model="eventInput" @focus="hideWarning" placeholder="Enter keyword to find your event">
-						<i class="search icon"></i>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<event-action :name="eventInput" :isCreate="modeSwitch" @invalidate="warningPrompt"></event-action>
-			</div>
+    <event-action style="min-width: 80%" :name="eventInput" :isCreate="modeSwitch" @invalidate="warningPrompt"></event-action>
 	</div>
 </template>
 
@@ -61,14 +51,6 @@ html {
 
 .event-page {
 	margin-top: 15%;
-}
-
-.ui.search {
-	min-width: 50%;
-}
-
-.ui.big.icon.input{
-	min-width: 80%;
 }
 
 .mode-switch {
