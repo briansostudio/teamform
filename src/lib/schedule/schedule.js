@@ -17,7 +17,6 @@ export const THURSDAY = 4 * DAY;
 export const FRIDAY = 5 * DAY;
 export const SATURDAY = 6 * DAY;
 
-
 class Schedule{
   constructor(intervals){
     this.intervals = intervals || [];
@@ -104,3 +103,14 @@ class Schedule{
 }
 
 export default Schedule;
+
+export const sleepingSchedule = () => new Schedule([
+  new TimeInterval(0, 7 * HOUR),
+  new TimeInterval(SUNDAY + 23 * HOUR, MONDAY + 7 * HOUR),
+  new TimeInterval(MONDAY + 23 * HOUR, TUESDAY + 7 * HOUR),
+  new TimeInterval(TUESDAY + 23 * HOUR, WEDNESDAY + 7 * HOUR),
+  new TimeInterval(WEDNESDAY + 23 * HOUR, THURSDAY + 7 * HOUR),
+  new TimeInterval(THURSDAY + 23 * HOUR, FRIDAY + 7 * HOUR),
+  new TimeInterval(FRIDAY + 23 * HOUR, SATURDAY + 7 * HOUR),
+  new TimeInterval(SATURDAY + 23 * HOUR, SATURDAY + 24 * HOUR),
+]);

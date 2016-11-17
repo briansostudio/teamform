@@ -1,5 +1,6 @@
 import * as types from '../mutation-types'
 import api from '../../api'
+import util from '../util'
 
 const state = {
     id: '',
@@ -11,7 +12,7 @@ const state = {
     },
     criteria: [],
     teams: [],
-    members: [],
+    members: {},
     errors: [],
     due: Date()
 }
@@ -28,11 +29,15 @@ const getters = {
 }
 
 const mutations = {
+    [types.EVENT_ID_CHANGED](state, { eventId }){
+      state.id = eventId;
+    },
     [types.EVENT_FETCHED](state, { event }){
         state.name = event.name
         state.description = event.description
         state.limits.min = event.teamSize.min
         state.limits.max = event.teamSize.max
+        state.members = event.members;
     },
     [types.EVENT_NAME_UPDATED](state, { name }){
         state.name = name
@@ -61,10 +66,28 @@ const mutations = {
 }
 
 const actions = {
+    "event/onLoad"({commit, rootState}, {eventId}){
+      commit(types.EVENT_ID_CHANGED, {eventId});
+      api.event.observe(eventId, (event)=>{
+        if(event !== null){
+          commit(types.EVENT_FETCHED, {eventId, event});
+
+          let user = event.members[rootState.member.id];
+          if(user){
+            commit("member/UPDATE", {user});
+          }
+        }else{
+          //Event not found
+        }
+      });
+    },
+    "event/onLeave"({commit}, {eventId}){
+      api.event.stopObserve(eventId);
+    },
     createEvent({commit}, payload){
         api.eventExist(payload).then((exist) => {
             if(exist){
-                commit(types.ERRORS_NOTIFY_INVALIDATED, { 
+                commit(types.ERRORS_NOTIFY_INVALIDATED, {
                     message: 'Event already exist, please retry',
                     type: 'error',
                     duration: 0,
@@ -88,7 +111,7 @@ const actions = {
                 })
             }
             else{
-                commit(types.ERRORS_NOTIFY_INVALIDATED, { 
+                commit(types.ERRORS_NOTIFY_INVALIDATED, {
                     message: 'Event does not exist, please retry',
                     type: 'error',
                     duration: 0,
