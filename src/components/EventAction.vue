@@ -1,24 +1,36 @@
 <template>
 	<div>
-		<div>
-			<button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
-		</div>
-		<div>
-			<el-dialog title="Enter selected event page" v-model="isLoginModalPresenting" size="small">
-				<el-steps :space="200" :active="currentLoginStep" >
-					<el-step title="Step One" description="Choose Your Identity"></el-step>
-					<el-step title="Step Two" description="Authenticate"></el-step>
-					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
-				</el-steps>
-				<br>
-				<Auth v-if="currentLoginStep == 2" :admin="role"></Auth>
-				<role-chooser v-else></role-chooser>
-				<span slot="footer" class="dialog-footer">
-					<el-button type="primary" @click.native="stepIncrement">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
-					<el-button @click.native="toggleLoginModal">Close</el-button>
-				</span>
-			</el-dialog>
-		</div>
+    <div class="row" style="margin-bottom: 8px;">
+      <div class="ui big icon input">
+        <el-autocomplete class="search-input" type="text" placeholder="Enter keyword to find your event"
+                         v-model="eventInput"
+                         @select="handleSelect"
+                         :fetch-suggestions="querySearch"
+                         :trigger-on-focus="false"></el-autocomplete>
+        <i class="search icon"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
+      </div>
+      <div>
+        <el-dialog title="Enter selected event page" :value="isLoginModalPresenting" @input="toggleLoginModal" size="small">
+          <el-steps :space="200" :active="currentLoginStep" >
+            <el-step title="Step One" description="Choose Your Identity"></el-step>
+            <el-step title="Step Two" description="Authenticate"></el-step>
+            <el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
+          </el-steps>
+          <br>
+          <Auth v-if="currentLoginStep == 2"></Auth>
+          <role-chooser v-else></role-chooser>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click.native="proceedClick">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
+            <el-button @click="toggleLoginModal(false)">Close</el-button>
+          </span>
+        </el-dialog>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -30,6 +42,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
 	data () {
 		return {
+		  eventInput:'',
 			event: {},
 			test: false,
 			active:0
@@ -46,13 +59,27 @@ export default {
 	},
 	methods: {
 		...mapActions(['toggleLoginModal', 'stepIncrement']),
+    querySearch(queryString, cb){
+		  let result = [
+        {value: "COMP3111", id:"123456"},
+        {value: "HackUST", id:"433535"}
+      ];
+      let regex = new RegExp(queryString,"i");
+      result = result.filter((item)=>{
+        return regex.test(item.value);
+      });
+      cb(result);
+    },
+    handleSelect(item){
+      this.$store.commit("EVENT_ID_CHANGED",item.id);
+    },
 		multiplexUserOption: function(){
 			if(this.isCreate){
 				this.createEvent()
 			}
 			else
 			{
-				this.$store.dispatch('toggleLoginModal')
+				this.$store.dispatch('toggleLoginModal', true)
 			}
 		},
 		createEvent: function(){
@@ -68,7 +95,14 @@ export default {
 			else{
 				return true
 			}
-		}
+		},
+    proceedClick(){
+		  if(this.currentLoginStep !== 2){
+        this.$store.dispatch("stepIncrement");
+      }else{
+        this.$store.dispatch("loginOrRegister");
+      }
+    }
 	},
 	props: ['name', 'isCreate']
 }
@@ -103,4 +137,12 @@ button.action-btn:hover{
 .large.ui.buttons > .ui.button:hover {
   box-shadow: 0 14px 13px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
 }
+</style>
+<style>
+  .ui.input .search-input input.el-input__inner{
+    border-radius: 500rem !important;
+    width: 100%;
+    height: 3rem;
+    min-width: 270px;
+  }
 </style>

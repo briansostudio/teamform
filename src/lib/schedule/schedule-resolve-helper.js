@@ -20,6 +20,8 @@ function remove0LengthIntervals(arr){
 }
 
 export default function(arr){
+  if(arr.length === 0)
+    return [];
   let n = arr.length;
   //copy array
   arr = arr.map(t=>{
