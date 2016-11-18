@@ -8,7 +8,7 @@ const state = {
     description: '',
     limits: {
         min: 0,
-        max: 5
+        max: 0
     },
     criteria: [],
     teams: [],
@@ -104,7 +104,7 @@ const actions = {
         })
     },
     fetchEvent({commit}, payload){
-        api.eventExist(payload).then((exist) => {
+        api.event.eventExist(payload).then((exist) => {
             if(exist){
                 api.loadEvent(payload, (event) => {
                     commit(types.EVENT_FETCHED, event)
@@ -122,11 +122,13 @@ const actions = {
             }
         })
     },
-    setMaximumTeamSize({commit}, payload){
+    setMaximumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MAX_UPDATED, payload)
+        api.event.updateEvent(state.id, {limits:state.limits});
     },
-    setMinimumTeamSize({commit}, payload){
+    setMinimumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MIN_UPDATED, payload)
+        api.event.updateEvent(state.id, {limits:state.limits});
     },
     updateTeamDescription({commit}, payload){
         commit(types.EVENT_DESCRIPTION_UPDATED, payload)

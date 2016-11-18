@@ -7,7 +7,7 @@
 			<div class="row event-page">
 				<app-title></app-title>
 			</div>
-    <event-action style="min-width: 80%" :name="eventInput" :isCreate="modeSwitch" @invalidate="warningPrompt"></event-action>
+    <event-action style="min-width: 80%" :name="eventInput" :isCreate="modeSwitch" @invalidate="warningPrompt" @change="hideWarning"></event-action>
 	</div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
 	components: {
 		AppTitle, EventAction ,ForkMe
 	},
+  mounted(){
+	  this.$store.dispatch('home/onLoad');
+  },
 	methods: {
 		hideWarning : () => {
 			$('.ui.big.icon.input').popup('hide');

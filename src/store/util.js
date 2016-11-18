@@ -7,5 +7,13 @@ export default {
       result.push(val);
     }
     return result;
+  },
+  find(obj, cb){
+    for (var key in obj){
+      var val = obj[key];
+      if(cb(val))
+        return val
+    }
+    return null
   }
 }

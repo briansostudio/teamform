@@ -50,31 +50,47 @@ export default {
 	},
 	computed:{
 		buttonTitle(){
-			return this.isCreate ? 'Create Event' : 'Discover Your Event'
+			return !this.eventId ? 'Create Event' : 'Discover Your Event'
 		},
-		...mapGetters(['isLoginModalPresenting', 'currentLoginStep'])
+		...mapGetters(['isLoginModalPresenting', 'currentLoginStep', 'eventList', 'eventId'])
 	},
 	components: {
 		RoleChooser,Auth
 	},
+  watch:{
+	  eventInput(eventName){
+      let id = '';
+      let list = this.eventList;
+      console.log(eventName);
+      for(let item of list){
+        if(item.value === eventName){
+          id = item.id;
+          break;
+        }
+      }
+      if(this.eventId !== id){
+        this.$store.commit('EVENT_ID_CHANGED', {eventId:id});
+      }
+      this.$emit("change");
+    }
+  },
 	methods: {
 		...mapActions(['toggleLoginModal', 'stepIncrement']),
     querySearch(queryString, cb){
-		  let result = [
-        {value: "COMP3111", id:"123456"},
-        {value: "HackUST", id:"433535"}
-      ];
       let regex = new RegExp(queryString,"i");
-      result = result.filter((item)=>{
+      let result = this.eventList.filter((item)=>{
         return regex.test(item.value);
       });
+      if(result[0] && result[0].value === queryString){
+        return cb([]);
+      }
       cb(result);
     },
     handleSelect(item){
-      this.$store.commit("EVENT_ID_CHANGED",item.id);
+      this.$store.commit("EVENT_ID_CHANGED",{eventId:item.id});
     },
 		multiplexUserOption: function(){
-			if(this.isCreate){
+			if(!this.eventId){
 				this.createEvent()
 			}
 			else
@@ -88,7 +104,7 @@ export default {
 			}
 		},
 		isInputValid: function(){
-			if (!this.name) {
+			if (!this.eventInput) {
 				this.$emit('invalidate')
 					return false
 			}

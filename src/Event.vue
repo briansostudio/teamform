@@ -4,20 +4,8 @@
 		<div class="row event-page">
 			<h1>Event Name: {{event.name}}</h1>
 		</div>
-		<div class="row">
-			<div class="ui grid">
-				<div class="column">
-					<TeamSizeControl type="max" size="5"></TeamSizeControl>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="ui grid">
-				<div class="column">
-					<TeamSizeControl type="min" size="10"></TeamSizeControl>
-				</div>
-			</div>
-		</div>
+
+    <TeamSizeControl></TeamSizeControl>
 		<div class="row">
 			<h2 class="ui header">
 				<i class="users icon"></i>

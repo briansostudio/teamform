@@ -1,4 +1,5 @@
 import * as types from '../../mutation-types'
+import api from '../../../api';
 
 const state = {
     login: {
@@ -12,14 +13,18 @@ const state = {
           password: '',
           confirmPassword: '',
         }
-    }
+    },
+    eventList:[
+    ]
 }
 
 const getters = {
+    eventInput: state => state.eventInput,
     isRegister: state => state.login.isRegister,
     isLoginModalPresenting: state => state.login.isModalPresent,
     displayCurrentRoleSelection: state => state.login.role,
-    currentLoginStep: state => state.login.step
+    currentLoginStep: state => state.login.step,
+    eventList: state => state.eventList
 }
 
 const actions = {
@@ -49,6 +54,15 @@ const actions = {
           dispatch("member/login",{email,password});
         }
     },
+    'home/onLoad'({commit}){
+      api.event.getEventList().then((events)=>{
+        let result = [];
+        for(let id in events){
+          result.push({id, value: events[id]});
+        }
+        commit('home/eventListUpdate', result);
+      });
+    },
     "home/loginFormUpdate"({commit},form){
       commit("home/loginFormUpdate",form, { silent: false });
     }
@@ -57,6 +71,9 @@ const actions = {
 const mutations = {
     "home/loginFormUpdate"(state, form){
       state.login.form = form;
+    },
+    "home/eventListUpdate"(state, events){
+      state.eventList = events;
     },
     [types.LOGIN_TOGGLE_MODAL](state, show){
       if(typeof show === "undefined")
