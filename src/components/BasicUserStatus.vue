@@ -1,7 +1,8 @@
 <template>
 	<div class="basic-user-status">
-      <span>Username: {{username}}</span>
-      <span class="teamNameText">Current Team: {{teamName}}</span>
+      <span>Username: {{user.name}}</span>
+      <span class="teamNameText">Current Team: {{ user.status === 'NO_TEAM' ? '-' : team.name}}</span>
+      <span> ({{statusString}})</span>
 	  <!--<span>Current Team: {{teamName}}</span>-->
       <div>
         <a class="userPageBtn" href="#" v-on:click.prevent="userPage">
@@ -17,12 +18,24 @@
 
 <script>
 export default{
-	data () {
-      return {
-        username: 'Tom',
-        teamName: 'COMP3511'
+	props:["user",'team'],
+  computed:{
+	  statusString(){
+	    switch(this.user.status){
+        case 'NO_TEAM': return 'No Team';
+        case 'IN_TEAM': return 'Member';
+        case 'LEADER': return 'Leader';
       }
-	},
+    }
+  },
+  methods:{
+    userPage(){
+
+    },
+    signOut(){
+
+    }
+  }
 }
 </script>
 
@@ -31,14 +44,14 @@ export default{
     position: fixed;
     display:flex;
     align-items: center;
-    left: 25%;
     top: 0;
-    right: 25%;
     z-index: 1;
     height: 50px;
     background: #00e0af;
     padding: 10px;
-	  width:50%;
+	  width:70%;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 0 2px 5px rgba(0,0,0,.4);
     border-radius: 2px;
     text-align: left;

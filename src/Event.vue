@@ -1,6 +1,6 @@
 <template>
 	<div class="ui centered grid">
-		<BasicUserStatus></BasicUserStatus>
+		<BasicUserStatus :user="currentUser" :team="userTeam"></BasicUserStatus>
 		<div class="row event-page">
 			<h1>Event Name: {{event.name}}</h1>
 		</div>
@@ -78,7 +78,7 @@ export default {
 		}
 	},
   computed:{
-    ...mapGetters(['userStatus', 'userTeam','eventParticipatedTeams'])
+    ...mapGetters(['userStatus', 'userTeam','currentUser','eventParticipatedTeams'])
   },
 	methods:{
 		fetchEvent: function(){

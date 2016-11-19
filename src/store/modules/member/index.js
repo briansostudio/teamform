@@ -20,6 +20,7 @@ const state = {
 };
 
 const getters = {
+  currentUser: state => state,
   userStatus: state => state.status,
   userTeam: (state,getters,rootState)=>util.find(rootState.event.teams,team=>team.id === state.team) || schema.team()
 };
