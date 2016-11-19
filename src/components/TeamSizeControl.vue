@@ -31,11 +31,9 @@ export default {
   },
 	watch:{
     _max(val){
-      console.log(val);
       this.max = val;
     },
     _min(val){
-      console.log(val);
       this.min = val;
     },
     max(size){

@@ -46,7 +46,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 	.event-page {
 		margin-top: 10%;
 	}

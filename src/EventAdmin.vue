@@ -53,9 +53,6 @@ export default {
 </script>
 
 <style>
-	.event-page {
-		margin-top: 10%;
-	}
 
 	.event-detail{
 		margin-left: 5%;

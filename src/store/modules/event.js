@@ -18,12 +18,13 @@ const state = {
 }
 
 const getters = {
+    currentEvent: state=>state,
     eventId: state => state.id,
     eventName: state => state.name,
     eventDescription: state => state.description,
     eventMaxTeamSize: state => state.limits.max,
     eventMinTeamSize: state => state.limits.min,
-    eventScopedCriteria: state => state.qualities,
+    eventScopedCriteria: state => state.criteria,
     eventParticipatedTeams: state => state.teams,
     eventParticipatedMembers: state => state.members
 }
@@ -125,11 +126,11 @@ const actions = {
     },
     setMaximumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MAX_UPDATED, payload)
-        api.event.updateEvent(state.id, {limits:state.limits});
+        api.event.updateEvent(state.id, {teamSize:state.limits});
     },
     setMinimumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MIN_UPDATED, payload)
-        api.event.updateEvent(state.id, {limits:state.limits});
+        api.event.updateEvent(state.id, {teamSize:state.limits});
     },
     updateTeamDescription({commit}, payload){
         commit(types.EVENT_DESCRIPTION_UPDATED, payload)

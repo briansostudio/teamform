@@ -1,11 +1,11 @@
 <template>
 	<div class="ui centered grid">
 		<BasicUserStatus :user="currentUser" :team="userTeam"></BasicUserStatus>
-		<div class="row event-page">
-			<h1>Event Name: {{event.name}}</h1>
-		</div>
+
+    <EventOverview :events = "currentEvent"></EventOverview>
 
     <TeamSizeControl></TeamSizeControl>
+
 		<div class="row">
 			<h2 class="ui header">
 				<i class="users icon"></i>
@@ -14,16 +14,17 @@
 				</div>
 			</h2>
 		</div>
-		<div v-if="userStatus === 'NO_TEAM'" class="row">
-			<div class="ui large action input">
+
+		<div class="row">
+			<div :class="userStatus === 'NO_TEAM' ? 'ui large action input' : 'ui large input'">
 				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
-				<button class="ui teal left labeled icon button" @click="addTeam">
+				<button v-if="userStatus === 'NO_TEAM'" class="ui teal left labeled icon button" @click="addTeam">
 					<i class="add user icon"></i>
 					Add Team
 				</button>
 			</div>
 		</div>
-    <div v-else class="ui centered grid">
+    <div v-if="userStatus !== 'NO_TEAM'" class="ui centered grid">
       <div class="column">
         <div class="ui left aligned segment teamCard">
           <img class="ui small left floated image" />
@@ -35,7 +36,6 @@
       </div>
     </div>
 		<TeamList v-bind:teams="eventParticipatedTeams"></TeamList>
-		<EventOverview :events = "event"></EventOverview>
 		<div class = "footer"></div>
   </div>
 </template>
@@ -51,34 +51,11 @@ import BasicUserStatus from './components/BasicUserStatus'
 export default {
 	data(){
 		return {
-			event: {
-				name: 'Sing K',
-				size: {
-					max: 10,
-					min: 1
-        },
-        description: 'Toxic boys join Together :)',
-        teamName: [
-          {name: 'BrainSoStudio', numMember: '6'},
-          {name: 'Ka D orange skin team',  numMember: '7'},
-          {name: 'Tim Team',  numMember: '10'}
-        ]
-      },
-			teams:{
-				'100' : {
-					name: 'happy together',
-					description: 'so happy together~~'
-				},
-				'101' : {
-					name: 'Android Studio',
-					description: 'This is the team for Android lovers!!'
-				}
-			},
 			teamName: ''
 		}
 	},
   computed:{
-    ...mapGetters(['userStatus', 'userTeam','currentUser','eventParticipatedTeams'])
+    ...mapGetters(['userStatus', 'userTeam','currentUser','eventParticipatedTeams', 'currentEvent'])
   },
 	methods:{
 		fetchEvent: function(){
@@ -106,7 +83,7 @@ export default {
 
 <style>
 	.event-page {
-		margin-top: 5%;
+		margin-top: 100px;
 	}
 	.add-team-input{
 		width: 100%;
