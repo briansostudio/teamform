@@ -1,23 +1,11 @@
 <template>
 	<div class="ui centered grid">
-		<BasicUserStatus></BasicUserStatus>
-		<div class="row event-page">
-			<h1>Event Name: {{event.name}}</h1>
-		</div>
-		<div class="row">
-			<div class="ui grid">
-				<div class="column">
-					<TeamSizeControl type="max" size="5"></TeamSizeControl>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="ui grid">
-				<div class="column">
-					<TeamSizeControl type="min" size="10"></TeamSizeControl>
-				</div>
-			</div>
-		</div>
+		<BasicUserStatus :user="currentUser" :team="userTeam"></BasicUserStatus>
+
+    <EventOverview :events = "currentEvent"></EventOverview>
+
+    <TeamSizeControl></TeamSizeControl>
+
 		<div class="row">
 			<h2 class="ui header">
 				<i class="users icon"></i>
@@ -26,22 +14,34 @@
 				</div>
 			</h2>
 		</div>
+
 		<div class="row">
-			<div class="ui large action input">
+			<div :class="userStatus === 'NO_TEAM' ? 'ui large action input' : 'ui large input'">
 				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
-				<button class="ui teal left labeled icon button">
+				<button v-if="userStatus === 'NO_TEAM'" class="ui teal left labeled icon button" @click="addTeam">
 					<i class="add user icon"></i>
 					Add Team
 				</button>
 			</div>
 		</div>
-		<TeamList v-bind:teams="teams"></TeamList>
-		<EventOverview :events = "event"></EventOverview>
+    <div v-if="userStatus !== 'NO_TEAM'" class="ui centered grid">
+      <div class="column">
+        <div class="ui left aligned segment teamCard">
+          <img class="ui small left floated image" />
+          <h3 class="ui header teal">{{userTeam.name}}</h3>
+          <div class="small">
+            <span>Description: {{userTeam.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+		<TeamList v-bind:teams="filteredTeams"></TeamList>
 		<div class = "footer"></div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
@@ -51,32 +51,12 @@ import BasicUserStatus from './components/BasicUserStatus'
 export default {
 	data(){
 		return {
-			event: {
-				name: 'Sing K',
-				size: {
-					max: 10,
-					min: 1
-        },
-        description: 'Toxic boys join Together :)',
-        teamName: [
-          {name: 'BrainSoStudio', numMember: '6'},
-          {name: 'Ka D orange skin team',  numMember: '7'},
-          {name: 'Tim Team',  numMember: '10'}
-        ]
-      },
-			teams:{
-				'100' : {
-					name: 'happy together',
-					description: 'so happy together~~'
-				},
-				'101' : {
-					name: 'Android Studio',
-					description: 'This is the team for Android lovers!!'
-				}
-			},
 			teamName: ''
 		}
 	},
+  computed:{
+    ...mapGetters(['userStatus', 'userTeam','currentUser','filteredTeams', 'currentEvent'])
+  },
 	methods:{
 		fetchEvent: function(){
 //			let _this = this
@@ -92,21 +72,7 @@ export default {
 			ref.update(update)
 		},
 		addTeam: function(){
-			let _this = this
-			let ref = this.$root.db.ref(this.$route.params.id+'/teams')
-			ref.push({
-				name: _this.teamName,
-				size: 5,
-				members: null,
-				leader: null
-			})
-			swal(
-				'Added team to event: '+this.event.name,
-				'The following team, '+_this.teamName+' has been added to your event',
-				'success'
-			).then(function(){
-				_this.teamName = ''
-			})
+			this.$store.dispatch("team/createTeam",{name: this.teamName});
 		}
 	},
 	components:{
@@ -117,7 +83,7 @@ export default {
 
 <style>
 	.event-page {
-		margin-top: 5%;
+		margin-top: 100px;
 	}
 	.add-team-input{
 		width: 100%;

@@ -1,18 +1,51 @@
 <template>
-	<div>
-		{{ type == 'max' ? 'Maximum' : 'Minimum'}} Team Size
-		<el-input-number :value="size" :min="1"></el-input-number>
+  <div>
+	  <div class="row">
+      <div class="ui grid">
+        <div class="column"> <span>Maximum Team Size</span> <el-input-number v-model="max" :min="min"></el-input-number> </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ui grid">
+        <div class="column"> <span>Minimum Team Size</span> <el-input-number v-model="min" :min="1" :max="max"></el-input-number> </div>
+      </div>
+    </div>
 	</div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
 export default {
-	props: ['type', 'size']
+  data(){
+    return {
+      max: 0,
+      min: 0
+    }
+  },
+  computed:{
+    ...mapGetters({
+      _max: 'eventMaxTeamSize',
+      _min: 'eventMinTeamSize',
+    })
+  },
+	watch:{
+    _max(val){
+      this.max = val;
+    },
+    _min(val){
+      this.min = val;
+    },
+    max(size){
+      this.$store.dispatch('setMaximumTeamSize',{size});
+    },
+    min(size){
+      this.$store.dispatch('setMinimumTeamSize',{size});
+    }
+  }
 }
 </script>
 
 <style>
-.ui.labeled.button:not([class*="left labeled"])>.button, .ui.labeled.button:not([class*="left labeled"])>.label, .ui[class*="left labeled"].button>.button{
-	cursor: default;
-}
+
 </style>

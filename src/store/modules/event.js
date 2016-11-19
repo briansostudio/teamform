@@ -8,7 +8,7 @@ const state = {
     description: '',
     limits: {
         min: 0,
-        max: 5
+        max: 0
     },
     criteria: [],
     teams: [],
@@ -18,12 +18,13 @@ const state = {
 }
 
 const getters = {
+    currentEvent: state=>state,
     eventId: state => state.id,
     eventName: state => state.name,
     eventDescription: state => state.description,
     eventMaxTeamSize: state => state.limits.max,
     eventMinTeamSize: state => state.limits.min,
-    eventScopedCriteria: state => state.qualities,
+    eventScopedCriteria: state => state.criteria,
     eventParticipatedTeams: state => state.teams,
     eventParticipatedMembers: state => state.members
 }
@@ -38,6 +39,7 @@ const mutations = {
         state.limits.min = event.teamSize.min
         state.limits.max = event.teamSize.max
         state.members = event.members;
+      state.teams = util.toArray(event.teams)
     },
     [types.EVENT_NAME_UPDATED](state, { name }){
         state.name = name
@@ -99,7 +101,7 @@ const actions = {
         })
     },
     fetchEvent({commit}, payload){
-        api.eventExist(payload).then((exist) => {
+        api.event.eventExist(payload).then((exist) => {
             if(exist){
                 api.loadEvent(payload, (event) => {
                     commit(types.EVENT_FETCHED, event)
@@ -117,11 +119,13 @@ const actions = {
             }
         })
     },
-    setMaximumTeamSize({commit}, payload){
+    setMaximumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MAX_UPDATED, payload)
+        api.event.updateEvent(state.id, {teamSize:state.limits});
     },
-    setMinimumTeamSize({commit}, payload){
+    setMinimumTeamSize({commit, state}, payload){
         commit(types.EVENT_TEAMSIZE_MIN_UPDATED, payload)
+        api.event.updateEvent(state.id, {teamSize:state.limits});
     },
     updateTeamDescription({commit}, payload){
         commit(types.EVENT_DESCRIPTION_UPDATED, payload)

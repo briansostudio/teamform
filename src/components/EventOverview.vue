@@ -10,15 +10,10 @@
       </h2>
       <div class ="event details">
         <p><i>Description:</i> {{events.description}}</p>
-        <p><i>Team Size:</i> {{events.size.min}} - {{events.size.max}}</p>
-        <p><i>List of Team: </i> </p>
-        <ol v-for="(teamName, index) in events.teamName">{{index+1}}. {{teamName.name}}  
-          <div class = "member number">
-            <i class="fa fa-users"></i>  {{teamName.numMember}}
-          </div>
-        </ol>
+        <p><i>Team Size:</i> {{events.limits.min}} - {{events.limits.max}}</p>
       </div>
     </div>
+    <div style="clear:both"></div>
   </div>
 </template>
 

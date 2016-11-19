@@ -1,30 +1,33 @@
 import * as types from '../mutation-types'
+import schema from './schema'
 import api from '../../api'
+import util from '../util'
 
 // initial team state
 const state = {
 	id: '',
 	name: '',
 	description: '',
-	members: [],
+	members: [],//array of id
 	requests: [],
 	tags: [],
-	leader: '',
-	size: 0
+	leader: '',//id
+	size: 0,
 }
 
 const getters = {
 	teamName: state => state.name,
 	teamDescription: state => state.description,
 	teamTags: state => state.tags,
-	teamSize: state => state.size
+	teamSize: state => state.size,
+  teamMembers: (state, getters, rootState) => util.filter(rootState.event.members,member=>state.members.includes(member.id))
 }
 
 // mutations for individual team
 
 const mutations = {
 	[types.ADD_TO_TEAM] (state, { request }){
-		
+
 	},
 	[types.MODIFY_TEAMSIZE] (state, { size }){
 		state.size = size
@@ -34,7 +37,7 @@ const mutations = {
 			state.join_request.push(req)
 		}
 	}
-	
+
 }
 
 const actions = {
