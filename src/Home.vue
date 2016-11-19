@@ -15,6 +15,7 @@
 import AppTitle from './components/AppTitle'
 import EventAction from './components/EventAction'
 import ForkMe from './components/ForkMe'
+import { mapGetters } from 'vuex'
 
 export default {
 	data() {
@@ -23,8 +24,21 @@ export default {
 			modeSwitch: true
 		}
 	},
+	computed: {
+		...mapGetters([
+			'validationErrors'
+		])
+	},
 	components: {
 		AppTitle, EventAction ,ForkMe
+	},
+	watch: {
+		validationErrors(val){
+			for(let v in val){
+				this.$message(v)
+				this.$store.dispatch('dismissValidationErrorMessage')
+			}
+		}
 	},
 	methods: {
 		hideWarning : () => {
@@ -47,6 +61,7 @@ export default {
 
 html {
 	height: 100%;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
 }
 
 .event-page {

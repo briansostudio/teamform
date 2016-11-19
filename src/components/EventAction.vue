@@ -84,7 +84,7 @@ export default {
 		},
 		createEvent: function(){
 			if (this.isInputValid()){
-				console.log('test')
+				this.$store.dispatch('createEvent', eventInput)
 			}
 		},
 		isInputValid: function(){

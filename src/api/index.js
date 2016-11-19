@@ -33,7 +33,7 @@ export default {
 		db.ref(`event/${id}`).update(properties)
 	},
 	updateTeam:function(event, update, cb){
-		db.ref(event+'/teams').update(update)
+		db.ref(`${event}/teams`).update(update)
 	},
 	loadEvent:function(eventTitle){
 		db.ref(eventTitle).on('value', (snapshot) => {

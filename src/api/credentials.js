@@ -1,7 +1,7 @@
 export const API_KEYS = {
-  apiKey: "AIzaSyBXc2nqW4q8-DVDtLroFh7pQp8Ru6wZGiU",
-  authDomain: "labfirebase-4e810.firebaseapp.com",
-  databaseURL: "https://labfirebase-4e810.firebaseio.com",
-  storageBucket: "labfirebase-4e810.appspot.com",
-  messagingSenderId: "235774078644"
+  apiKey: "AIzaSyB37sX4oAPk10vSdiUdmWehnnGJf4KXk-8",
+  authDomain: "teamform-14254.firebaseapp.com",
+  databaseURL: "https://teamform-14254.firebaseio.com",
+  storageBucket: "teamform-14254.appspot.com",
+  messagingSenderId: "250682606003"
 }

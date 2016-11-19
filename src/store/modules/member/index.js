@@ -1,6 +1,7 @@
 import api from '../../../api'
 import lib from './lib'
 import router from '../../../router'
+import * as types from '../../mutation-types'
 import Vue from 'vue';
 
 const state = {
@@ -33,9 +34,9 @@ const actions = {
 
     },(err)=>{
       if(err.code && err.message){
-        commit("member/LOGIN_ERROR",err);
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
       }else{
-        commit("member/LOGIN_ERROR","System Error:" + err);
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
       }
     })
   },
@@ -53,11 +54,25 @@ const actions = {
       router.push(`/event/${eventId}/`);
     },(err)=>{
       if(err.code && err.message){
-        commit("member/LOGIN_ERROR",err);
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
       }else{
-        commit("member/LOGIN_ERROR","System Error:" + err);
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
       }
     })
+  },
+  "member/socialLogin"({state, commit, rootState, dispatch}, platform){
+    let eventId = rootState.event.id
+    api.member.socialLogin(platform, eventId).then((userId)=>{
+      sessionStorage.setItem('firebase.user.uid', userId);
+      router.push(`/event/${eventId}/`);
+    },(err)=>{
+      if(err.code && err.message){
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
+      }else{
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
+      }
+    }
+    )
   },
   "schedule/createInterval"({commit, rootState}, {interval}){
     api.member.addIntervalToSchedule(rootState.event.id, rootState.member.id, interval)
@@ -78,9 +93,6 @@ const actions = {
 const mutations = {
   ["member/UPDATE"](state, {user}){
     Object.assign(state, user);
-  },
-  ["member/LOGIN_ERROR"](state, {}){
-
   },
   ["schedule/INTERVAL_ADDED"](state, {id, interval}){
     Vue.set(state.schedule.intervals, id, interval);
