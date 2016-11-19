@@ -5,7 +5,7 @@ let eventRefMap = {};
 
 export default {
   async getEventList(){
-    let snapshot = await db.ref(`/eventLists`).once('value');
+    let snapshot = await db.ref(`reference`).once('value');
     return snapshot.val();
   },
   observe(eventId, callback){
