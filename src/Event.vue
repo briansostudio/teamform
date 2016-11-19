@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-		<TeamList v-bind:teams="eventParticipatedTeams"></TeamList>
+		<TeamList v-bind:teams="filteredTeams"></TeamList>
 		<div class = "footer"></div>
   </div>
 </template>
@@ -55,7 +55,7 @@ export default {
 		}
 	},
   computed:{
-    ...mapGetters(['userStatus', 'userTeam','currentUser','eventParticipatedTeams', 'currentEvent'])
+    ...mapGetters(['userStatus', 'userTeam','currentUser','filteredTeams', 'currentEvent'])
   },
 	methods:{
 		fetchEvent: function(){

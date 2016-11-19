@@ -1,7 +1,11 @@
 const state = {
+  filter:{
+
+  }
 }
 
 const getters = {
+  filteredTeams:(state,getters,rootState)=>rootState.event.teams
 }
 
 const actions = {

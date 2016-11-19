@@ -5,12 +5,11 @@
       <span> ({{statusString}})</span>
 	  <!--<span>Current Team: {{teamName}}</span>-->
       <div>
-        <a class="userPageBtn" href="#" v-on:click.prevent="userPage">
+        <router-link :to="{ name: 'user', params: { eventId: $route.params.eventId, userId: user.id }}" class="userPageBtn">
           <i class="user icon" aria-hidden="true"></i>
-          </a>
-          <a class="signOutBtn" href="#" v-on:click.prevent="signOut">
+        </router-link>
+        <a class="signOutBtn" href="#" v-on:click.prevent="signOut">
           <i class="sign out icon" aria-hidden="true"></i>
-          </a>
         </a>
       </div>
     </div>
@@ -29,9 +28,6 @@ export default{
     }
   },
   methods:{
-    userPage(){
-
-    },
     signOut(){
 
     }
