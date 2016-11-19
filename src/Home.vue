@@ -34,10 +34,6 @@ export default {
 	},
 	watch: {
 		validationErrors(val){
-			for(let v in val){
-				this.$message(v)
-				this.$store.dispatch('dismissValidationErrorMessage')
-			}
 		}
 	},
 	methods: {

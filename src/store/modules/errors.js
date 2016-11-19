@@ -26,13 +26,25 @@ const actions = {
 
 const mutations = {
     [types.ERRORS_NOTIFY_INVALIDATED](state, { message }){
-        state.validation.push(message)
+        state.validation.push({
+            message: message,
+            type: 'error',
+            duration: 0
+        })
     },
     [types.ERRORS_NOTIFY_SYSTEM](state, { message }){
-        state.system.push(message)
+        state.system.push({
+            message: message,
+            type: 'error',
+            duration: 0
+        })
     },
     [types.ERRORS_NOTIFY_UNDEFINED](state, { message }){
-        state.misc.push(message)
+        state.misc.push({
+            message: message,
+            type: 'error',
+            duration: 0
+        })
     },
     [types.ERRORS_DISMISS_INVALIDATED](state){
         state.validation.shift()
