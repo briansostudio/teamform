@@ -1,4 +1,4 @@
-import {fb, db, auth} from './firebase'
+import {fb, db, auth, auth_providers} from './firebase'
 
 export default {
   async register(eventId, {email, password}, userData){
@@ -23,7 +23,7 @@ export default {
 
     //create user;
     userData.id = user.uid;
-    await this.getFireBaseRef(user.uid, eventId).set(userData);
+    await this.getFirebaseRef(user.uid, eventId).set(userData);
     return user.uid;
   },
   async login(eventId, {email, password}, userData){
@@ -34,7 +34,7 @@ export default {
     return user.uid;
   },
   async assertRegisteredInEvent(userId, eventId){
-    let exist = await this.getFireBaseRef(userId, eventId).once("value");
+    let exist = await this.getFirebaseRef(userId, eventId).once("value");
     if(exist.val() === null){
       throw {
         code: "app/not-registered-in-event",
@@ -43,7 +43,7 @@ export default {
     }
   },
   async assertNotRegisteredInEvent(userId, eventId){
-    let exist = await this.getFireBaseRef(userId, eventId).once("value");
+    let exist = await this.getFirebaseRef(userId, eventId).once("value");
     if(exist.val() !== null){
       throw {
         code: "app/user-already-register",
@@ -51,44 +51,48 @@ export default {
       }
     }
   },
-  socialLogin:function(type, cb){
+  async socialLogin(platform ,eventId){
     let provider
-    switch(type){
-      case 'Github':
-        provider = new auth.GithubAuthProvider()
-      case 'Google':
-        provider = new auth.GoogleAuthProvider()
+    switch(platform){
+      case 'google':
+        provider = auth_providers[0]
+        break
+      case 'github':
+        provider = auth_providers[1]
+        break
     }
-    auth.signInWithRedirect(provider)
-    getRedirectResult().then( (result) => {
-      const token = result.credential.accessToken
-      db.ref('users/').update(result.user)
-      cb(token)
-    } ).catch( (error) => {
-      console.log(error)
-    })
+    let result = await auth.signInWithPopup(provider)
+
+    let user = {
+      name: result.user.displayName,
+      description: "no description yet",
+      id: result.user.uid
+    }
+
+    await this.getFirebaseRef(result.user.uid, eventId).set(user);
+    return user.id
   },
   async getMember(userId, eventId){
-    let snapshot = await this.getFireBaseRef(userId, eventId).once("value");
+    let snapshot = await this.getFirebaseRef(userId, eventId).once("value");
     return snapshot.val();
   },
   async addIntervalToSchedule(eventId, userId, interval){
-    let ref = this.getFireBaseRef(userId, eventId).child("schedule/intervals");
+    let ref = this.getFirebaseRef(userId, eventId).child("schedule/intervals");
     return ref.push({
       start: interval.start,
       end: interval.end
     }).key;
   },
   async updateIntervalInSchedule(eventId, userId, intervalId, interval){
-    let ref = this.getFireBaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
+    let ref = this.getFirebaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
     await ref.set(interval);
   },
   async removeIntervalFromSchedule(eventId, userId, intervalId){
-    let ref = this.getFireBaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
+    let ref = this.getFirebaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
     await ref.remove();
   },
   //private use, should not call
-  getFireBaseRef(userId, eventId){
+  getFirebaseRef(userId, eventId){
     return db.ref(`events/${eventId}/members/${userId}`);
   },
   async updateMember(userId, eventId, updates){

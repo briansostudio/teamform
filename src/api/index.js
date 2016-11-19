@@ -6,6 +6,6 @@ import team from './team'
 export default {
   member,
   event,
-  team,
+  team
 }
 

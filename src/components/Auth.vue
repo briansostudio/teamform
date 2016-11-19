@@ -3,14 +3,14 @@
   <!--title of the auth form-->
     <div v-show="!isRegister">
       <div>
-        <button class="ui google plus labeled icon button">
+        <button class="ui google plus labeled icon button" @click="signInWithProvider('google')">
         <i class="google plus icon"></i>
           Sign in with Google
         </button>
       </div>
       <br>
       <div>
-        <button class="ui github labeled icon button">
+        <button class="ui github labeled icon button" @click="signInWithProvider('github')">
         <i class="github icon"></i>
           Sign in with Github
         </button>
@@ -53,7 +53,7 @@
 
     <span>
       <span>{{isRegister ? "Already have account":"Not a member?"}}</span>
-      <el-button size="mini" v-on:click="toggleRegister">{{isRegister ? "login" : "register"}}</el-button>
+      <el-button size="mini" v-on:click="toggleRegister">{{isRegister ? "Login" : "Register"}}</el-button>
     </span>
   </div>
 
@@ -96,7 +96,7 @@ export default
         this.$store.dispatch('member/login', {email:this.email, password:this.password});
       },
       signInWithProvider(provider){
-
+        this.$store.dispatch('member/socialLogin', provider)
       }
 
     },
