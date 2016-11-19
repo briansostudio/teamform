@@ -14,22 +14,34 @@
 				</div>
 			</h2>
 		</div>
-		<div class="row">
+		<div v-if="userStatus === 'NO_TEAM'" class="row">
 			<div class="ui large action input">
 				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
-				<button class="ui teal left labeled icon button">
+				<button class="ui teal left labeled icon button" @click="addTeam">
 					<i class="add user icon"></i>
 					Add Team
 				</button>
 			</div>
 		</div>
-		<TeamList v-bind:teams="teams"></TeamList>
+    <div v-else class="ui centered grid">
+      <div class="column">
+        <div class="ui left aligned segment teamCard">
+          <img class="ui small left floated image" />
+          <h3 class="ui header teal">{{userTeam.name}}</h3>
+          <div class="small">
+            <span>Description: {{userTeam.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+		<TeamList v-bind:teams="eventParticipatedTeams"></TeamList>
 		<EventOverview :events = "event"></EventOverview>
 		<div class = "footer"></div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
@@ -65,6 +77,9 @@ export default {
 			teamName: ''
 		}
 	},
+  computed:{
+    ...mapGetters(['userStatus', 'userTeam','eventParticipatedTeams'])
+  },
 	methods:{
 		fetchEvent: function(){
 //			let _this = this
@@ -80,21 +95,7 @@ export default {
 			ref.update(update)
 		},
 		addTeam: function(){
-			let _this = this
-			let ref = this.$root.db.ref(this.$route.params.id+'/teams')
-			ref.push({
-				name: _this.teamName,
-				size: 5,
-				members: null,
-				leader: null
-			})
-			swal(
-				'Added team to event: '+this.event.name,
-				'The following team, '+_this.teamName+' has been added to your event',
-				'success'
-			).then(function(){
-				_this.teamName = ''
-			})
+			this.$store.dispatch("team/createTeam",{name: this.teamName});
 		}
 	},
 	components:{

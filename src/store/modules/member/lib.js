@@ -9,9 +9,7 @@ export default {
       quality:{ //radar chart
 
       },
-      team: {
-
-      },
+      team: '',//team id
       schedule: sleepingSchedule()
     }
   }

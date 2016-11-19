@@ -91,4 +91,7 @@ export default {
   getFireBaseRef(userId, eventId){
     return db.ref(`events/${eventId}/members/${userId}`);
   },
+  async updateMember(userId, eventId, updates){
+    await this.getFireBaseRef(userId, eventId).update(updates);
+  }
 }

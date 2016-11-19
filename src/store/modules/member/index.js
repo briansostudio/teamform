@@ -2,6 +2,8 @@ import api from '../../../api'
 import lib from './lib'
 import router from '../../../router'
 import Vue from 'vue';
+import schema from '../schema'
+import util from '../../util'
 
 const state = {
   id: sessionStorage.getItem('firebase.user.uid') || "",
@@ -11,15 +13,39 @@ const state = {
     intervals:{
     }
   },
+  team:'',
   description: "",
   criteria:[
   ]
 };
 
 const getters = {
+  userStatus: state => state.status,
+  userTeam: (state,getters,rootState)=>util.find(rootState.event.teams,team=>team.id === state.team) || schema.team()
 };
 
 const actions = {
+  "member/becomeLeader"({state, commit, rootState, dispatch}, {teamId}){
+    let eventId = rootState.event.id;
+    api.member.updateMember(state.id, eventId, {
+      status: "LEADER",
+      team: teamId
+    });
+  },
+  "team/createTeam"({commit, state, rootState, dispatch}, {name}){
+    if(!state.id){
+      throw {code:'app/no-user-login', message:"No user is logged in to create this team, please Login and retry"}
+    }
+    if(state.status !== 'NO_TEAM'){
+      throw {code: 'app/already-have-team', message:"You cannot create a team as you are still in a team"}
+    }
+    let team = schema.team(rootState.member.id);
+    team.name = name;
+    api.team.createTeam(rootState.event.id, team).then(teamId=>{
+      console.log(teamId);
+      dispatch('member/becomeLeader', {teamId})
+    });
+  },
   "member/register"({state, commit, rootState, dispatch}, {name, email, password}){
     let eventId = rootState.event.id;
     let user = lib.mockMember();
