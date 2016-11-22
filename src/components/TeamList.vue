@@ -1,6 +1,8 @@
 <template>
 	<div>
-			<TeamCard v-for="(team, index) in teams" :team="team"></TeamCard>
+    <transition-group name="fadeLeft" tag="div">
+			<TeamCard v-for="(team, index) in teams" :team="team" key="team.id"></TeamCard>
+    </transition-group>
 	</div>
 </template>
 

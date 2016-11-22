@@ -1,9 +1,6 @@
 <template>
 	<div class="ui centered grid">
 			<fork-me></fork-me>
-			<div class="mode-switch">
-				<el-switch v-model="modeSwitch" on-text="" off-text=""></el-switch>
-			</div>
 			<div class="row event-page">
 				<app-title></app-title>
 			</div>
@@ -37,10 +34,6 @@ export default {
   },
 	watch: {
 		validationErrors(val){
-			for(let v in val){
-				this.$message(v)
-				this.$store.dispatch('dismissValidationErrorMessage')
-			}
 		}
 	},
 	methods: {

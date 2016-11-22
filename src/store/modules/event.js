@@ -96,12 +96,7 @@ const actions = {
         api.eventExist(payload).then((exist) => {
             if(exist){
                 commit(types.ERRORS_NOTIFY_INVALIDATED, {
-                    message: 'Event already exist, please retry',
-                    type: 'error',
-                    duration: 0,
-                    onClose(){
-                        this.$store.dispatch('dismissValidationErrorMessage')
-                    }
+                    message: 'Event already exist, please retry'
                 })
             }
             else{
