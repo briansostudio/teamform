@@ -5,7 +5,7 @@
           <h1>Event Name: {{event.name}}</h1>
         </div>
         <div class="row">
-          <TeamOverview :teamId="teams"></TeamOverview>
+          <TeamOverview :team="viewingTeam"></TeamOverview>
         </div>
         <div class = "footer"></div>
       </div>
@@ -16,6 +16,7 @@
 <script>
   import TeamOverview from './components/TeamOverview'
   import MemberList from './components/MemberList'
+  import { mapGetters } from 'vuex'
   export default {
       data(){
         return {
@@ -33,7 +34,9 @@
           }
         }
       },
-      computed: {},
+      computed: {
+        ...mapGetters(["viewingTeam"])
+      },
       methods: {},
       props: {},
       components: {TeamOverview, MemberList}

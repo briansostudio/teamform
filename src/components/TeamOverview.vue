@@ -7,13 +7,13 @@
 					  <i class="users icon massive teal"></i>
 					</div>
 					<div class="content ui left aligned segment">
-					  <a class="header">Team Name: {{teamId.name}}</a>
+					  <a class="header">Team Name: {{team.name}}</a>
 					  <div class="meta">
-						<span>Description: {{teamId.description}}</span>
+						<span>Description: {{team.description}}</span>
 					  </div>
 					  <div class="description">
-						<p>Leader Name: {{teamId.leader}}</p>
-						<p>Number of members: </p>
+						<p>Leader Name: {{team.leader.name}}</p>
+						<p>Number of members: {{team.members.length}}</p>
 					  </div>
 					</div>
 				  </div>
@@ -25,7 +25,7 @@
 <script>
 //import RaderChart from './RaderChart.vue'
 export default {
-	props: ['teamId']
+	props: ['team']
 }
 </script>
 

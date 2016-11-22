@@ -2,6 +2,7 @@ import * as types from '../mutation-types'
 import schema from './schema'
 import api from '../../api'
 import util from '../util'
+import eventLib from '../../lib/event'
 
 // initial team state
 const state = {
@@ -11,16 +12,17 @@ const state = {
 	members: [],//array of id
 	requests: [],
 	tags: [],
-	leader: '',//id
+	leader: {},
 	size: 0,
 }
 
 const getters = {
+  viewingTeam: state => state,
 	teamName: state => state.name,
 	teamDescription: state => state.description,
 	teamTags: state => state.tags,
 	teamSize: state => state.size,
-  teamMembers: (state, getters, rootState) => util.filter(rootState.event.members,member=>state.members.includes(member.id))
+  teamMembers: (state, getters, rootState) => state.members
 }
 
 // mutations for individual team
@@ -36,11 +38,16 @@ const mutations = {
 		for(req in requests){
 			state.join_request.push(req)
 		}
-	}
-
+	},
+  "team/updateTeam" (state, {team}){
+	  Object.assign(state, team);
+  }
 }
 
 const actions = {
+  "team/dispatchUpdateTeam" ({rootState, commit}, {team}){
+    commit("team/updateTeam", {team:Object.assign({}, team, eventLib.computeTeamMeta(team,rootState.event))});
+  },
 	addJoinRequest({commit, state, rootState}, payload){
 		const requests = payload
 		commit(types.ADD_JOIN_REQUEST, { requests })

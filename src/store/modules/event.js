@@ -69,7 +69,7 @@ const mutations = {
 }
 
 const actions = {
-    "event/onLoad"({commit, rootState}, {eventId}){
+    "event/onLoad"({commit,dispatch, rootState}, {eventId}){
       commit(types.EVENT_ID_CHANGED, {eventId});
       api.event.observe(eventId, (event)=>{
         if(event !== null){
@@ -78,6 +78,11 @@ const actions = {
           let user = event.members[rootState.member.id];
           if(user){
             commit("member/UPDATE", {user});
+          }
+
+          let team = event.teams[rootState.route.params.teamId];
+          if(team){
+            dispatch("team/dispatchUpdateTeam", {team});
           }
         }else{
           //Event not found
