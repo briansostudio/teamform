@@ -46,7 +46,11 @@ const mutations = {
 
 const actions = {
   "team/dispatchUpdateTeam" ({rootState, commit}, {team}){
-    commit("team/updateTeam", {team:Object.assign({}, team, eventLib.computeTeamMeta(team,rootState.event))});
+    let meta = eventLib.computeTeamMeta(team,rootState.event);
+    for(let member of meta.members){
+      Object.assign(member, eventLib.computeMemberMeta(member, rootState.event));
+    }
+    commit("team/updateTeam", {team:Object.assign({}, team, meta)});
   },
 	addJoinRequest({commit, state, rootState}, payload){
 		const requests = payload

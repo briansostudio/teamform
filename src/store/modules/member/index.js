@@ -118,6 +118,9 @@ const actions = {
   "schedule/removeInterval"({commit, rootState}, {id}){
     api.member.removeIntervalFromSchedule(rootState.event.id, rootState.member.id, id);
     commit('schedule/INTERVAL_REMOVED', {id});
+  },
+  "member/dispatch_UPDATE"({commit, rootState}, {user}){
+    commit("member/UPDATE",{user: Object.assign({}, user, eventLib.computeMemberMeta(user, rootState.event))});
   }
 };
 

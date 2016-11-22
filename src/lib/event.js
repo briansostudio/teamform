@@ -6,6 +6,7 @@ export default{
       leader: eventState.members[team.leader],
       freeHours: 0,
       weakness:"unknown",
+      strength:"unknown",
       members:this.getMembersInTeam(team,eventState),
       radarChartData: [],
     };
@@ -18,6 +19,7 @@ export default{
 
     let labels = eventState.criteria;
     let weaknessMap = labels.map(()=>0);
+    let strengthMap = labels.map(()=>0);
 
     let masterTeamSchedule = new Schedule();
     for(let member of members){
@@ -29,18 +31,26 @@ export default{
         if(member.criteria[index] > weaknessMap[index]){
           weaknessMap[index] = member.criteria[index];
         }
+        strengthMap[index] += member.criteria[index];
       }
     }
 
-    let mi = 0;
+    let wi = 0;
+    let si = 0;
     let weak = weaknessMap[0];
+    let strong = strengthMap[0];
     for(let index in weaknessMap){
       if(weaknessMap[index] < weak){
-        mi = index;
+        wi = index;
         weak = weaknessMap[index];
       }
+      if(strengthMap[index] > strong){
+        si = index;
+        strong = strengthMap[index];
+      }
     }
-    result.weakness = labels[mi];
+    result.weakness = labels[wi];
+    result.strength = labels[si];
 
     masterTeamSchedule = masterTeamSchedule.resolve();
     result.freeHours = masterTeamSchedule.calculateRemainingTimeInWeek() / 3600000;
@@ -87,5 +97,17 @@ export default{
         return `rgba(${c.r},${c.g},${c.b},${c.a})`;
       }
     };
+  },
+  computeMemberMeta(member, eventState){
+    let result =  {
+      freeHours: 0,
+      weakness:"unknown",
+      strength:"unknown",
+      radarChartData: {
+        labels: eventState.criteria.map((s)=>s.substring(0,3)),
+        datasets: [this.getMemberRadarChartData(member)]
+      }
+    };
+    return result;
   }
 }

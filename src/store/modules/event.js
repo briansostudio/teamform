@@ -77,7 +77,7 @@ const actions = {
 
           let user = event.members[rootState.member.id];
           if(user){
-            commit("member/UPDATE", {user});
+            dispatch("member/dispatch_UPDATE", {user});
           }
 
           let team = event.teams[rootState.route.params.teamId];
