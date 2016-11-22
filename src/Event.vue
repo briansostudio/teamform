@@ -2,9 +2,15 @@
 	<div class="ui centered grid event-page-main">
 		<BasicUserStatus :user="currentUser" :team="userTeam"></BasicUserStatus>
 
-    <EventOverview :events = "currentEvent"></EventOverview>
-
-    <TeamSizeControl></TeamSizeControl>
+    <div class="row">
+      <EventOverview :events = "currentEvent"></EventOverview>
+    </div>
+    <div class="row">
+      <Countdown :Date="eventDeadline"></Countdown>
+    </div>
+    <div class="row">
+      <TeamSizeControl></TeamSizeControl>
+    </div>
 
 		<div class="row">
 			<h2 class="ui header">
@@ -50,11 +56,13 @@ import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
 import BasicUserStatus from './components/BasicUserStatus'
   import TeamCard from './components/TeamCard'
+  import Countdown from './components/Countdown.vue'
 
 export default {
 	data(){
 		return {
-			teamName: ''
+			teamName: '',
+      eventDeadline: new Date(Date.now() + 86400000)
 		}
 	},
   computed:{
@@ -79,7 +87,7 @@ export default {
 		}
 	},
 	components:{
-		TeamSizeControl, TeamList, EventOverview, BasicUserStatus, TeamCard
+		TeamSizeControl, TeamList, EventOverview, BasicUserStatus, TeamCard, Countdown
 	}
 }
 </script>

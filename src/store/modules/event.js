@@ -40,6 +40,7 @@ const mutations = {
         state.limits.max = event.teamSize.max
         state.members = event.members;
       state.teams = util.toArray(event.teams)
+      state.criteria = event.criteria;
     },
     [types.EVENT_NAME_UPDATED](state, { name }){
         state.name = name

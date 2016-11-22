@@ -4,10 +4,10 @@
       <h3 class="ui header teal">{{team.name}}</h3>
       <div style="display:flex">
         <div style="width: 200px">
-          <span>Leader: {{leaderName}}</span><br>
-          <span>Member: {{numOfMember}}/{{maxMember}}</span><br>
-          <span>Free Hours: {{freeHours}}</span><br>
-          <span>Weakness: {{weakness}}</span><br>
+          <span>Leader: {{team.leader.name}}</span><br>
+          <span>Member: {{team.members.length}}/{{maxMember}}</span><br>
+          <span>Free Hours: {{team.freeHours}}</span><br>
+          <span>Weakness: {{team.weakness}}</span><br>
           <span> [[Or maybe other attributes/data to show]]</span>
         </div>
         <div>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="teamCard-radar">
-      <Radar :chartData="chartData" :options="options"></Radar>
+      <Radar :chartData="team.radarChartData" :options="options"></Radar>
     </div>
   </div>
 </template>
@@ -31,26 +31,22 @@
               options:{
                 legend:{
                   display:false
+                },
+                scale:{
+                  pointLabels:{
+                    fontSize:10,
+                    fontColor:"#00816A"
+                  },
+                  ticks: {
+                    max: 100,
+                    min: 0,
+                    stepSize: 25
+                  }
                 }
-              }
+              },
             }
         },
         computed: {
-          chartData(){
-            return {
-              labels: ["Web", "And", "iOS", "UI", "Bus", "Des"],
-              datasets: [{
-                label: "Andrew",
-                backgroundColor: "rgba(179,181,198,0.2)",
-                borderColor: "rgba(179,181,198,1)",
-                pointBackgroundColor: "rgba(179,181,198,1)",
-                pointBorderColor: "#fff",
-                pointHoverBackgroundColor: "#fff",
-                pointHoverBorderColor: "rgba(179,181,198,1)",
-                data: [60, 59, 90, 81, 56, 55]
-              }]
-            };
-          },
           freeHours(){
               return 120; // 120 hours
           },

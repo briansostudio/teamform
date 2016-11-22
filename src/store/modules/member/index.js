@@ -5,6 +5,7 @@ import * as types from '../../mutation-types'
 import Vue from 'vue';
 import schema from '../schema'
 import util from '../../util'
+import eventLib from '../../../lib/event'
 
 const state = {
   id: sessionStorage.getItem('firebase.user.uid') || "",
@@ -23,7 +24,10 @@ const state = {
 const getters = {
   currentUser: state => state,
   userStatus: state => state.status,
-  userTeam: (state,getters,rootState)=>util.find(rootState.event.teams,team=>team.id === state.team) || schema.team()
+  userTeam: (state,getters,rootState)=>{
+    let team = util.find(rootState.event.teams,team=>team.id === state.team) || schema.team();
+    return Object.assign({},team,eventLib.computeTeamMeta(team, rootState.event));
+  }
 };
 
 const actions = {

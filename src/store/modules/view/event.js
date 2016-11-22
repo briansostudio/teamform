@@ -1,3 +1,5 @@
+import eventLib from '../../../lib/event'
+
 const state = {
   filter:{
 
@@ -6,7 +8,9 @@ const state = {
 
 const getters = {
   filteredTeams:(state,getters,rootState)=>{
-    return rootState.event.teams;
+    return rootState.event.teams.map((team)=>{
+      return Object.assign({},team, eventLib.computeTeamMeta(team, rootState.event));
+    });
   }
 }
 
