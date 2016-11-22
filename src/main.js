@@ -4,6 +4,7 @@ import { sync } from 'vuex-router-sync'
 import router from './router'
 import store from './store'
 import Element from 'element-ui'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
 
 Vue.use(VueRouter)
