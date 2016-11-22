@@ -1,5 +1,5 @@
 <template>
-	<div class="ui centered grid">
+	<div class="ui centered grid event-page-main">
 		<BasicUserStatus :user="currentUser" :team="userTeam"></BasicUserStatus>
 
     <EventOverview :events = "currentEvent"></EventOverview>
@@ -24,18 +24,20 @@
 				</button>
 			</div>
 		</div>
-    <div v-if="userStatus !== 'NO_TEAM'" class="ui centered grid">
+
+    <div v-if="userStatus !== 'NO_TEAM'" class="row">
       <div class="column">
-        <div class="ui left aligned segment teamCard">
-          <img class="ui small left floated image" />
-          <h3 class="ui header teal">{{userTeam.name}}</h3>
-          <div class="small">
-            <span>Description: {{userTeam.description}}</span>
-          </div>
-        </div>
+        <TeamCard :team="userTeam"></TeamCard>
       </div>
     </div>
-		<TeamList v-bind:teams="filteredTeams"></TeamList>
+
+    <div class="row">
+      <div class="column">
+        <TeamList v-bind:teams="filteredTeams"></TeamList>
+      </div>
+    </div>
+
+
 		<div class = "footer"></div>
   </div>
 </template>
@@ -47,6 +49,7 @@ import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
 import BasicUserStatus from './components/BasicUserStatus'
+  import TeamCard from './components/TeamCard'
 
 export default {
 	data(){
@@ -76,12 +79,17 @@ export default {
 		}
 	},
 	components:{
-		TeamSizeControl, TeamList, EventOverview, BasicUserStatus
+		TeamSizeControl, TeamList, EventOverview, BasicUserStatus, TeamCard
 	}
 }
 </script>
 
 <style>
+  .ui.grid.event-page-main{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 	.event-page {
 		margin-top: 100px;
 	}

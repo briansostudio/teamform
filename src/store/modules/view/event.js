@@ -5,7 +5,9 @@ const state = {
 }
 
 const getters = {
-  filteredTeams:(state,getters,rootState)=>rootState.event.teams
+  filteredTeams:(state,getters,rootState)=>{
+    return rootState.event.teams;
+  }
 }
 
 const actions = {
