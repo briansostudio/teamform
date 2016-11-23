@@ -6,12 +6,9 @@
                 <h1 class="ui center aligned icon header">
                   <i class="user icon"></i>
                 </h1>
-                <!--<h1>
-                <i class="circular user icon" style="width:100%"></i>
-                <h1>-->
               </div>
-              <!--<i class="grid-content circular user icon"></i>-->
-              <h1>Hong Ng</h1>
+              <h1>{{viewingUser.name}}</h1>
+              <h2>{{viewingUser.description}}</h2>
               </el-col>
             <el-col :span="12">
                 <el-tabs :active-name="activeName" style="width:100%">
@@ -120,5 +117,11 @@
 
   .User {
     margin-top: 5%;
+  }
+
+  .ui.center.aligned.icon.header
+  {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 </style>
