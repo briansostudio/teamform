@@ -81,7 +81,7 @@ export default{
       pointBorderColor: "#fff",
       pointHoverBackgroundColor: "#fff",
       pointHoverBorderColor: color.text(),
-      data: member.criteria
+      data: member.criteria || []
     };
     color.a = 0.2;
     result.backgroundColor = color.text();
