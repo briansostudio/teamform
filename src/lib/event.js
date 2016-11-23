@@ -21,10 +21,12 @@ export default{
     let weaknessMap = labels.map(()=>0);
     let strengthMap = labels.map(()=>0);
 
-    let masterTeamSchedule = new Schedule();
+    let intervals = [];
     for(let member of members){
       if(member.schedule){
-        masterTeamSchedule.combine(member.schedule);
+        for(let index in member.schedule){
+          intervals.push(member.schedule[index]);
+        }
       }
 
       for(let index in labels){
@@ -52,7 +54,7 @@ export default{
     result.weakness = labels[wi];
     result.strength = labels[si];
 
-    masterTeamSchedule = masterTeamSchedule.resolve();
+    let masterTeamSchedule = new Schedule(intervals).resolve();
     result.freeHours = masterTeamSchedule.calculateRemainingTimeInWeek() / 3600000;
 
     return result;
@@ -60,7 +62,11 @@ export default{
   getMembersInTeam(team, eventState){
     let members = [];
     for(let uid of team.members){
-      members.push(eventState.members[uid]);
+      let member = eventState.members[uid];
+      members.push(Object.assign({},member,{
+        schedule:this.convertSchedule(member.schedule, eventState),
+        criteria:this.fillUpCriteria(member.criteria, eventState.criteria)
+      }));
     }
     return members;
   },
@@ -103,12 +109,22 @@ export default{
       freeHours: 0,
       weakness:"unknown",
       strength:"unknown",
+      criteria: this.fillUpCriteria(member.criteria, eventState.criteria),
       radarChartData: {
         labels: eventState.criteria.map((s)=>s.substring(0,3)),
         datasets: [this.getMemberRadarChartData(member)]
       },
       schedule: this.convertSchedule(member.schedule)
     };
+    return result;
+  },
+  fillUpCriteria(userCriteria, eventCriteria){
+    if(!userCriteria)
+      return eventCriteria.map(()=>0);
+    let result = [];
+    for(let index in eventCriteria){
+      result.push(userCriteria[index]);
+    }
     return result;
   },
   convertSchedule(schedule){
