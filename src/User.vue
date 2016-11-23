@@ -1,9 +1,32 @@
 <template>
     <div class="User">
-      <UserStatus :user="viewingUser"></UserStatus>
-      <Radar :chartData="chartData"></Radar>
-      <WeeklySchedule :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
-      <MyRequests :requests = "request"></MyRequests>
+        <el-row :gutter="24" type="flex" justify="center" align="center">
+            <el-col :span="4">
+              <div class="grid-content bg-purple">
+                <h1 class="ui center aligned icon header">
+                  <i class="user icon"></i>
+                </h1>
+              </div>
+              <h1>{{viewingUser.name}}</h1>
+              <h2>{{viewingUser.description}}</h2>
+              </el-col>
+            <el-col :span="12">
+                <el-tabs :active-name="activeName" style="width:100%">
+                  <el-tab-pane label="Overview" name="first">
+                    <UserStatus :user="viewingUser"></UserStatus>
+                  </el-tab-pane>
+                  <el-tab-pane label="Skill" name="second">
+                      <Radar :chartData="chartData"></Radar>
+                  </el-tab-pane>
+                  <el-tab-pane label="Schedule" name="third">
+                      <WeeklySchedule :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
+                  </el-tab-pane>
+                  <el-tab-pane label="Request" name="fourth">
+                      <MyRequests :requests="request"></MyRequests>
+                  </el-tab-pane>
+                </el-tabs>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -13,7 +36,6 @@
   import MyRequests from './components/MyRequests.vue'
   import { mapGetters } from 'vuex'
   import Radar from './components/Radar.vue'
-
 
   export default {
     data(){
@@ -51,7 +73,55 @@
 </script>
 
 <style>
-    .User {
-
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    height: 200px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    align-content: center;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
+  .el-tabs__item.is-active {
+    color: #00FA9A;
+  }
+
+  .el-tabs__active-bar {
+    background-color: #00FA9A;
+  }
+
+  .User {
+    margin-top: 5%;
+  }
+
+  .ui.center.aligned.icon.header
+  {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 </style>

@@ -6,6 +6,7 @@ import Vue from 'vue';
 import schema from '../schema'
 import util from '../../util'
 import eventLib from '../../../lib/event'
+import $ from 'jquery';
 
 const state = {
   id: sessionStorage.getItem('firebase.user.uid') || "",
@@ -61,6 +62,7 @@ const actions = {
 
     api.member.register(eventId, {email, password}, user).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
+      $('body').css("overflow","");
       router.push(`/event/${eventId}/user/${userId}/`);
 
     },(err)=>{
@@ -76,12 +78,7 @@ const actions = {
 
     api.member.login(eventId, {email, password}).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
-      let user = rootState.event.members[userId];
-      if(user){
-        commit("member/UPDATE", {user});
-      }else{
-        console.error("SHOULD NOT COME HERE #12532");
-      }
+      $('body').css("overflow","");
       router.push(`/event/${eventId}/`);
     },(err)=>{
       if(err.code && err.message){
@@ -95,6 +92,7 @@ const actions = {
     let eventId = rootState.event.id
     api.member.socialLogin(platform, eventId).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
+      $('body').css("overflow","");
       router.push(`/event/${eventId}/`);
     },(err)=>{
       if(err.code && err.message){
