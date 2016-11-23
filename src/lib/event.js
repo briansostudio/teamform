@@ -106,8 +106,18 @@ export default{
       radarChartData: {
         labels: eventState.criteria.map((s)=>s.substring(0,3)),
         datasets: [this.getMemberRadarChartData(member)]
-      }
+      },
+      schedule: this.convertSchedule(member.schedule)
     };
     return result;
+  },
+  convertSchedule(schedule){
+    if(!schedule)
+      return new Schedule();
+    let intervals = {};
+    for(let index in schedule.intervals){
+      intervals[index] = schedule.intervals[index];
+    }
+    return {intervals:intervals};
   }
 }
