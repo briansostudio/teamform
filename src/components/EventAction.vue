@@ -159,6 +159,6 @@ button.action-btn:hover{
     border-radius: 500rem !important;
     width: 100%;
     height: 3rem;
-    min-width: 270px;
+    min-width: 480px;
   }
 </style>

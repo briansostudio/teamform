@@ -17,6 +17,14 @@ export default {
     let {ref, func} = eventRefMap[eventId];
     ref.off("value",func);
   },
+  async authenticateAsOrganizer(eventId, password){
+    let ref = db.ref(`/events/${eventId}/adminPassword`)
+    let snapshot = await ref.once('value')
+    if(snapshot.val() == password){
+      return true
+    }
+    else return false
+  },
   async createEvent(name){
     let key = db.ref('reference').push(name).key;
     await db.ref(`events/${key}`).set({

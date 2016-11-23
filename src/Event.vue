@@ -49,14 +49,14 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
 import BasicUserStatus from './components/BasicUserStatus'
-  import TeamCard from './components/TeamCard'
-  import Countdown from './components/Countdown.vue'
+import TeamCard from './components/TeamCard'
+import Countdown from './components/Countdown.vue'
 
 export default {
 	data(){
