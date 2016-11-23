@@ -98,10 +98,14 @@
     padding: 1em;
   }
   .teamCard-radar{
-    width: 214px;
-    height: 214px;
+    width: 243px;
+    height: 218px;
     background: #FFF;
-    border-radius: 5px;
-    margin-right: 2px;
+    border-radius: 0 5px 5px 0;
+    border-left:1px solid #ddd;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 5px;
+    /*margin-right: 2px;*/
   }
 </style>
