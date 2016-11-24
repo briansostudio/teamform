@@ -6,27 +6,24 @@
             </div>
             <el-form>
                 <el-form-item label="Authentication Password">
-                    <el-input v-model="form.password"></el-input>
+                    <el-input v-model="password" type="password"></el-input>
                 </el-form-item>
-                <el-button type="primary" @click.native="adminLogin(form.password)">Login</el-button>
             </el-form>
         </el-card>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
     data(){
         return {
-            form: {
-                password: ''
-            }
+            password: ''
         }
     },
-    methods: {
-        ...mapActions(['adminLogin'])
+    watch: {
+        password(val){
+            this.$store.dispatch('updatePasswordEntered', val)
+        }
     }
 }
 </script>

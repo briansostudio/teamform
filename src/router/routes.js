@@ -18,7 +18,7 @@ const routes = [
     component: Event
   },
   {
-    path: '/event/:eventId/admin',
+    path: '/event/:eventId/manage',
     name: 'event admin',
     component: EventAdmin
   },

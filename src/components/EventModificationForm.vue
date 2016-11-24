@@ -20,10 +20,6 @@
                 <div class="ui grid">
                     <div class="column">
                         <TeamSizeControl type="max" :size="event.size.max"></TeamSizeControl>
-                        <div class="ui buttons">
-                            <button class="ui button" @click="event.size.max-=1"><i class="minus icon"></i></button>
-                            <button class="ui button" @click="event.size.max+=1"><i class="plus icon"></i></button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -31,10 +27,6 @@
                 <div class="ui grid">
                     <div class="column">
                         <TeamSizeControl type="min" :size="event.size.min"></TeamSizeControl>
-                        <div class="ui buttons">
-                            <button class="ui button" @click="event.size.min-=1"><i class="minus icon"></i></button>
-                            <button class="ui button" @click="event.size.min+=1"><i class="plus icon"></i></button>
-                        </div>
                     </div>
                 </div>
             </div>
