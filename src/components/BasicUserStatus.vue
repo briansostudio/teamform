@@ -41,7 +41,7 @@ export default{
     display:flex;
     align-items: center;
     top: 0;
-    z-index: 1;
+    z-index: 10;
     height: 50px;
     background: #00e0af;
     padding: 10px;
