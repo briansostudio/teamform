@@ -9,7 +9,7 @@
           <TeamOverview :team="viewingTeam"></TeamOverview>
         </div>
         <div class="row">
-          <WeeklySchedule :users="teamSchedule" :currentUserId="currentUser.id"></WeeklySchedule>
+          <WeeklySchedule :isMergeMode="true" :users="teamSchedule" :currentUserId="currentUser.id"></WeeklySchedule>
         </div>
 
         <MemberList :team="viewingTeam"></MemberList>
