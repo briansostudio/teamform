@@ -5,6 +5,14 @@
         <div class="row event-page">
           <h1>Event Name: {{event.name}}</h1>
         </div>
+
+        <div>
+          <JoinRequest v-show="!isLeaderOfViewingTeam"></JoinRequest>
+          <router-link v-show="isLeaderOfViewingTeam" :to="{ name: 'team management', params: { eventId: $route.params.eventId, teamId: viewingTeam.id }}">
+            <div class="ui teal button">Manage Team</div>
+          </router-link>
+        </div>
+
         <div class="row">
           <TeamOverview :team="viewingTeam"></TeamOverview>
         </div>
@@ -18,6 +26,7 @@
 </template>
 
 <script>
+  import JoinRequest from './components/JoinRequest.vue'
   import BasicUserStatus from './components/BasicUserStatus'
   import TeamOverview from './components/TeamOverview'
   import WeeklySchedule from './components/WeeklySchedule/WeeklySchedule.vue'
@@ -41,11 +50,11 @@
         }
       },
       computed: {
-        ...mapGetters(["viewingTeam",'teamSchedule','currentUser','userTeam'])
+        ...mapGetters(["viewingTeam",'teamSchedule','currentUser','userTeam','isLeaderOfViewingTeam']),
       },
       methods: {},
       props: {},
-      components: {TeamOverview, MemberList, WeeklySchedule, BasicUserStatus}
+      components: {TeamOverview, MemberList, WeeklySchedule, BasicUserStatus, JoinRequest}
   }
 </script>
 

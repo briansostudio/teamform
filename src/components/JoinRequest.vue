@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-    <div class="ui teal button" @click="showForm">Join Request<div>
+    <div class="ui teal button" @click="showForm">Join Request</div>
     <div class="ui modal">
         <div class="ui piled segment">
             <h1 class="ui horizontal divider header">Join Request</h1>

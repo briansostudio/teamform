@@ -19,6 +19,7 @@ const state = {
 
 const getters = {
   viewingTeam: state => state,
+  isLeaderOfViewingTeam: (state, getters, rootState) => getters.currentUser.id === state.leader.id,
   teamSchedule: state => {
     let result = {};
     for(let member of state.members){
