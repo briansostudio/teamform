@@ -38,7 +38,7 @@
     },
     computed:{
       selectedInterval(){
-        return this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] || null;
+        return (this.users[this.currentUserId] ? this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] : null) || null;
       },
       resolved(){
         let intervals = [];

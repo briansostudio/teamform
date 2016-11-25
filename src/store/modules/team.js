@@ -3,6 +3,7 @@ import schema from './schema'
 import api from '../../api'
 import util from '../util'
 import eventLib from '../../lib/event'
+import Vue from 'vue'
 
 // initial team state
 const state = {
@@ -18,6 +19,14 @@ const state = {
 
 const getters = {
   viewingTeam: state => state,
+  teamSchedule: state => {
+    let result = {};
+    for(let member of state.members){
+      result[member.id] = member;
+    }
+    console.log(JSON.parse(JSON.stringify(result)));
+    return result;
+  },
 	teamName: state => state.name,
 	teamDescription: state => state.description,
 	teamTags: state => state.tags,
@@ -40,11 +49,20 @@ const mutations = {
 		}
 	},
   "team/updateTeam" (state, {team}){
-	  Object.assign(state, team);
+    //Object.assign(state, team);
+	  for(let key in team){
+	    Vue.set(state, key, team[key]);
+    }
+    console.log("team/updateTeam",state);
   }
 }
 
 const actions = {
+  "team/onLoad" ({rootState, dispatch}, {teamId}){
+    let team = util.find(rootState.event.teams,team=>team.id == teamId);
+    if(team)
+      dispatch("team/dispatchUpdateTeam",{team: team});
+  },
   "team/dispatchUpdateTeam" ({rootState, commit}, {team}){
     let meta = eventLib.computeTeamMeta(team,rootState.event);
     for(let member of meta.members){
