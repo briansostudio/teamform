@@ -1,4 +1,5 @@
 import {fb, db, auth, auth_providers} from './firebase'
+import teamApi from './team'
 
 export default {
   async register(eventId, {email, password}, userData){
@@ -95,6 +96,15 @@ export default {
   async removeIntervalFromSchedule(eventId, userId, intervalId){
     let ref = this.getFirebaseRef(userId, eventId).child(`schedule/intervals/${intervalId}`);
     await ref.remove();
+  },
+  async leaveTeam(eventId, userId, teamId){
+    await Promise.all([
+      this.updateMember(userId, eventId, {
+        status: 'NO_TEAM',
+        team: ''
+      }),
+      teamApi.removeMemberFromTeam(eventId, teamId, userId),
+    ]);
   },
   //private use, should not call
   getFirebaseRef(userId, eventId){

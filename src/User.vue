@@ -18,9 +18,8 @@
                   <el-tab-pane label="Skill" name="second">
                       <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
                   </el-tab-pane>
-                  <el-tab-pane label="Schedule" name="third" style="display:block;">
-                  </el-tab-pane>
-                  <el-tab-pane v-if="isViewingCurrentUser" label="Request" name="fourth">
+                  <el-tab-pane label="Schedule" name="third"></el-tab-pane>
+                  <el-tab-pane v-show="isViewingCurrentUser" label="Request" name="fourth">
                       <MyRequests :requests="request"></MyRequests>
                   </el-tab-pane>
                 </el-tabs>

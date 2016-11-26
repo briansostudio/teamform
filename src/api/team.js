@@ -15,5 +15,29 @@ export default {
   },
   async createTeam(eventId, teamObj){
     return db.ref(`events/${eventId}/teams`).push(teamObj).key;
+  },
+  /**
+   * This add the userId into the member list
+   * This doesn't take care the data in user model.
+   */
+  async addMemberToTeam(eventId, teamId, memberId){
+    let membersRef = db.ref(`events/${eventId}/teams/${teamId}/members`);
+    let members = (await membersRef.once()).val();
+    await membersRef.update({
+      [members.length]:memberId
+    });
+    return members.length;
+  },
+  /**
+   * This remove the userId in the member list
+   * This doesn't take care the data in user model.
+   */
+  async removeMemberFromTeam(eventId, teamId, memberId){
+    let membersRef = db.ref(`events/${eventId}/teams/${teamId}/members`);
+    let members = (await membersRef.once().val());
+    let mutableMembers = [...members];
+    let index = mutableMembers.indexOf(memberId);
+    mutableMembers.splice(index, 1);
+    await membersRef.update(mutableMembers);
   }
 }
