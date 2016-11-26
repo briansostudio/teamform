@@ -31,10 +31,9 @@ const getters = {
   },
   currentUserRequests: (state, getters, rootState) => {
     return util.filter(getters.allRequests,request=>request.member === getters.currentUser.id,true).map(request=>{
-      console.log('REQUEST',request);
-      console.log(rootState.event.teams[request.team]);
+      let team = util.find(rootState.event.teams,team=>team.id === request.team);
       return Object.assign({},request,{
-        team:eventLib.computeTeamMeta(rootState.event.teams[request.team],rootState.event)
+        team:Object.assign({},team,eventLib.computeTeamMeta(team,rootState.event))
       });
     });
   }

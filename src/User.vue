@@ -20,9 +20,9 @@
                   </el-tab-pane>
                   <el-tab-pane label="Schedule" name="third"></el-tab-pane>
                   <el-tab-pane v-show="isViewingCurrentUser" label="Request" name="fourth">
-                      <MyRequests :requests="request"></MyRequests>
                   </el-tab-pane>
                 </el-tabs>
+              <MyRequests v-show="currentTab === 'fourth'" :requests="currentUserRequests"></MyRequests>
               <WeeklySchedule v-if="currentTab == 'third'" :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
             </el-col>
         </el-row>
@@ -42,7 +42,6 @@
         activeName:"first",
         currentTab:"first",
         userId: null,
-        request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}],
         radarOptions:{
           legend:{
             display:false
@@ -66,7 +65,8 @@
       },
       ...mapGetters([
         "viewingUser",
-        "isViewingCurrentUser"
+        "isViewingCurrentUser",
+        'currentUserRequests'
       ])
     },
     methods: {
