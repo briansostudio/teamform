@@ -15,30 +15,14 @@
         <button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
       </div>
       <div>
-        <el-dialog title="Enter selected event page" :value="isLoginModalPresenting" @input="toggleLoginModal" size="small">
-          <el-steps :space="200" :active="currentLoginStep" >
-            <el-step title="Step One" description="Choose Your Identity"></el-step>
-            <el-step title="Step Two" description="Authenticate"></el-step>
-            <el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
-          </el-steps>
-          <br>
-          <admin-auth v-if="currentLoginStep == 2 && displayCurrentRoleSelection == 'organizer'"></admin-auth>
-          <auth v-if="currentLoginStep == 2 && displayCurrentRoleSelection == 'participants'"></auth>
-          <role-chooser v-if="currentLoginStep == 1"></role-chooser>
-          <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click.native="proceedClick">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
-            <el-button @click="toggleLoginModal(false)">Close</el-button>
-          </span>
-        </el-dialog>
+        <EventAuthModal :presented="isLoginModalPresenting"></EventAuthModal>
       </div>
     </div>
 	</div>
 </template>
 
 <script>
-import RoleChooser from './RoleChooser'
-import Auth from './Auth'
-import AdminAuth from './AdminAuth'
+import EventAuthModal from './EventAuthModal'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -54,10 +38,10 @@ export default {
 		buttonTitle(){
 			return !this.eventId ? 'Create Event' : 'Discover Your Event'
 		},
-		...mapGetters(['isLoginModalPresenting', 'currentLoginStep', 'eventList', 'eventId', 'displayCurrentRoleSelection', 'adminEnteredPassword'])
+		...mapGetters(['isLoginModalPresenting', 'eventList', 'eventId'])
 	},
 	components: {
-		RoleChooser,Auth,AdminAuth
+	  EventAuthModal
 	},
   watch:{
 	  eventInput(eventName){
@@ -77,7 +61,7 @@ export default {
     }
   },
 	methods: {
-		...mapActions(['toggleLoginModal', 'stepIncrement']),
+		...mapActions(['toggleLoginModal']),
     querySearch(queryString, cb){
       let regex = new RegExp(queryString,"i");
       let result = this.eventList.filter((item)=>{
@@ -114,17 +98,6 @@ export default {
 				return true
 			}
 		},
-    proceedClick(){
-		  if(this.currentLoginStep !== 2){
-        this.$store.dispatch("stepIncrement");
-      }else{
-        if(this.displayCurrentRoleSelection == 'organizer'){
-          this.$store.dispatch("adminLogin", this.adminEnteredPassword)
-        }else{
-          this.$store.dispatch("loginOrRegister");
-        }
-      }
-    }
 	},
 	props: ['name', 'isCreate']
 }
@@ -138,22 +111,22 @@ button.action-btn{
 	font:normal normal 300 1.3em 'Open Sans';
 	text-decoration:none;
 
-	color:rgba(28, 190, 131, 1);
+	color:rgba(24, 242, 178, 1);
 	background-color:transparent;
-	border:1px solid rgba(28, 190, 131, 1);
+	border:1px solid rgba(24, 242, 178, 1);
 	border-radius:100px;
 
 	padding: .3em 1.2em;
 	margin:5px;
 
 	background-size: 200% 100%;
-	background-image: linear-gradient(to right, transparent 50%, rgba(28, 190, 131, 1) 50%);
+	background-image: linear-gradient(to right, transparent 50%, rgba(24, 242, 178, 1) 50%);
 	transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
 }
 
 button.action-btn:hover{
 	color:rgba(255, 255, 255, 1);
-	background-color:rgba(28, 190, 131, 1);
+	background-color:rgba(24, 242, 178, 1);
 	background-position: -100% 100%;
 }
 .large.ui.buttons > .ui.button:hover {

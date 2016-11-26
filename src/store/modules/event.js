@@ -18,7 +18,7 @@ const state = {
 }
 
 const getters = {
-    currentEvent: state=>state,
+    currentEvent: state => state,
     eventId: state => state.id,
     eventName: state => state.name,
     eventDescription: state => state.description,
@@ -42,25 +42,23 @@ const mutations = {
       state.teams = util.toArray(event.teams)
       state.criteria = event.criteria;
     },
-    [types.EVENT_NAME_UPDATED](state, { name }){
+    [types.EVENT_NAME_UPDATED](state, name){
         state.name = name
     },
-    [types.EVENT_DESCRIPTION_UPDATED](state, { description }){
+    [types.EVENT_DESCRIPTION_UPDATED](state, description){
         state.description = description
     },
-    [types.EVENT_TEAMSIZE_MIN_UPDATED](state, { size }){
+    [types.EVENT_TEAMSIZE_MIN_UPDATED](state, size){
         state.limits.min = size
     },
-    [types.EVENT_TEAMSIZE_MAX_UPDATED](state, { size }){
+    [types.EVENT_TEAMSIZE_MAX_UPDATED](state, size){
         state.limits.max = size
     },
-    [types.EVENT_ADD_RECRUIT_CRITERIA](state, { criteria }){
-        for (let c in criteria){
-            state.criteria.push(c)
-        }
+    [types.EVENT_ADD_RECRUIT_CRITERIA](state, criterion){
+        state.criteria.push(criterion)
     },
-    [types.EVENT_DISCARD_RECRUIT_CRITERIA](state, { criteria }){
-        let index = state.criteria.indexOf(criteria);
+    [types.EVENT_DISCARD_RECRUIT_CRITERIA](state, criterion){
+        let index = state.criteria.indexOf(criterion);
         state.criteria.slice(index, 1)
     },
     [types.EVENT_DUE_UPDATE](state, { deadline }){
@@ -126,24 +124,40 @@ const actions = {
         })
     },
     setMaximumTeamSize({commit, state}, payload){
-        commit(types.EVENT_TEAMSIZE_MAX_UPDATED, payload)
-        api.event.updateEvent(state.id, {teamSize:state.limits});
+        api.event.updateEvent(state.id, {teamSize: { max : payload, min: state.limits.min }}).then(() => {
+            commit(types.EVENT_TEAMSIZE_MAX_UPDATED, payload);
+        }) ;
     },
     setMinimumTeamSize({commit, state}, payload){
-        commit(types.EVENT_TEAMSIZE_MIN_UPDATED, payload)
-        api.event.updateEvent(state.id, {teamSize:state.limits});
+        api.event.updateEvent(state.id, {teamSize: { max: state.limits.max, min : payload }}).then( () => {
+            commit(types.EVENT_TEAMSIZE_MIN_UPDATED, payload);
+        });
     },
-    updateTeamDescription({commit}, payload){
-        commit(types.EVENT_DESCRIPTION_UPDATED, payload)
+    updateEventDescription({commit}, payload){
+        console.log(payload)
+        api.event.updateEvent(state.id, { description: payload }).then( () => {
+            commit(types.EVENT_DESCRIPTION_UPDATED, payload)
+        })
     },
-    updateTeamName({commit}, payload){
-        commit(types.EVENT_NAME_UPDATED, payload)
+    updateEventName({commit}, payload){
+        console.log(payload)
+        api.event.updateEvent(state.id, { name: payload}).then( () => {
+            commit(types.EVENT_NAME_UPDATED, payload)
+        })
     },
     addRecruitCriteria({commit}, payload){
-        commit(types.EVENT_ADD_RECRUIT_CRITERIA, payload)
+        let updatedCriteria = state.criteria
+        updatedCriteria.push(payload)
+        api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
+            commit(types.EVENT_ADD_RECRUIT_CRITERIA, payload)
+        })
     },
     discardRecruitCriteria({commit}, payload){
-        commit(types.EVENT_DISCARD_RECRUIT_CRITERIA, payload)
+        let updatedCriteria = state.criteria
+        updatedCriteria.splice(updatedCriteria.indexOf(payload), 1)
+        api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
+            commit(types.EVENT_DISCARD_RECRUIT_CRITERIA, payload)
+        })
     },
     setEventDeadline({commit}, payload){
         commit(types.EVENT_DUE_UPDATE, payload)
