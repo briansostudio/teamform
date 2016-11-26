@@ -20,6 +20,10 @@ router.afterEach((to, from)=>{
   }else if(from.params.eventId && !to.params.eventId){
     store.dispatch("event/onLeave",{eventId:from.params.eventId});
   }
+
+  if(to.params.teamId){
+    store.dispatch("team/onLoad",{teamId:to.params.teamId});
+  }
 });
 
 const app = new Vue({

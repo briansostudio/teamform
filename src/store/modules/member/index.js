@@ -90,10 +90,15 @@ const actions = {
   },
   "member/socialLogin"({state, commit, rootState, dispatch}, platform){
     let eventId = rootState.event.id
-    api.member.socialLogin(platform, eventId).then((userId)=>{
+    api.member.socialLogin(platform, eventId).then(({userId, firstTimeUser})=>{
       sessionStorage.setItem('firebase.user.uid', userId);
-      $('body').css("overflow","");
-      router.push(`/event/${eventId}/`);
+        $('body').css("overflow","");
+      if(firstTimeUser){
+        router.push(`/event/${eventId}/user/${userId}/`);
+      }else{
+        router.push(`/event/${eventId}/`);
+      }
+
     },(err)=>{
       if(err.code && err.message){
         commit(types.ERRORS_NOTIFY_SYSTEM,err);

@@ -11,20 +11,20 @@
               <h2>{{viewingUser.description}}</h2>
               </el-col>
             <el-col :span="12">
-                <el-tabs :active-name="activeName" style="width:100%">
+                <el-tabs :active-name="activeName" style="width:100%" @tab-click="tabClicked">
                   <el-tab-pane label="Overview" name="first">
                     <UserStatus :user="viewingUser"></UserStatus>
                   </el-tab-pane>
                   <el-tab-pane label="Skill" name="second">
-                      <Radar :chartData="chartData"></Radar>
+                      <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
                   </el-tab-pane>
-                  <el-tab-pane label="Schedule" name="third">
-                      <WeeklySchedule :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
+                  <el-tab-pane label="Schedule" name="third" style="display:block;">
                   </el-tab-pane>
-                  <el-tab-pane label="Request" name="fourth">
+                  <el-tab-pane v-if="isViewingCurrentUser" label="Request" name="fourth">
                       <MyRequests :requests="request"></MyRequests>
                   </el-tab-pane>
                 </el-tabs>
+              <WeeklySchedule v-if="currentTab == 'third'" :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
             </el-col>
         </el-row>
     </div>
@@ -40,21 +40,25 @@
   export default {
     data(){
       return {
-        chartData:{
-          labels: ["Web", "Android", "iOS", "UI Design", "Server", "Custom 1", "Custom 2"],
-          datasets: [{
-            label: "Andrew",
-            backgroundColor: "rgba(179,181,198,0.2)",
-            borderColor: "rgba(179,181,198,1)",
-            pointBackgroundColor: "rgba(179,181,198,1)",
-            pointBorderColor: "#fff",
-            pointHoverBackgroundColor: "#fff",
-            pointHoverBorderColor: "rgba(179,181,198,1)",
-            data: [60, 59, 90, 81, 56, 55, 40]
-          }]
-        },
+        activeName:"first",
+        currentTab:"first",
         userId: null,
-        request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}]
+        request: [{events: 'Open New Issue', team: 'tim team'}, {events: 'Pull Request', team: 'Team Tim'}],
+        radarOptions:{
+          legend:{
+            display:false
+          },
+          scale:{
+            pointLabels:{
+              fontColor:"#00816A"
+            },
+            ticks: {
+              max: 100,
+              min: 0,
+              stepSize: 25
+            }
+          }
+        },
       }
     },
     computed: {
@@ -66,7 +70,11 @@
         "isViewingCurrentUser"
       ])
     },
-    methods: {},
+    methods: {
+      tabClicked(tab){
+          this.currentTab = tab.name;
+      }
+    },
     props: {},
     components: {UserStatus, WeeklySchedule, MyRequests, Radar}
   }

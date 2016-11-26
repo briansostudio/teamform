@@ -69,8 +69,13 @@ export default {
       id: result.user.uid
     }
 
-    await this.getFirebaseRef(result.user.uid, eventId).set(user);
-    return user.id
+    let exist = await this.getFirebaseRef(result.user.uid, eventId).once("value");
+    if(exist.val() === null){
+      await this.getFirebaseRef(result.user.uid, eventId).set(user);
+      return {userId: user.id, firstTimeUser: true};
+    }else{
+      return {userId: user.id, firstTimeUser: false};
+    }
   },
   async getMember(userId, eventId){
     let snapshot = await this.getFirebaseRef(userId, eventId).once("value");

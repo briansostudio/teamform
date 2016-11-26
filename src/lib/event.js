@@ -116,6 +116,7 @@ export default{
       },
       schedule: this.convertSchedule(member.schedule)
     };
+    //TODO compute weakness, strength, freeHours...
     return result;
   },
   fillUpCriteria(userCriteria, eventCriteria){
