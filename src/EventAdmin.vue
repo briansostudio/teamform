@@ -4,14 +4,10 @@
         <h1>Event Management Panel</h1>
       </div>
       <div class ="row event-detail">
-				<div class="eight wide column">
-					<EventDetails></EventDetails>
-				</div>
-				<div class="eight wide column">
+				<div class="twelve wide column">
 		  			<EventModificationForm></EventModificationForm>
 				</div>
       </div>
-
         <div class="row event-detail">
 			<TeamList v-if="event.hasOwnProperty('teams')" :teams="event.teams"></TeamList>
 			<div v-else class="ui piled segment page">
