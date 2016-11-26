@@ -10,6 +10,7 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import JoinRequest from './JoinRequest.vue'
     export default {
         data(){
             return {}
@@ -19,7 +20,7 @@
         },
         methods: {},
         props: {},
-        components: {}
+        components: {JoinRequest}
     }
 </script>
 
