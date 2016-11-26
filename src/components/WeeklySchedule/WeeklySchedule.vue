@@ -6,8 +6,8 @@
         <input type="checkbox" v-model="mergeMode">
         <label>View schedule together</label>
       </div>
-      totalHours : {{totalHours}} |
-      availableHours : {{availableHours}} |
+      total hours : {{totalHours}} |
+      free hours : {{availableHours}} |
 
     </div>
     <div v-if="selectedInterval !== null" class="ui right floated compact segment">

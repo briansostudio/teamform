@@ -8,6 +8,9 @@ const getters = {
   viewingUser(state, getters, rootState){
     let user = rootState.event.members[rootState.route.params.userId] || lib.mockMember();
     return Object.assign({}, user, eventLib.computeMemberMeta(user, rootState.event));
+  },
+  isViewingCurrentUser(state, getters, rootState){
+    return getters.viewingUser.id === getters.currentUser.id;
   }
 }
 

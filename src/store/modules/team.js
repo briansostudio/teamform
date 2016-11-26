@@ -20,6 +20,10 @@ const state = {
 const getters = {
   viewingTeam: state => state,
   isLeaderOfViewingTeam: (state, getters, rootState) => getters.currentUser.id === state.leader.id,
+  isMemberOfViewingTeam: (state, getters, rootState) => {
+    let currentUserId = getters.currentUser.id;
+    return !!util.find(state.members, member => member.id === currentUserId);
+  },
   teamSchedule: state => {
     let result = {};
     for(let member of state.members){
