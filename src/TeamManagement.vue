@@ -1,16 +1,19 @@
 <template>
     <div class="TeamManagement">
-      <Manage></Manage>
+      <Manage :team="viewingTeam" :requests="viewingTeamRequests"></Manage>
     </div>
 </template>
 
 <script>
   import Manage from  './components/Manage'
+  import {mapGetters} from 'vuex'
   export default {
       data(){
           return {}
       },
-      computed: {},
+      computed: {
+        ...mapGetters(['viewingTeam','viewingTeamRequests'])
+      },
       methods: {},
       props: {},
       components: {Manage}

@@ -1,5 +1,6 @@
 import {Schedule} from './schedule'
 import memberLib from '../store/modules/member/lib'
+import util from '../store/util'
 export default{
   computeTeamMeta(team, eventState){
     let result =  {
@@ -9,6 +10,7 @@ export default{
       strength:"unknown",
       members:this.getMembersInTeam(team,eventState),
       radarChartData: [],
+      requests:util.filter(eventState.requests, (request)=>request.team === team.id, true),
     };
     result.radarChartData = {
       labels: eventState.criteria.map((s)=>s.substring(0,3)),
@@ -103,6 +105,10 @@ export default{
         return `rgba(${c.r},${c.g},${c.b},${c.a})`;
       }
     };
+  },
+  getComputedMember(memberId, eventState){
+    let member = eventState.members[memberId] || memberLib.mockMember();
+    return Object.assign({},member, this.computeMemberMeta(member, eventState));
   },
   computeMemberMeta(member, eventState){
     let result =  {

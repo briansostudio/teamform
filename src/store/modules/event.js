@@ -14,7 +14,8 @@ const state = {
     teams: [],
     members: {},
     errors: [],
-    due: Date()
+    due: Date(),
+  requests: {},
 }
 
 const getters = {
@@ -26,7 +27,8 @@ const getters = {
     eventMinTeamSize: state => state.limits.min,
     eventScopedCriteria: state => state.criteria,
     eventParticipatedTeams: state => state.teams,
-    eventParticipatedMembers: state => state.members
+    eventParticipatedMembers: state => state.members,
+  allRequests: state => state.requests
 }
 
 const mutations = {
@@ -41,6 +43,7 @@ const mutations = {
         state.members = event.members;
       state.teams = util.toArray(event.teams)
       state.criteria = event.criteria;
+      state.requests = event.requests || {};
     },
     [types.EVENT_NAME_UPDATED](state, { name }){
         state.name = name

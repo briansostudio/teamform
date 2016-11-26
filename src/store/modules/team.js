@@ -24,6 +24,7 @@ const getters = {
     let currentUserId = getters.currentUser.id;
     return !!util.find(state.members, member => member.id === currentUserId);
   },
+  isRequestSentToViewingTeam: (state, getters, rootState) => !!util.filter(state.requests,request=>request.member === getters.currentUser.id).length,
   teamSchedule: state => {
     let result = {};
     for(let member of state.members){
@@ -32,6 +33,11 @@ const getters = {
     console.log(JSON.parse(JSON.stringify(result)));
     return result;
   },
+  viewingTeamRequests: (state, getters, rootState) => state.requests.map(request => {
+    return Object.assign({},request,{
+      member: eventLib.getComputedMember(request.member, rootState.event)
+    })
+  }),
 	teamName: state => state.name,
 	teamDescription: state => state.description,
 	teamTags: state => state.tags,
@@ -42,17 +48,6 @@ const getters = {
 // mutations for individual team
 
 const mutations = {
-	[types.ADD_TO_TEAM] (state, { request }){
-
-	},
-	[types.MODIFY_TEAMSIZE] (state, { size }){
-		state.size = size
-	},
-	[types.ADD_JOIN_REQUEST] (state, { requests }){
-		for(req in requests){
-			state.join_request.push(req)
-		}
-	},
   "team/updateTeam" (state, {team}){
     //Object.assign(state, team);
 	  for(let key in team){
@@ -75,17 +70,11 @@ const actions = {
     }
     commit("team/updateTeam", {team:Object.assign({}, team, meta)});
   },
-	addJoinRequest({commit, state, rootState}, payload){
-		const requests = payload
-		commit(types.ADD_JOIN_REQUEST, { requests })
+	"request/sendJoinTeamRequest"({commit, state, rootState, getters}, {message}){
+    api.sendJoinTeamRequest(rootState.event.id, getters.currentUser.id, state.id, message);
 	},
-	modifyTeamSize({commit, state}, payload){
-		const size = payload
-		commit(types.MODIFY_TEAMSIZE, { size })
-	},
-	approveJoinRequest({commit, state}, payload){
-		const request = payload
-		commit(types.ADD_TO_TEAM, { request })
+	"request/acceptJoinTeamRequest"({commit, state, rootState}, {requestId}){
+    api.acceptJoinTeamRequest(rootState.event.id, requestId);
 	}
 }
 
