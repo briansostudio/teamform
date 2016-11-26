@@ -28,6 +28,15 @@ const getters = {
   userTeam: (state,getters,rootState)=>{
     let team = util.find(rootState.event.teams,team=>team.id === state.team) || schema.team();
     return Object.assign({},team,eventLib.computeTeamMeta(team, rootState.event));
+  },
+  currentUserRequests: (state, getters, rootState) => {
+    return util.filter(getters.allRequests,request=>request.member === getters.currentUser.id,true).map(request=>{
+      console.log('REQUEST',request);
+      console.log(rootState.event.teams[request.team]);
+      return Object.assign({},request,{
+        team:eventLib.computeTeamMeta(rootState.event.teams[request.team],rootState.event)
+      });
+    });
   }
 };
 
@@ -62,6 +71,7 @@ const actions = {
 
     api.member.register(eventId, {email, password}, user).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
+      commit('member/USER_ID_CHANGED',{userId});
       $('body').css("overflow","");
       router.push(`/event/${eventId}/user/${userId}/`);
 
@@ -78,6 +88,7 @@ const actions = {
 
     api.member.login(eventId, {email, password}).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
+      commit('member/USER_ID_CHANGED',{userId});
       $('body').css("overflow","");
       router.push(`/event/${eventId}/`);
     },(err)=>{
@@ -92,7 +103,8 @@ const actions = {
     let eventId = rootState.event.id
     api.member.socialLogin(platform, eventId).then(({userId, firstTimeUser})=>{
       sessionStorage.setItem('firebase.user.uid', userId);
-        $('body').css("overflow","");
+      commit('member/USER_ID_CHANGED',{userId});
+      $('body').css("overflow","");
       if(firstTimeUser){
         router.push(`/event/${eventId}/user/${userId}/`);
       }else{
@@ -128,6 +140,9 @@ const actions = {
 };
 
 const mutations = {
+  ["member/USER_ID_CHANGED"](state, {userId}){
+    state.id = userId;
+  },
   ["member/UPDATE"](state, {user}){
     Object.assign(state, user);
   },
