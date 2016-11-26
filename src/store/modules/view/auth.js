@@ -20,6 +20,7 @@ const actions = {
         api.event.authenticateAsOrganizer(eventId, hashedPassphrase).then( (isAuthenticated) => {
             if(isAuthenticated){
                 commit(types.AUTH_EVENT_ORGANIZER_LOGIN, true)
+                $('body').css("overflow","");
                 router.push(`/event/${eventId}/manage`);
             }
             else{
