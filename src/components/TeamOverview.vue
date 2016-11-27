@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import TeamActions from './TeamActions.vue'
+import TeamActions from './TeamActions.vue'
 import Radar from './Radar.vue'
 export default {
   data(){

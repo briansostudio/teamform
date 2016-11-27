@@ -16,7 +16,11 @@
                     <UserStatus :user="viewingUser"></UserStatus>
                   </el-tab-pane>
                   <el-tab-pane label="Skill" name="second">
-                      <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
+                    <div v-if="viewingUser.radarChartData">
+                    <RadarSlideInput>
+                    </RadarSlideInput>
+                    </div>
+                    <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
                   </el-tab-pane>
                   <el-tab-pane label="Schedule" name="third"></el-tab-pane>
                   <el-tab-pane v-show="isViewingCurrentUser" label="Request" name="fourth">
@@ -35,6 +39,7 @@
   import MyRequests from './components/MyRequests.vue'
   import { mapGetters } from 'vuex'
   import Radar from './components/Radar.vue'
+  import RadarSlideInput from './components/RadarSlideInput'
 
   export default {
     data(){
@@ -75,7 +80,7 @@
       }
     },
     props: {},
-    components: {UserStatus, WeeklySchedule, MyRequests, Radar}
+    components: {UserStatus, WeeklySchedule, MyRequests, Radar, RadarSlideInput}
   }
 </script>
 
@@ -130,5 +135,11 @@
   {
     margin-top: auto;
     margin-bottom: auto;
+  }
+
+  .el-tab-pane
+  {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 </style>
