@@ -25,10 +25,13 @@ export default {
     }
     else return false
   },
-  async createEvent(name){
+  async createEvent({name, adminPassword}){
+    console.log(name)
+    console.log(adminPassword)
     let key = db.ref('reference').push(name).key;
     await db.ref(`events/${key}`).set({
-      name: name,
+      name,
+      adminPassword,
       size: {
         max: 10,
         min: 1

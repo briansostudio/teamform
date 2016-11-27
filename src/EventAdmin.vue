@@ -9,7 +9,7 @@
 				</div>
       </div>
         <div class="row event-detail">
-			<TeamList :teams="filteredTeams"></TeamList>
+			<TeamList :teams="allTeams"></TeamList>
 		</div>
   </div>
 </template>
@@ -22,7 +22,7 @@ import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
-		...mapGetters(['filteredTeams'])
+		...mapGetters(['allTeams'])
 	},
 	components:{
 		EventModificationForm, EventDetails, TeamList
