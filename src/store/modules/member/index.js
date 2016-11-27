@@ -1,7 +1,12 @@
 import api from '../../../api'
 import lib from './lib'
 import router from '../../../router'
+import * as types from '../../mutation-types'
 import Vue from 'vue';
+import schema from '../schema'
+import util from '../../util'
+import eventLib from '../../../lib/event'
+import $ from 'jquery';
 
 const state = {
   id: sessionStorage.getItem('firebase.user.uid') || "",
@@ -11,15 +16,58 @@ const state = {
     intervals:{
     }
   },
+  team:'',
   description: "",
   criteria:[
   ]
 };
 
 const getters = {
+  currentUser: state => state,
+  userStatus: state => state.status,
+  userTeam: (state,getters,rootState)=>{
+    let team = util.find(rootState.event.teams,team=>team.id === state.team) || schema.team();
+    return Object.assign({},team,eventLib.computeTeamMeta(team, rootState.event));
+  },
+  currentUserRequests: (state, getters, rootState) => {
+    return util.filter(getters.allRequests,request=>request.member === getters.currentUser.id,true).map(request=>{
+      let team = util.find(rootState.event.teams,team=>team.id === request.team);
+      return Object.assign({},request,{
+        team:Object.assign({},team,eventLib.computeTeamMeta(team,rootState.event))
+      });
+    });
+  }
 };
 
 const actions = {
+  'member/leaveTeam'({getters, rootState}){
+    let userId = getters.currentUser.id;
+    let eventId = rootState.event.id;
+    let teamId = getters.userTeam.id;
+    console.log(eventId, userId, teamId)
+    api.member.leaveTeam(eventId, userId, teamId).then(()=>console.log('FINISH','leaveTeam'));
+  },
+  "member/becomeLeader"({state, commit, rootState, dispatch}, {teamId}){
+    let eventId = rootState.event.id;
+    api.member.updateMember(state.id, eventId, {
+      status: "LEADER",
+      team: teamId
+    });
+  },
+  "team/createTeam"({commit, state, rootState, dispatch}, {name}){
+    if(!state.id){
+      throw {code:'app/no-user-login', message:"No user is logged in to create this team, please Login and retry"}
+    }
+    if(state.status !== 'NO_TEAM'){
+      throw {code: 'app/already-have-team', message:"You cannot create a team as you are still in a team"}
+    }
+    let team = schema.team(rootState.member.id);
+    team.name = name;
+    api.team.createTeam(rootState.event.id, team).then(teamId=>{
+      console.log(teamId);
+      dispatch('member/becomeLeader', {teamId})
+    });
+  },
   "member/register"({state, commit, rootState, dispatch}, {name, email, password}){
     let eventId = rootState.event.id;
     let user = lib.mockMember();
@@ -29,13 +77,15 @@ const actions = {
 
     api.member.register(eventId, {email, password}, user).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
+      commit('member/USER_ID_CHANGED',{userId});
+      $('body').css("overflow","");
       router.push(`/event/${eventId}/user/${userId}/`);
 
     },(err)=>{
       if(err.code && err.message){
-        commit("member/LOGIN_ERROR",err);
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
       }else{
-        commit("member/LOGIN_ERROR","System Error:" + err);
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
       }
     })
   },
@@ -44,20 +94,37 @@ const actions = {
 
     api.member.login(eventId, {email, password}).then((userId)=>{
       sessionStorage.setItem('firebase.user.uid', userId);
-      let user = rootState.event.members[userId];
-      if(user){
-        commit("member/UPDATE", {user});
-      }else{
-        console.error("SHOULD NOT COME HERE #12532");
-      }
+      commit('member/USER_ID_CHANGED',{userId});
+      $('body').css("overflow","");
       router.push(`/event/${eventId}/`);
     },(err)=>{
       if(err.code && err.message){
-        commit("member/LOGIN_ERROR",err);
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
       }else{
-        commit("member/LOGIN_ERROR","System Error:" + err);
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
       }
     })
+  },
+  "member/socialLogin"({state, commit, rootState, dispatch}, platform){
+    let eventId = rootState.event.id
+    api.member.socialLogin(platform, eventId).then(({userId, firstTimeUser})=>{
+      sessionStorage.setItem('firebase.user.uid', userId);
+      commit('member/USER_ID_CHANGED',{userId});
+      $('body').css("overflow","");
+      if(firstTimeUser){
+        router.push(`/event/${eventId}/user/${userId}/`);
+      }else{
+        router.push(`/event/${eventId}/`);
+      }
+
+    },(err)=>{
+      if(err.code && err.message){
+        commit(types.ERRORS_NOTIFY_SYSTEM,err);
+      }else{
+        commit(types.ERRORS_NOTIFY_UNDEFINED,err);
+      }
+    }
+    )
   },
   "schedule/createInterval"({commit, rootState}, {interval}){
     api.member.addIntervalToSchedule(rootState.event.id, rootState.member.id, interval)
@@ -72,15 +139,27 @@ const actions = {
   "schedule/removeInterval"({commit, rootState}, {id}){
     api.member.removeIntervalFromSchedule(rootState.event.id, rootState.member.id, id);
     commit('schedule/INTERVAL_REMOVED', {id});
+  },
+  "member/dispatch_UPDATE"({commit, rootState}, {user}){
+    commit("member/UPDATE",{user: Object.assign({}, user, eventLib.computeMemberMeta(user, rootState.event))});
+  },
+  updateCriterion({commit, rootState}, payload) {
+    let updatedCriteria = state.criteria
+    updatedCriteria[payload.index] = payload.value
+    let update = {criteria:updatedCriteria}
+    api.member.updateMember(state.id, rootState.event.id, update).then(()=> {
+      commit(types.USER_UPDATE_CRITERION, payload);  
+    })
+    
   }
 };
 
 const mutations = {
+  ["member/USER_ID_CHANGED"](state, {userId}){
+    state.id = userId;
+  },
   ["member/UPDATE"](state, {user}){
     Object.assign(state, user);
-  },
-  ["member/LOGIN_ERROR"](state, {}){
-
   },
   ["schedule/INTERVAL_ADDED"](state, {id, interval}){
     Vue.set(state.schedule.intervals, id, interval);
@@ -90,6 +169,9 @@ const mutations = {
   },
   ["schedule/INTERVAL_REMOVED"](state, {id}){
     Vue.delete(state.schedule.intervals, id);
+  },
+  [types.USER_UPDATE_CRITERION](state, {index, value}) {
+    state.criteria[index] = value;
   }
 };
 

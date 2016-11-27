@@ -4,8 +4,8 @@ import { sync } from 'vuex-router-sync'
 import router from './router'
 import store from './store'
 import Element from 'element-ui'
+import 'vue2-animate/dist/vue2-animate.min.css'
 
-import 'vue-animate/dist/vue-animate.min.css'
 
 Vue.use(VueRouter)
 Vue.use(Element)
@@ -19,6 +19,10 @@ router.afterEach((to, from)=>{
     store.dispatch("event/onLoad",{eventId:to.params.eventId});
   }else if(from.params.eventId && !to.params.eventId){
     store.dispatch("event/onLeave",{eventId:from.params.eventId});
+  }
+
+  if(to.params.teamId){
+    store.dispatch("team/onLoad",{teamId:to.params.teamId});
   }
 });
 

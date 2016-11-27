@@ -1,0 +1,33 @@
+<template>
+    <div class="TeamActions">
+      <JoinRequest v-show="!isMemberOfViewingTeam"></JoinRequest>
+      <router-link v-show="isLeaderOfViewingTeam" :to="{ name: 'team management', params: { eventId: $route.params.eventId, teamId: viewingTeam.id }}">
+        <div class="ui teal button">Manage Team</div>
+      </router-link>
+      <div v-show="isMemberOfViewingTeam && !isLeaderOfViewingTeam" @click="leaveTeam" class="ui teal button">Leave Team</div>
+    </div>
+</template>
+
+<script>
+  import { mapGetters, mapActions } from 'vuex'
+  import JoinRequest from './JoinRequest.vue'
+    export default {
+        data(){
+            return {}
+        },
+        computed: {
+          ...mapGetters(['viewingTeam','currentUser','isLeaderOfViewingTeam','isMemberOfViewingTeam']),
+        },
+        methods: {
+          ...mapActions({'leaveTeam':'member/leaveTeam'})
+        },
+        props: {},
+        components: {JoinRequest}
+    }
+</script>
+
+<style>
+    .TeamActions {
+
+    }
+</style>

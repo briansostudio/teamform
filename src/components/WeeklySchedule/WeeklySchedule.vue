@@ -6,8 +6,8 @@
         <input type="checkbox" v-model="mergeMode">
         <label>View schedule together</label>
       </div>
-      totalHours : {{totalHours}} |
-      availableHours : {{availableHours}} |
+      total hours : {{totalHours}} |
+      free hours : {{availableHours}} |
 
     </div>
     <div v-if="selectedInterval !== null" class="ui right floated compact segment">
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+  import eventLib from '../../lib/event'
   import FullCalendar from './FullCalendar'
   import {Schedule, TimeInterval, Consts} from '../../lib/schedule'
   import colors from './colors';
@@ -32,13 +33,13 @@
       return {
         colorIndex: 0,
         baseDate: new Date(BASE_DATE),
-        mergeMode: false,
+        mergeMode: this.isMergeMode,
         selectedIntervalId: "",
       }
     },
     computed:{
       selectedInterval(){
-        return this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] || null;
+        return (this.users[this.currentUserId] ? this.users[this.currentUserId].schedule.intervals[this.selectedIntervalId] : null) || null;
       },
       resolved(){
         let intervals = [];
@@ -74,7 +75,7 @@
         }else {
           for (let userId in this.users) {
             let user = this.users[userId];
-            let color = this.getColor();
+            let color = eventLib.getColorFromString(user.id).text();
             let isCurrentUser = userId == this.currentUserId;
             for (let intervalId in user.schedule.intervals) {
               let interval = user.schedule.intervals[intervalId];
@@ -122,6 +123,7 @@
       }
     },
     props: {
+      isMergeMode: {default:()=>false},
       editMode: {default:()=>false},
       users: {default:()=>{}},
       currentUserId: {default:()=>undefined}

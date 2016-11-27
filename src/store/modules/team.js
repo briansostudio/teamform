@@ -1,54 +1,80 @@
 import * as types from '../mutation-types'
+import schema from './schema'
 import api from '../../api'
+import util from '../util'
+import eventLib from '../../lib/event'
+import Vue from 'vue'
 
 // initial team state
 const state = {
 	id: '',
 	name: '',
 	description: '',
-	members: [],
+	members: [],//array of id
 	requests: [],
 	tags: [],
-	leader: '',
-	size: 0
+	leader: {},
+	size: 0,
 }
 
 const getters = {
+  viewingTeam: state => state,
+  isLeaderOfViewingTeam: (state, getters, rootState) => getters.currentUser.id === state.leader.id,
+  isMemberOfViewingTeam: (state, getters, rootState) => {
+    let currentUserId = getters.currentUser.id;
+    return !!util.find(state.members, member => member.id === currentUserId);
+  },
+  isRequestSentToViewingTeam: (state, getters, rootState) => !!util.filter(state.requests,request=>request.member === getters.currentUser.id).length,
+  teamSchedule: state => {
+    let result = {};
+    for(let member of state.members){
+      result[member.id] = member;
+    }
+    console.log(JSON.parse(JSON.stringify(result)));
+    return result;
+  },
+  viewingTeamRequests: (state, getters, rootState) => state.requests.filter(request=>request.status === "PENDING").map(request => {
+    return Object.assign({},request,{
+      member: eventLib.getComputedMember(request.member, rootState.event)
+    })
+  }),
 	teamName: state => state.name,
 	teamDescription: state => state.description,
 	teamTags: state => state.tags,
-	teamSize: state => state.size
+	teamSize: state => state.size,
+  teamMembers: (state, getters, rootState) => state.members
 }
 
 // mutations for individual team
 
 const mutations = {
-	[types.ADD_TO_TEAM] (state, { request }){
-		
-	},
-	[types.MODIFY_TEAMSIZE] (state, { size }){
-		state.size = size
-	},
-	[types.ADD_JOIN_REQUEST] (state, { requests }){
-		for(req in requests){
-			state.join_request.push(req)
-		}
-	}
-	
+  "team/updateTeam" (state, {team}){
+    //Object.assign(state, team);
+	  for(let key in team){
+	    Vue.set(state, key, team[key]);
+    }
+    console.log("team/updateTeam",state);
+  }
 }
 
 const actions = {
-	addJoinRequest({commit, state, rootState}, payload){
-		const requests = payload
-		commit(types.ADD_JOIN_REQUEST, { requests })
+  "team/onLoad" ({rootState, dispatch}, {teamId}){
+    let team = util.find(rootState.event.teams,team=>team.id == teamId);
+    if(team)
+      dispatch("team/dispatchUpdateTeam",{team: team});
+  },
+  "team/dispatchUpdateTeam" ({rootState, commit}, {team}){
+    let meta = eventLib.computeTeamMeta(team,rootState.event);
+    for(let member of meta.members){
+      Object.assign(member, eventLib.computeMemberMeta(member, rootState.event));
+    }
+    commit("team/updateTeam", {team:Object.assign({}, team, meta)});
+  },
+	"request/sendJoinTeamRequest"({commit, state, rootState, getters}, {message}){
+    api.sendJoinTeamRequest(rootState.event.id, getters.currentUser.id, state.id, message);
 	},
-	modifyTeamSize({commit, state}, payload){
-		const size = payload
-		commit(types.MODIFY_TEAMSIZE, { size })
-	},
-	approveJoinRequest({commit, state}, payload){
-		const request = payload
-		commit(types.ADD_TO_TEAM, { request })
+	"request/acceptJoinTeamRequest"({commit, state, rootState}, {requestId}){
+    api.acceptJoinTeamRequest(rootState.event.id, requestId);
 	}
 }
 

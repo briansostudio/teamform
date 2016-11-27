@@ -1,70 +1,99 @@
 <template>
 	<div>
-		<div>
-			<button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
-		</div>
-		<div>
-			<el-dialog title="Enter selected event page" v-model="dialogVisible" size="small">
-				<el-steps :space="200" :active="1">
-					<el-step title="Step One" description="Choose Your Identity"></el-step>
-					<el-step title="Step Two" description="Authenticate"></el-step>
-					<el-step title="Step Three" description="Join / View Your Team(s)"></el-step>
-				</el-steps>
-				<br>
-				<Auth v-if="test" :admin="role"></Auth>
-				<role-chooser v-else></role-chooser>
-				<span slot="footer" class="dialog-footer">
-					<el-button type="primary" @click="enterAuthPage">Proceed <i class="fa fa-chevron-circle-right"></i></el-button>
-					<el-button @click.native="dialogVisible = false">Close</el-button>
-				</span>
-			</el-dialog>
-		</div>
+    <div class="row" style="margin-bottom: 8px;">
+      <div class="ui big icon input">
+        <el-autocomplete class="search-input" type="text" placeholder="Enter keyword to find your event"
+                         v-model="eventInput"
+                         @select="handleSelect"
+                         :fetch-suggestions="querySearch"
+                         :trigger-on-focus="false"></el-autocomplete>
+        <i class="search icon"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
+      </div>
+			<div>
+				<CreateEventModal :open="openCreateEventModal" :eventTitle="eventInput"></CreateEventModal>
+			</div>
+      <div>
+        <EventAuthModal :presented="isLoginModalPresenting"></EventAuthModal>
+      </div>
+    </div>
 	</div>
 </template>
 
 <script>
-import RoleChooser from './RoleChooser'
-import Auth from './Auth'
+import EventAuthModal from './EventAuthModal'
+import CreateEventModal from './CreateEventModal'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
 	data () {
 		return {
+		  eventInput:'',
 			event: {},
-			dialogVisible : false,
-			test: false
+			test: false,
+			active:0,
+			openCreateEventModal: false
 		}
 	},
 	computed:{
 		buttonTitle(){
-			return this.isCreate ? 'Create Event' : 'Discover Your Event'
-		}
+			return !this.eventId ? 'Create Event' : 'Discover Your Event'
+		},
+		...mapGetters(['isLoginModalPresenting', 'eventList', 'eventId'])
 	},
 	components: {
-		RoleChooser,Auth
+	  EventAuthModal, CreateEventModal
 	},
+  watch:{
+	  eventInput(eventName){
+      let id = '';
+      let list = this.eventList;
+      console.log(eventName);
+      for(let item of list){
+        if(item.value === eventName){
+          id = item.id;
+          break;
+        }
+      }
+      if(this.eventId !== id){
+        this.$store.commit('EVENT_ID_CHANGED', {eventId:id});
+      }
+      this.$emit("change");
+    }
+  },
 	methods: {
+		...mapActions(['toggleLoginModal']),
+    querySearch(queryString, cb){
+      let regex = new RegExp(queryString,"i");
+      let result = this.eventList.filter((item)=>{
+        return regex.test(item.value);
+      });
+      if(result[0] && result[0].value === queryString){
+        return cb([]);
+      }
+      cb(result);
+    },
+    handleSelect(item){
+      this.$store.commit("EVENT_ID_CHANGED",{eventId:item.id});
+    },
 		multiplexUserOption: function(){
-			if(this.isCreate){
-				this.createEvent()
+			if(!this.isInputValid()){
+				return
+			}
+			if(!this.eventId){
+				this.openCreateEventModal = true
 			}
 			else
 			{
-				this.loadEvent()
-			}
-		},
-		createEvent: function(){
-			if (this.isInputValid()){
-				console.log('test')
-			}
-		},
-		loadEvent: function(){
-			if (this.isInputValid()) {
-				this.dialogVisible = true
-				console.log('test2')
+				this.$store.dispatch('toggleLoginModal', true)
 			}
 		},
 		isInputValid: function(){
-			if (!this.name) {
+			if (!this.eventInput) {
 				this.$emit('invalidate')
 					return false
 			}
@@ -72,11 +101,6 @@ export default {
 				return true
 			}
 		},
-		enterAuthPage: function(){
-			this.test = true;
-			this.active = 2;
-
-		}
 	},
 	props: ['name', 'isCreate']
 }
@@ -90,25 +114,33 @@ button.action-btn{
 	font:normal normal 300 1.3em 'Open Sans';
 	text-decoration:none;
 
-	color:rgba(28, 190, 131, 1);
+	color:rgba(24, 242, 178, 1);
 	background-color:transparent;
-	border:1px solid rgba(28, 190, 131, 1);
+	border:1px solid rgba(24, 242, 178, 1);
 	border-radius:100px;
 
 	padding: .3em 1.2em;
 	margin:5px;
 
 	background-size: 200% 100%;
-	background-image: linear-gradient(to right, transparent 50%, rgba(28, 190, 131, 1) 50%);
+	background-image: linear-gradient(to right, transparent 50%, rgba(24, 242, 178, 1) 50%);
 	transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
 }
 
 button.action-btn:hover{
 	color:rgba(255, 255, 255, 1);
-	background-color:rgba(28, 190, 131, 1);
+	background-color:rgba(24, 242, 178, 1);
 	background-position: -100% 100%;
 }
 .large.ui.buttons > .ui.button:hover {
   box-shadow: 0 14px 13px -12px rgba(153, 153, 153, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(153, 153, 153, 0.2);
 }
+</style>
+<style>
+  .ui.input .search-input input.el-input__inner{
+    border-radius: 500rem !important;
+    width: 100%;
+    height: 3rem;
+    min-width: 480px;
+  }
 </style>

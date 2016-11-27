@@ -1,10 +1,10 @@
-import Home from './Home'
-import Event from './Event'
-import EventAdmin from './EventAdmin'
-import TeamManagement from './TeamManagement'
-import Team from './Team'
-import User from './User';
-import Login from './Login'
+import Home from '../Home'
+import Event from '../Event'
+import EventAdmin from '../EventAdmin'
+import TeamManagement from '../TeamManagement'
+import Team from '../Team'
+import User from '../User';
+import Login from '../Login'
 
 const routes = [
   {
@@ -18,7 +18,7 @@ const routes = [
     component: Event
   },
   {
-    path: '/event/:eventId/admin',
+    path: '/event/:eventId/manage',
     name: 'event admin',
     component: EventAdmin
   },

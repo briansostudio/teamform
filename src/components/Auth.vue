@@ -1,187 +1,93 @@
 <template>
-  <form class="auth-form" v-on:submit.prevent="onSubmitButtonClick()">
+  <div>
   <!--title of the auth form-->
-
-    <!--user input form-->
-    <div class="container">
-      <div v-show="!admin" class="ui input email">
-      	<input class="email-prompt" type="email" name="email" id="email" placeholder="Email" required v-model.trim="email"  v-on:input="isEmail()">
+    <div v-show="!isRegister">
+      <div>
+        <button class="ui google plus labeled icon button" @click="signInWithProvider('google')">
+        <i class="google plus icon"></i>
+          Sign in with Google
+        </button>
       </div>
-      <div class="ui warning message" v-show="errorEmail">
-          <div class="header">
-            * invalid email!
-          </div>
-            Please enter a valid email
+      <br>
+      <div>
+        <button class="ui github labeled icon button" @click="signInWithProvider('github')">
+        <i class="github icon"></i>
+          Sign in with Github
+        </button>
       </div>
-    </div>
-    <div class="container">
-      <div class="ui input password">
-      	<input class="password-prompt" type="password" name="password" id="password" placeholder="Password" required v-model.trim="password" v-on:input="passwordLength()">
+        <div v-show="!admin" class="ui horizontal divider">
+        Or
       </div>
-          <div class="ui warning message" v-show="errorPasswordMin">
-            <div class="header">
-              * Password is too short!
-            </div>
-              Please enter a longer email
-          </div>
-        <span class="error" v-show="errorPasswordMin"></span>
-    </div>
-    <div v-show="signUpStatue && !admin" class="container">
-      <div class="ui input confirmPassword">
-      	<input class="confirmpassword-prompt" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" v-model.trim="confirmPassword" v-on:input="isPasswordMatchWithConfirmPassword()">
-      </div>
-        <div class="ui warning message" v-show="errorConfirmPassword">
-          <div class="header">
-            * Not match with password!
-          </div>
-              Password and confirm password must be the same
-        </div>
-    </div>
-    <div v-show="signUpStatue && !admin" class="container">
-      <div class="ui input username">
-      	<input class="username-prompt" type="text" name="username" id="username" placeholder="Username" v-model.trim="username" v-on:input="isUsernameInput()">
-      </div>
-        <div class="ui warning message" v-show="errorUsername">
-          <div class="header">
-            * Username cannot be empty!
-          </div>
-            Please enter back the username
-        </div>
     </div>
 
-    <!--login button-->
-    <div v-show="!signUpStatue" class="clearfix btn-group">
-      <button class="ui positive button" type="submit">Sign in</button>
-      <button class="ui positive button" type="button" v-on:click="onSignUpButtonClick()">Sign up</button>
+    <div v-show="!isRegister">
+      <span>Sign in using username and password</span>
     </div>
-    <div v-show="signUpStatue">
-      <button type="submit" class="ui positive button signup-submit">Sign up</button>
-      <button type="submit" class="ui positive button signup-submit" v-on:click="onBackButtonClick()">Back</button>
-    </div>
-    <div v-show="!admin" class="ui horizontal divider">
-    Or
-    </div>
-    <div v-show="!admin" class="social-providers">
-      <a href="#" v-on:click.prevent="signInWithProvider('facebook')"><i class="fa fa-facebook-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('twitter')"><i class="fa fa-twitter-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('google')"><i class="fa fa-google-plus-square" aria-hidden="true" style="font-size:48px"></i></a>
-      <a href="#" v-on:click.prevent="signInWithProvider('github')"><i class="fa fa-github-square" aria-hidden="true" style="font-size:48px"></i></a>
-    </div>
-  </form>
+
+    <br>
+    <el-row type="flex" class="row-bg" justify="space-between">
+      <el-col :span="16" :offset="3">
+        <el-form class="" ref="form" :model="form" label-width="90px">
+          <el-form-item label="Email">
+            <el-input v-model="form.email"></el-input>
+          </el-form-item>
+
+          <transition name="slide-fade">
+            <el-form-item v-if="isRegister" label="User name">
+              <el-input v-model="form.username"></el-input>
+            </el-form-item>
+          </transition>
+
+          <el-form-item label="Password">
+            <el-input type="password" v-model="form.password"></el-input>
+          </el-form-item>
+
+          <transition name="slide-fade">
+            <el-form-item v-if="isRegister" label="Confirm password">
+              <el-input type="password" v-model="form.confirmPassword"></el-input>
+            </el-form-item>
+          </transition>
+        </el-form>
+      </el-col>
+    </el-row>
+
+    <span>
+      <span>{{isRegister ? "Already have account":"Not a member?"}}</span>
+      <el-button size="mini" v-on:click="toggleRegister">{{isRegister ? "Login" : "Register"}}</el-button>
+    </span>
+  </div>
 
 </template>
 <script>
-import AppTitle from './AppTitle'
-import Rating from './Rating'
+import {mapGetters, mapActions} from 'vuex';
 export default
 {
-
     data () {
       return {
-        email: '',
-        password: '',
-        confirmPassword: '',
-        username: '',
-        signUpStatue: false,
+        form:{
+          email: '',
+          username: '',
+          password: '',
+          confirmPassword: '',
+        }
         // admin:0,
-        errorEmail:false,
-        errorPasswordMin:false,
-        errorConfirmPassword:false,
-        errorUsername: false
       }
     },
     computed: {
-      title(){
-        return this.signUpStatue ? 'Sign up' : 'Sign in';
+      ...mapGetters(["isRegister"])
+    },
+    watch:{
+      form:{
+        handler(val){
+          this.$store.dispatch('home/loginFormUpdate',val);
+        },
+        deep: true
       }
     },
     methods: {
-      //checking
-      isEmail()
-      {
-        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-        if (this.email == '' || !re.test(this.email))
-        {
-          this.errorEmail = true;
-          // $(".ui.input.email").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorEmail = false;
-          // $(".ui.input.email").removeClass(" error");
-          return true;
-        }
-      },
-      passwordLength()
-      {
-        if(this.password.length<6)
-        {
-          this.errorPasswordMin = true;
-          // $(".ui.input.password").addClass(" error");
-          return false;
-        }
-        else{
-          this.errorPasswordMin = false;
-          // $(".ui.input.password").removeClass(" error");
-          return true;
-        }
-      },
-      isPasswordMatchWithConfirmPassword()
-      {
-        if (this.password == '' || this.password != this.confirmPassword)
-        {
-          this.errorConfirmPassword = true;
-          // $(".ui.input.confirmPassword").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorConfirmPassword = false;
-          // $(".ui.input.confirmPassword").removeClass(" error");
-          return true;
-        }
-      },
-      isUsernameInput()
-      {
-        if (this.username == '')
-        {
-          this.errorUsername = true;
-          // $(".ui.input.username").addClass(" error");
-          return false;
-        }
-        else
-        {
-          this.errorUsername = false;
-          // $(".ui.input.username").removeClass(" error");
-          return true;
-        }
-      },
-      //function
-      swapAdminClick()
-      {
-        this.admin = true;
-        this.errorEmail = false;
-        this.errorPasswordMin = false;
-        // $(".ui.input.email").removeClass(" error");
-        // $(".ui.input.password").removeClass(" error");
-      },
-      swapUserClick()
-      {
-        this.admin = false;
-        this.errorEmail = false;
-        this.errorPasswordMin = false;
-        // $(".ui.input.email").removeClass(" error");
-        // $(".ui.input.password").removeClass(" error");
-      },
-      onSignUpButtonClick(){
-        this.signUpStatue = true;
-      },
-      onBackButtonClick(){
-        this.signUpStatue = false;
-      },
+      ...mapActions(["toggleRegister"]),
       onSubmitButtonClick(){
-        return this.signUpStatue ? this.signUpWithPassword() : this.signInWithPassword();
+        return this.isRegister ? signUpWithPassword() : signInWithPassword();
       },
       signUpWithPassword(){
         this.$store.dispatch('member/register',{name:this.username, email:this.email, password:this.password});
@@ -190,95 +96,11 @@ export default
         this.$store.dispatch('member/login', {email:this.email, password:this.password});
       },
       signInWithProvider(provider){
-
+        this.$store.dispatch('member/socialLogin', provider)
       }
 
-    },
-    components:{
-      AppTitle,Rating,
     },
     props:['admin']
 }
 
 </script>
-
-<style>
-  .auth-form{
-    max-width: 70%;
-    margin: 10vh auto 15px;
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0 0px 0px #ccc;
-  }
-  .container
-  {
-	  margin: auto;
-    width: 100%;
-  }
-
-  .ui.teal.tag.label
-  {
-    margin: 10px;
-    font-size:17px
-  }
-  .ui.red.tag.label
-  {
-    margin: 10px;
-    font-size:16px
-  }
-  .auth-form h1{
-    font-weight: 500;
-  }
-  .auth-form > div {
-    margin-top: 15px;
-  }
-  button.ui.positive.button {
-    font-size: 18px;
-    background: #28d6ac;
-    color: #fff;
-    width: 45%;
-    margin-left: 10px;
-  }
-  .ui.input
-  {
-  	 width: 100%;
-  }
-  .auth-form hr{
-    margin-top: 20px;
-
-  }
-  .auth-form .social-providers{
-    text-align: center;
-  }
-
-  .auth-form .social-providers a{
-    color: #41b883;
-    font-size: 36px;
-    padding: 4px;
-  }
-  .fa-facebook-square {
-	  color:#3b5998
-  }
-  .fa-twitter-square {
-	  color:#00aced
-  }
-  .fa-google-plus-square {
-	  color:#dd4b39
-  }
-  .fa-github-square {
-	  color:#000000
-  }
-
-  .fa{
-    transition: all 0.2s ease-in-out;
-  }
-  .fa:hover {
-    opacity: .7;
-  }
-  .error
-  {
-    margin-bottom: 5px;
-    font-size:150%;
-    color:red;
-  }
-</style>

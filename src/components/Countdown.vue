@@ -20,7 +20,7 @@
             <div class="text">Seconds</div>
         </div>
     </div>
-    
+
 </template>
 <script>
 import swal from 'sweetalert2';
@@ -34,11 +34,11 @@ export default {
             eventDate: Math.trunc(Date.parse(this.Date) / 1000)
         }
     },
-    mounted() { 
-        var intervalID = window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);  
-        if(this.seconds == 0)
+    mounted() {
+        var intervalID = window.setInterval(() => {this.now = Math.trunc((new Date()).getTime() / 1000)},1000);
+        if(this.seconds == 0 && this.minutes == 0 && this.hours == 0 && this.days == 0)
         {
-            swal(
+           swal(
 			    'Event Registration Ended',
 			    'Deadline: ' + this.Date ,
                 'error'
@@ -50,7 +50,7 @@ export default {
     computed: {
             seconds() {
                 if(this.eventDate - this.now > 0)
-                {  
+                {
                     return (this.eventDate - this.now) % 60;
                 }
                 else
@@ -79,7 +79,7 @@ export default {
                     return 0;
             }
     }
-    
+
 }
 </script>
 

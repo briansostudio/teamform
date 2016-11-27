@@ -22,9 +22,9 @@
     "moment": "^2.16.0",
     "sweetalert2": "^6.0.1",
     "vue": "^2.0.1",
-    "vue-animate": "0.0.4",
     "vue-chartjs": "^2.2.0",
     "vue-router": "^2.0.0",
+    "vue2-animate": "^1.0.4",
     "vuex": "^2.0.0",
     "vuex-router-sync": "^3.0.0"
   },

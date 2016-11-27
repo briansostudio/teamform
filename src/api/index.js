@@ -1,56 +1,39 @@
 import {fb, db, auth} from './firebase'
 import member from './member'
 import event from './event'
+import team from './team'
 
 export default {
   member,
   event,
-	getTeamsFromEvent: function(eventId,cb){
-		db.ref(eventId).on('value', (snapshot) => {
-			cb(snapshot.val(), null)
-		}, (error) => {
-			cb(null, error)
-		})
-	},
-	getAllEvents:function(){
-		db.ref('events').on('value', (snapshot) => {
-			cb(snapshot.val(), null)
-		}, (error) => {
-			cb(null, error)
-		})
-	},
-	createEvent:function(name){
-		let key = db.ref('reference').push(name).key;
-		return db.ref(`events/${key}`).set({
-			name: name,
-			size: {
-				max: 10,
-				min: 1
-			}
-		}).then(()=>key);
-	},
-	updateEvent:function(id, properties){
-		db.ref(`event/${id}`).update(properties)
-	},
-	updateTeam:function(event, update, cb){
-		db.ref(event+'/teams').update(update)
-	},
-	loadEvent:function(eventTitle){
-		db.ref(eventTitle).on('value', (snapshot) => {
-			return snapshot.val()
-		})
-	},
-	eventExist:async function(name){
-		function find(obj, cb){
-			for (var key in obj){
-				var val = obj[key];
-				if(cb(val))
-					return val
-			}
-			return null
-		}
-		let snapshot = await db.ref('/events').once('value');
-		return !! find(snapshot.val(), record=>record === name);
-	},
+  team,
+  async sendJoinTeamRequest(eventId, userId, teamId, message){
+    let requestObject = {
+      member: userId,
+      team: teamId,
+      message: message,
+      status: 'PENDING'
+    };
+    return db.ref(`events/${eventId}/requests/`).push(requestObject).key;
+  },
+  async acceptJoinTeamRequest(eventId, requestId){
+    let requestObject = (await db.ref(`events/${eventId}/requests/${requestId}`).once('value')).val();
+    await Promise.all([
+      this.member.updateMember(requestObject.member, eventId, {
+        status: 'IN_TEAM',
+        team:requestObject.team
+      }),
+      this.team.addMemberToTeam(eventId, requestObject.team, requestObject.member),
+      this.removeJoinTeamRequest(eventId, requestId)
+    ]);
+  },
+  async removeJoinTeamRequest(eventId, requestId){
+    await db.ref(`events/${eventId}/requests/${requestId}`).remove();
+  },
+  async deniedJoinTeamRequest(eventId, requestId){
+    await db.ref(`events/${eventId}/requests/${requestId}`).update({
+      status: 'DENIED'
+    });
+  },
 }
 

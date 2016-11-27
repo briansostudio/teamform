@@ -1,27 +1,27 @@
 <template>
-	<div class="ui labeled button" tabindex="0">
-		<div class="ui button">
-			{{ type == 'max' ? 'Maximum' : 'Minimum'}} Team Size
+	<div>
+		<div>
+			<el-tooltip class="item" effect="dark" content="Maximum" placement="right">
+				<el-input-number :value="size.max" @change="setMaximumTeamSize">
+				</el-input-number>
+			</el-tooltip>
 		</div>
-		<span class="ui basic label">
-			{{size}}
-		</span>
+		<div>
+			<el-tooltip class="item" effect="dark" content="Minimum" placement="right">
+				<el-input-number :value="size.min" @change="setMinimumTeamSize">
+				</el-input-number>
+			</el-tooltip>
+		</div>
 	</div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-	watch: {
-		size: function(value){
-			this.$emit('valueChanged')
-		}
+	methods: {
+		...mapActions(['setMaximumTeamSize', 'setMinimumTeamSize'])
 	},
-	props: ['type', 'size']
+	props: ['size']
 }
 </script>
-
-<style>
-.ui.labeled.button:not([class*="left labeled"])>.button, .ui.labeled.button:not([class*="left labeled"])>.label, .ui[class*="left labeled"].button>.button{
-	cursor: default;
-}
-</style>

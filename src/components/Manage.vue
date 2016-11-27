@@ -23,21 +23,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<!-- first row for demo ui -->
-						<tr>
-							<td>index</td>
-							<td class="center aligned">name</td>
-							<td class="center aligned">
-								<button @click="" class="ui labeled icon button red">
-									<i class="remove user icon"></i>
-									Remove from team
-								</button>
-							</td>
-						</tr>
-						<!-- end of first row for demo ui -->
-						<tr v-for="(team, index) in teams">
-							<td>{{team.name}}</td>
-							<td class="center aligned">{{index}}</td>
+						<tr v-for="(member, index) in team.members">
+							<td>{{index}}</td>
+							<td class="center aligned">{{member.name}}</td>
 							<td class="center aligned">
 								<button @click="manageTeam(index)" class="ui labeled icon button red">
 									<i class="remove user icon"></i>
@@ -66,21 +54,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<!-- first row for demo ui -->
-						<tr>
-							<td>index</td>
-							<td class="center aligned">name</td>
-							<td class="center aligned">
-								<button @click="" class="ui labeled icon button teal">
-									<i class="add user icon"></i>
-									Add to team
-								</button>
-							</td>
-						</tr>
-						<!-- end of first row for demo ui -->
-						<tr v-for="(team, index) in teams">
-							<td>{{team.name}}</td>
-							<td class="center aligned">{{index}}</td>
+						<tr v-for="(request, index) in requests">
+							<td>{{index}}</td>
+							<td class="center aligned">{{request.member.name}}</td>
 							<td class="center aligned">
 								<button @click="" class="ui labeled icon button teal">
 									<i class="add user icon"></i>
@@ -100,8 +76,9 @@
 
 export default {
 	methods:{
-		
-	}
+
+	},
+  props:['team','requests']
 }
 </script>
 

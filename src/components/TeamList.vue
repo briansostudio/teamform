@@ -1,30 +1,37 @@
 <template>
-	<div class="ui centered grid">		
-		<div class="column">
-			<div v-for="(team, index) in teams" class="ui left aligned segment teamCard">
-				<img class="ui small left floated image" />
-				<h3 class="ui header teal">{{team.name}}</h3>
-				<div class="small">
-					<span>Description: {{team.description}}</span>
-				</div>
-			</div>
+	<div>
+    <div v-if="teams.length > 0">
+      <transition-group name="fadeLeft" tag="div">
+			  <TeamCard v-for="(team, index) in teams" :team="team" key="team.id"></TeamCard>
+      </transition-group>
+    </div>
+    <div v-else class="ui piled segment page">
+				<h2 class="ui icon header">
+					<i class="hide icon"></i>
+					<div class="content">
+						No Teams data available
+						<div class="sub header">To view teams in your event, add at least one team to the event
+						</div>
+					</div>
+				</h2>
 		</div>
 	</div>
 </template>
 
 <script>
-//import Rader from './components/Rader'
+import TeamCard from './TeamCard.vue'
 
 export default {
 	methods: {
-
 	},
-	props: ['teams']
+  computed:{
+  },
+	props: ['teams'],
+  components:{
+    TeamCard
+  }
 }
 </script>
 
 <style>
-.teamCard{
-	width: 600px;
-}
 </style>
