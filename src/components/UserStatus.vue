@@ -1,8 +1,8 @@
 <template>
     <div class="UserStatus">
-      <h3>{{user.name}}</h3>
-      <h3>{{user.description}}</h3>
-      <h3>{{user.id}}</h3>
+      <h3>Name: {{user.name}}</h3>
+      <h3>Description: {{user.description}}</h3>
+      <h3>User ID: {{user.id}}</h3>
     </div>
 </template>
 

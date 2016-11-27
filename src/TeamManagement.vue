@@ -1,14 +1,19 @@
 <template>
     <div class="TeamManagement">
-      <el-tabs>
-        <el-tab-pane label="Overview" name="overview">
-          <TeamOverviewEdit :team="viewingTeam"></TeamOverviewEdit>
-        </el-tab-pane>
-        <el-tab-pane label="Member Management" name="second">
-          <MemberListEdit :team="viewingTeam"></MemberListEdit>
-          <RequestList :requests="viewingTeamRequests"></RequestList>
-        </el-tab-pane>
-      </el-tabs>
+      <el-row :gutter="24" type="flex" justify="center" align="center">
+        <el-tabs>
+          <br>
+          <el-tab-pane label="Overview" name="overview">
+            <TeamOverviewEdit :team="viewingTeam"></TeamOverviewEdit>
+          </el-tab-pane>
+          <el-tab-pane label="Member Management" name="second">
+            <MemberListEdit :team="viewingTeam"></MemberListEdit>
+            <br>
+            <RequestList :requests="viewingTeamRequests"></RequestList>
+            <br>
+          </el-tab-pane>
+        </el-tabs>
+      </el-row>
     </div>
 </template>
 

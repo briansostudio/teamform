@@ -13,14 +13,14 @@
         <div style="display:flex; align-items: center">
           <MemberCard style="flex:1" :member="member"></MemberCard>
           <div style="width:150px; margin-left:10px;">
-            <button style="width: 100%; height:100px" v-if="member.id === team.leader.id" class="ui labeled icon button yellow">
+            <el-button type="warning" style="width: 100%; height:100px; font-size:18px;" v-if="member.id === team.leader.id">
               <i class="user icon"></i>
               Leader
-            </button>
-            <button style="width: 100%; height:100px" v-else @click="removeMemberFromViewingTeam(member)" class="ui labeled icon button red">
+            </el-button>
+            <el-button type="danger" style="width: 100%; height:100px; font-size:18px;" v-else @click="removeMemberFromViewingTeam(member)">
               <i class="remove user icon"></i>
               Remove
-            </button>
+            </el-button>
           </div>
         </div>
 

@@ -2,7 +2,7 @@
     <div class="RequestList">
       <div class="row">
         <h2 class="ui header">
-          <i class="users icon"></i>
+          <i class="add user icon"></i>
           <div class="content">
             Members requesting to join
           </div>
@@ -12,22 +12,19 @@
       <div v-for="(request, index) in requests">
         <div style="display:flex; align-items: center">
           <MemberCard style="flex:1" :member="request.member"></MemberCard>
-
           <div class="ui vertical buttons" style="height:220px;width:150px; margin-left:10px;">
-            <div class="ui button" style="flex: none;">
+            <el-button type="text" style="flex: none; color:grey;">
               Message:
-            </div>
-            <div class="ui button" style="">
+              <br><br>
               {{request.message}}
-            </div>
-            <button class="ui labeled icon button green" style="max-height:100px;" @click="teamManagementAcceptRequest(request)">
-              <i class="check icon"></i>
+            </el-button>
+            <br>
+            <el-button icon="check" type="success" style="width:140px; margin-left:10px;" @click="teamManagementAcceptRequest(request)">
               Accept
-            </button>
-            <button class="ui labeled icon button red" style="flex: none;" @click="teamManagementRejectRequest(request)">
-              <i class="remove circle icon"></i>
+            </el-button>
+            <el-button icon="close" type="danger" style="flex: none;" @click="teamManagementRejectRequest(request)">
               Reject
-            </button>
+            </el-button>
           </div>
         </div>
 
