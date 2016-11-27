@@ -25,18 +25,9 @@ export default {
     }
     else return false
   },
-  async createEvent({name, adminPassword}){
-    console.log(name)
-    console.log(adminPassword)
-    let key = db.ref('reference').push(name).key;
-    await db.ref(`events/${key}`).set({
-      name,
-      adminPassword,
-      size: {
-        max: 10,
-        min: 1
-      }
-    });
+  async createEvent(eventObj){
+    let key = (await db.ref('reference').push(eventObj.name)).key;
+    await db.ref(`events/${key}`).set(eventObj);
     return key;
   },
   async updateEvent(eventId, properties){

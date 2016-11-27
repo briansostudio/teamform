@@ -3,6 +3,7 @@ import api from '../../api'
 import util from '../util'
 import md5 from 'blueimp-md5'
 import router from '../../router'
+import schema from './schema'
 
 const state = {
     id: '',
@@ -103,8 +104,12 @@ const actions = {
                 })
             }
             else{
-                api.event.createEvent({name, adminPassword: md5(adminPassword)}).then( key=>{
-                    router.push(`/event/${key}/`);
+              let eventObj = schema.dbEvent();
+              eventObj.name = name;
+              eventObj.adminPassword = md5(adminPassword);
+                api.event.createEvent(eventObj).then( key=>{
+                    $('body').css("overflow","");
+                    router.push(`/event/${key}/manage`);
                 });
             }
         })
