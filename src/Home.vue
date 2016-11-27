@@ -63,10 +63,4 @@ html {
 .event-page {
 	margin-top: 15%;
 }
-
-.mode-switch {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-}
 </style>

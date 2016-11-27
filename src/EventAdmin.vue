@@ -9,17 +9,7 @@
 				</div>
       </div>
         <div class="row event-detail">
-			<TeamList v-if="event.hasOwnProperty('teams')" :teams="event.teams"></TeamList>
-			<div v-else class="ui piled segment page">
-				<h2 class="ui icon header">
-					<i class="hide icon"></i>
-					<div class="content">
-						No Teams data available
-						<div class="sub header">To view teams in your event, add at least one team to the event
-						</div>
-					</div>
-				</h2>
-			</div>
+			<TeamList :teams="filteredTeams"></TeamList>
 		</div>
   </div>
 </template>
@@ -27,22 +17,15 @@
 <script>
 import EventModificationForm from './components/EventModificationForm'
 import EventDetails from './components/EventDetails'
+import TeamList from './components/TeamList'
+import { mapGetters } from 'vuex'
 
 export default {
-	data(){
-		return {
-			event: {
-				name: '',
-				size: {
-					max: 10,
-					min: 1
-				}
-			},
-			teamName: ''
-		}
+	computed: {
+		...mapGetters(['filteredTeams'])
 	},
 	components:{
-		EventModificationForm, EventDetails
+		EventModificationForm, EventDetails, TeamList
 	}
 }
 
