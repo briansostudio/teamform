@@ -33,7 +33,7 @@ const getters = {
     console.log(JSON.parse(JSON.stringify(result)));
     return result;
   },
-  viewingTeamRequests: (state, getters, rootState) => state.requests.map(request => {
+  viewingTeamRequests: (state, getters, rootState) => state.requests.filter(request=>request.status === "PENDING").map(request => {
     return Object.assign({},request,{
       member: eventLib.getComputedMember(request.member, rootState.event)
     })

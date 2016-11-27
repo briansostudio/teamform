@@ -22,7 +22,7 @@ export default {
    */
   async addMemberToTeam(eventId, teamId, memberId){
     let membersRef = db.ref(`events/${eventId}/teams/${teamId}/members`);
-    let members = (await membersRef.once()).val();
+    let members = (await membersRef.once('value')).val();
     await membersRef.update({
       [members.length]:memberId
     });
@@ -34,10 +34,14 @@ export default {
    */
   async removeMemberFromTeam(eventId, teamId, memberId){
     let membersRef = db.ref(`events/${eventId}/teams/${teamId}/members`);
-    let members = (await membersRef.once().val());
-    let mutableMembers = [...members];
+    let snapshot = await membersRef.once('value');
+    let members = snapshot.val();
+    let mutableMembers = [];
+    for(let index in members){
+      mutableMembers[index] = members[index];
+    }
     let index = mutableMembers.indexOf(memberId);
     mutableMembers.splice(index, 1);
-    await membersRef.update(mutableMembers);
+    await membersRef.set(mutableMembers);
   }
 }

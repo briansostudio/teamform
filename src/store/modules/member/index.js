@@ -40,6 +40,13 @@ const getters = {
 };
 
 const actions = {
+  'member/leaveTeam'({getters, rootState}){
+    let userId = getters.currentUser.id;
+    let eventId = rootState.event.id;
+    let teamId = getters.userTeam.id;
+    console.log(eventId, userId, teamId)
+    api.member.leaveTeam(eventId, userId, teamId).then(()=>console.log('FINISH','leaveTeam'));
+  },
   "member/becomeLeader"({state, commit, rootState, dispatch}, {teamId}){
     let eventId = rootState.event.id;
     api.member.updateMember(state.id, eventId, {
@@ -135,6 +142,15 @@ const actions = {
   },
   "member/dispatch_UPDATE"({commit, rootState}, {user}){
     commit("member/UPDATE",{user: Object.assign({}, user, eventLib.computeMemberMeta(user, rootState.event))});
+  },
+  updateCriterion({commit, rootState}, payload) {
+    let updatedCriteria = state.criteria
+    updatedCriteria[payload.index] = payload.value
+    let update = {criteria:updatedCriteria}
+    api.member.updateMember(state.id, rootState.event.id, update).then(()=> {
+      commit(types.USER_UPDATE_CRITERION, payload);  
+    })
+    
   }
 };
 
@@ -153,6 +169,9 @@ const mutations = {
   },
   ["schedule/INTERVAL_REMOVED"](state, {id}){
     Vue.delete(state.schedule.intervals, id);
+  },
+  [types.USER_UPDATE_CRITERION](state, {index, value}) {
+    state.criteria[index] = value;
   }
 };
 
