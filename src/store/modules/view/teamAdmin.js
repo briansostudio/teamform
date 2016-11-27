@@ -15,6 +15,9 @@ const actions = {
   },
   "teamManagementAcceptRequest"({state, getters, rootState}, request){
     api.acceptJoinTeamRequest(rootState.event.id, request.id).then(()=>console.log('FINISH','acceptJoinTeamRequest'));
+  },
+  "teamManagementRejectRequest"({state, getters, rootState}, request){
+    api.deniedJoinTeamRequest(rootState.event.id, request.id).then(()=>console.log('FINISH','deniedJoinTeamRequest'));
   }
 }
 

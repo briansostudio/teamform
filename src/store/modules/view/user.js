@@ -1,5 +1,6 @@
 import lib from '../member/lib'
 import eventLib from '../../../lib/event'
+import api from '../../../api';
 
 const state = {
 }
@@ -15,6 +16,9 @@ const getters = {
 }
 
 const actions = {
+  "member/cancelJoinRequest"({rootState}, request){
+    api.removeJoinTeamRequest(rootState.event.id,request.id);
+  }
 }
 
 const mutations = {

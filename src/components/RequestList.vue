@@ -8,31 +8,35 @@
           </div>
         </h2>
       </div>
-      <table class="ui definition table">
-        <thead>
-        <tr>
-          <th></th>
-          <th class="center aligned">Name</th>
-          <th class="center aligned">Add member</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(request, index) in requests">
-          <td>{{index}}</td>
-          <td class="center aligned">{{request.member.name}}</td>
-          <td class="center aligned">
-            <button @click="teamManagementAcceptRequest(request)" class="ui labeled icon button teal">
-              <i class="add user icon"></i>
-              Add to team
+
+      <div v-for="(request, index) in requests">
+        <div style="display:flex; align-items: center">
+          <MemberCard style="flex:1" :member="request.member"></MemberCard>
+
+          <div class="ui vertical buttons" style="height:220px;width:150px; margin-left:10px;">
+            <div class="ui button" style="flex: none;">
+              Message:
+            </div>
+            <div class="ui button" style="">
+              {{request.message}}
+            </div>
+            <button class="ui labeled icon button green" style="max-height:100px;" @click="teamManagementAcceptRequest(request)">
+              <i class="check icon"></i>
+              Accept
             </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+            <button class="ui labeled icon button red" style="flex: none;" @click="teamManagementRejectRequest(request)">
+              <i class="remove circle icon"></i>
+              Reject
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
 </template>
 
 <script>
+  import MemberCard from './MemberCard.vue'
   import {mapActions} from 'vuex'
     export default {
         data(){
@@ -40,10 +44,10 @@
         },
         computed: {},
         methods: {
-          ...mapActions(["teamManagementAcceptRequest"])
+          ...mapActions(["teamManagementAcceptRequest",'teamManagementRejectRequest'])
         },
         props: ["requests"],
-        components: {}
+        components: {MemberCard}
     }
 </script>
 

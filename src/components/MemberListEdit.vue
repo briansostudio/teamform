@@ -8,35 +8,28 @@
           </div>
         </h2>
       </div>
-      <table class="ui definition table">
-        <thead>
-        <tr>
-          <th></th>
-          <th class="center aligned">Name</th>
-          <th class="center aligned">Remove member</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(member, index) in team.members">
-          <td>{{index}}</td>
-          <td class="center aligned">{{member.name}}</td>
-          <td class="center aligned">
-            <button v-if="member.id === team.leader.id" class="ui labeled icon button yellow" @click="removeMemberFromViewingTeam(member)">
+
+      <div v-for="(member, index) in team.members">
+        <div style="display:flex; align-items: center">
+          <MemberCard style="flex:1" :member="member"></MemberCard>
+          <div style="width:150px; margin-left:10px;">
+            <button style="width: 100%; height:100px" v-if="member.id === team.leader.id" class="ui labeled icon button yellow">
               <i class="user icon"></i>
               Leader
             </button>
-            <button v-else @click="removeMemberFromViewingTeam(member)" class="ui labeled icon button red">
+            <button style="width: 100%; height:100px" v-else @click="removeMemberFromViewingTeam(member)" class="ui labeled icon button red">
               <i class="remove user icon"></i>
-              Remove from team
+              Remove
             </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+          </div>
+        </div>
+
+      </div>
     </div>
 </template>
 
 <script>
+  import MemberCard from './MemberCard.vue'
   import {mapActions} from 'vuex';
 
     export default {
@@ -49,7 +42,7 @@
           ...mapActions(["removeMemberFromViewingTeam"])
         },
         props: ["team"],
-        components: {}
+        components: {MemberCard}
     }
 </script>
 
