@@ -16,7 +16,6 @@ export default{
       labels: eventState.criteria.map((s)=>s.substring(0,3)),
       datasets: result.members.map((member)=>this.getMemberRadarChartData(member))
     };
-    console.log(result.radarChartData);
     let members = result.members;
 
     let labels = eventState.criteria;

@@ -40,6 +40,12 @@ const getters = {
 };
 
 const actions = {
+  'member/leaveTeam'({getters, rootState}){
+    let userId = getters.currentUser.id;
+    let eventId = rootState.event.id;
+    let teamId = getters.userTeam.id;
+    api.member.leaveTeam(eventId, userId, teamId).then(()=>console.log('FINISH','leaveTeam'));
+  },
   "member/becomeLeader"({state, commit, rootState, dispatch}, {teamId}){
     let eventId = rootState.event.id;
     api.member.updateMember(state.id, eventId, {

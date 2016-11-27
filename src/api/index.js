@@ -17,7 +17,7 @@ export default {
     return db.ref(`events/${eventId}/requests/`).push(requestObject).key;
   },
   async acceptJoinTeamRequest(eventId, requestId){
-    let requestObject = (await db.ref(`events/${eventId}/requests/${requestId}`).once()).val();
+    let requestObject = (await db.ref(`events/${eventId}/requests/${requestId}`).once('value')).val();
     await Promise.all([
       this.member.updateMember(requestObject.member, eventId, {
         status: 'IN_TEAM',
