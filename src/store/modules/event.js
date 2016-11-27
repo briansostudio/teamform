@@ -1,6 +1,8 @@
 import * as types from '../mutation-types'
 import api from '../../api'
 import util from '../util'
+import md5 from 'blueimp-md5'
+import router from '../../router'
 
 const state = {
     id: '',
@@ -93,16 +95,16 @@ const actions = {
     "event/onLeave"({commit}, {eventId}){
       api.event.stopObserve(eventId);
     },
-    createEvent({commit}, payload){
-        api.eventExist(payload).then((exist) => {
+    createEvent({commit}, {name, adminPassword}){
+        api.event.eventExist(name).then((exist) => {
             if(exist){
                 commit(types.ERRORS_NOTIFY_INVALIDATED, {
                     message: 'Event already exist, please retry'
                 })
             }
             else{
-                api.createEvent(payload).then(key=>{
-
+                api.event.createEvent({name, adminPassword: md5(adminPassword)}).then( key=>{
+                    router.push(`/event/${key}/`);
                 });
             }
         })

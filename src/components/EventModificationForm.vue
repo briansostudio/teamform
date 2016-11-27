@@ -4,10 +4,10 @@
     <div class="fab">
         <el-form ref="form" label-width="180px" style="margin: 60px 60px 60px 60px;">
             <el-form-item label="Event Title">
-                <el-input :value="currentEvent.name" @input="updateEventName"></el-input>
+                <el-input :value="currentEvent.name" @change="updateEventName"></el-input>
             </el-form-item>
             <el-form-item label="Event Description">
-                <el-input type="textarea" :value="currentEvent.description" @input="updateEventDescription"></el-input>
+                <el-input type="textarea" :value="currentEvent.description" @change="updateEventDescription"></el-input>
             </el-form-item>
             <el-form-item label="Qualifiable Criteria">
                 <criteria-control></criteria-control>

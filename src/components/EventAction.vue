@@ -14,6 +14,9 @@
       <div>
         <button class="action-btn" @click.prevent="multiplexUserOption">{{buttonTitle}}</button>
       </div>
+			<div>
+				<CreateEventModal :open="openCreateEventModal" :eventTitle="eventInput"></CreateEventModal>
+			</div>
       <div>
         <EventAuthModal :presented="isLoginModalPresenting"></EventAuthModal>
       </div>
@@ -23,6 +26,7 @@
 
 <script>
 import EventAuthModal from './EventAuthModal'
+import CreateEventModal from './CreateEventModal'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -31,7 +35,8 @@ export default {
 		  eventInput:'',
 			event: {},
 			test: false,
-			active:0
+			active:0,
+			openCreateEventModal: false
 		}
 	},
 	computed:{
@@ -41,7 +46,7 @@ export default {
 		...mapGetters(['isLoginModalPresenting', 'eventList', 'eventId'])
 	},
 	components: {
-	  EventAuthModal
+	  EventAuthModal, CreateEventModal
 	},
   watch:{
 	  eventInput(eventName){
@@ -76,17 +81,15 @@ export default {
       this.$store.commit("EVENT_ID_CHANGED",{eventId:item.id});
     },
 		multiplexUserOption: function(){
+			if(!this.isInputValid()){
+				return
+			}
 			if(!this.eventId){
-				this.createEvent()
+				this.openCreateEventModal = true
 			}
 			else
 			{
 				this.$store.dispatch('toggleLoginModal', true)
-			}
-		},
-		createEvent: function(){
-			if (this.isInputValid()){
-				this.$store.dispatch('createEvent', eventInput)
 			}
 		},
 		isInputValid: function(){
