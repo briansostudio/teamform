@@ -1,5 +1,13 @@
 <template>
     <div class="User">
+        <el-row :gutter="24" type="flex" justify="space-around" align="center">
+          <el-col>
+              <el-breadcrumb separator="/">
+              <el-breadcrumb-item :to="{path : `/event/${eventId}`}">Event</el-breadcrumb-item>
+              <el-breadcrumb-item>User</el-breadcrumb-item>
+              </el-breadcrumb>
+          </el-col>
+        </el-row>
         <el-row :gutter="24" type="flex" justify="center" align="center">
             <el-col :span="4">
               <div class="grid-content bg-purple">
@@ -71,7 +79,8 @@
       ...mapGetters([
         "viewingUser",
         "isViewingCurrentUser",
-        'currentUserRequests'
+        'currentUserRequests',
+        'eventId'
       ])
     },
     methods: {

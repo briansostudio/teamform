@@ -14,10 +14,7 @@
         </div>
         <div>
           <div class="cancel button">
-          <button class="ui labeled icon button" @click="cancelJoinRequest(request)">
-            <i class="fa fa-times"></i>
-              Cancel Request
-            </button>
+            <el-button type="danger" icon="delete" @click="cancelJoinRequest(request)">Cancel Request</el-button>
           </div>
         </div>
       </div>
