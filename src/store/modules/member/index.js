@@ -16,6 +16,7 @@ const state = {
     intervals:{
     }
   },
+  avatar: '',
   team:'',
   description: "",
   criteria:[

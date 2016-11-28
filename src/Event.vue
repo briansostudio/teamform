@@ -8,9 +8,6 @@
     <div class="row">
       <Countdown :Date="eventDeadline"></Countdown>
     </div>
-    <div class="row">
-      <TeamSizeControl></TeamSizeControl>
-    </div>
 
 		<div class="row">
 			<h2 class="ui header">
@@ -50,7 +47,6 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import TeamSizeControl from './components/TeamSizeControl'
 import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
@@ -87,7 +83,7 @@ export default {
 		}
 	},
 	components:{
-		TeamSizeControl, TeamList, EventOverview, BasicUserStatus, TeamCard, Countdown
+		TeamList, EventOverview, BasicUserStatus, TeamCard, Countdown
 	}
 }
 </script>

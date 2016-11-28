@@ -1,23 +1,38 @@
 <template>
     <div class="User">
         <el-row :gutter="24" type="flex" justify="space-around" align="center">
-          <el-col>
+          <el-col :span="8">
               <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{path : `/event/${eventId}`}">Event</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{path : `/event/${eventId}`}">{{eventName}}</el-breadcrumb-item>
               <el-breadcrumb-item>User</el-breadcrumb-item>
               </el-breadcrumb>
           </el-col>
         </el-row>
         <el-row :gutter="24" type="flex" justify="center" align="center">
             <el-col :span="4">
-              <div class="grid-content bg-purple">
-                <h1 class="ui center aligned icon header">
-                  <i class="user icon"></i>
-                </h1>
+              <div class="ui card">
+                <div class="image">
+                  <img src="http://placehold.it/180x180" alt="">
+                </div>
+                <div class="content">
+                  <a class="header">
+                    {{viewingUser.name}}
+                  </a>
+                  <div class="meta">
+                    No Team Yet
+                  </div>
+                  <div class="description">
+                    {{viewingUser.description}}
+                  </div>
+                </div>
+                <div class="extra content">
+                  <a>
+                    <i class="inbox icon"></i>
+                    Contact
+                  </a>
+                </div>
               </div>
-              <h1>{{viewingUser.name}}</h1>
-              <h2>{{viewingUser.description}}</h2>
-              </el-col>
+            </el-col>
             <el-col :span="12">
                 <el-tabs :active-name="activeName" style="width:100%" @tab-click="tabClicked">
                   <el-tab-pane label="Overview" name="first">
@@ -80,7 +95,8 @@
         "viewingUser",
         "isViewingCurrentUser",
         'currentUserRequests',
-        'eventId'
+        'eventId',
+        'eventName'
       ])
     },
     methods: {
