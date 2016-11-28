@@ -17,8 +17,14 @@ export default{
       ],
       teams: [],
       members: {},
-      due: new Date(Date.now() + 3600 * 1000)
+      due: new Date(Date.now() + 365 * 86400 * 1000)
     }
+  },
+  dbEvent(){
+    let event = this.event();
+    event.teamSize = event.limits;
+    delete event.limits;
+    return event;
   },
   team(leader){
     let team = {

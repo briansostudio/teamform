@@ -24,11 +24,11 @@
                     <UserStatus :user="viewingUser"></UserStatus>
                   </el-tab-pane>
                   <el-tab-pane label="Skill" name="second">
-                    <div v-if="viewingUser.radarChartData">
-                    <RadarSlideInput>
-                    </RadarSlideInput>
-                    </div>
                     <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
+                    <div v-if="isViewingCurrentUser">
+                      <RadarSlideInput>
+                      </RadarSlideInput>
+                    </div>
                   </el-tab-pane>
                   <el-tab-pane label="Schedule" name="third"></el-tab-pane>
                   <el-tab-pane v-show="isViewingCurrentUser" label="Request" name="fourth">

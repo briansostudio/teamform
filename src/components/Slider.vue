@@ -1,6 +1,7 @@
 <template>
-    <el-slider v-model="criterion" @change="updateSkill" show-input>
-        </el-slider>
+  <div>
+    {{label}}<el-slider v-model="criterion" @change="updateSkill" show-input></el-slider>
+  </div>
 </template>
 
 <script>
@@ -14,6 +15,6 @@ export default ({
         },
       ...mapActions(["updateCriterion"])
   },
-  props: ["criterion", "index"]
+  props: ["criterion", "index", "label"]
 })
 </script>
