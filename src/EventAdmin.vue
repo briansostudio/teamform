@@ -1,7 +1,7 @@
 <template>
   <div class="ui centered grid stackable">
       <div class="row event-page">
-        <h1>Event Management Panel</h1>
+        <h1 style="color:black;">Event Management Panel</h1>
       </div>
       <div class ="row event-detail">
 				<div class="twelve wide column">
