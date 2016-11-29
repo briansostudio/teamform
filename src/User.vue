@@ -144,14 +144,6 @@
     background-color: #f9fafc;
   }
 
-  .el-tabs__item.is-active {
-    color: #00FA9A;
-  }
-
-  .el-tabs__active-bar {
-    background-color: #00FA9A;
-  }
-
   .User {
     margin-top: 5%;
   }
