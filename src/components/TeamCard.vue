@@ -14,7 +14,7 @@
                   </tr>
                   <tr>
                     <td class="label"><i class="users icon"></i>Member</td>
-                    <td>{{team.members.length}}/{{maxMember}}</td>
+                    <td>{{team.members.length}}/{{currentEvent.limits.max}}</td>
                   </tr>
                   <tr>
                     <td class="label"><i class="wait icon"></i>Free Hours</td>
@@ -44,6 +44,7 @@
 
 <script>
   import Radar from './Radar'
+  import {mapGetters} from 'vuex'
     export default {
         data(){
             return {
@@ -66,21 +67,7 @@
             }
         },
         computed: {
-          freeHours(){
-              return 120; // 120 hours
-          },
-          weakness(){
-              return "Desgin";
-          },
-          leaderName(){
-              return "Clement";
-          },
-          numOfMember(){
-              return 4;
-          },
-          maxMember(){
-              return 7;
-          }
+          ...mapGetters(["currentEvent"])
         },
         methods: {},
         props: ["team"],

@@ -12,7 +12,7 @@
             <div class="meta">
             <span class="right floated">
               <i class="users icon"></i>
-              {{team.members.length}} / 7
+              {{team.members.length}} / {{currentEvent.limits.max}}
             </span>
             <span class="left floated">
                Leader: {{team.leader.name}}
@@ -24,14 +24,14 @@
           </div>
           <div class="extra content">
             <span>
-              
+
               <TeamActions></TeamActions>
             </span>
           </div>
         </div>
       </div>
-    
-    
+
+
     </div>
     <div class="column">
       <div style="height: 420px; display: flex; align-items: center; flex-direction: column;">
@@ -46,6 +46,7 @@
 <script>
 import TeamActions from './TeamActions.vue'
 import Radar from './Radar.vue'
+import {mapGetters} from 'vuex'
 export default {
   data(){
     return {
@@ -71,6 +72,9 @@ export default {
       team(){
           console.log("watch team",this.team);
       }
+  },
+  computed:{
+    ...mapGetters(["currentEvent"])
   },
 	props: ['team'],
   components: {Radar, TeamActions}
