@@ -10,24 +10,35 @@
       </div>
 
       <div v-for="(request, index) in requests">
-        <div style="display:flex; align-items: center">
-          <MemberCard style="flex:1" :member="request.member"></MemberCard>
-          <div class="ui vertical buttons" style="height:220px;width:150px; margin-left:10px;">
-            <el-button type="text" style="flex: none; color:grey;">
-              Message:
-              <br><br>
-              {{request.message}}
-            </el-button>
-            <br>
-            <el-button icon="check" type="success" style="width:140px; margin-left:10px;" @click="teamManagementAcceptRequest(request)">
-              Accept
-            </el-button>
-            <el-button icon="close" type="danger" style="flex: none;" @click="teamManagementRejectRequest(request)">
-              Reject
-            </el-button>
+        <div class="ui cards" style="padding-top:25px;">
+          <div class="card"  style="width:700px;">
+            <div class="content">
+              <MemberCard style="flex:1" :member="request.member"></MemberCard>
+            </div>
+            <div class="extra content">
+              <div class="header">
+                Message:
+              </div>
+              <div class="description">
+                {{request.message}}
+              </div>
+            </div>
+            <div class="extra content">
+              <span class="right floated">
+                <div class="ui two buttons">
+                  <div class="ui basic">
+                    <el-button icon="close" type="danger" style="width:140px;flex: none;" @click="teamManagementRejectRequest(request)">
+                      Reject
+                    </el-button>
+                    <el-button icon="check" type="success" style="width:140px; margin-left:10px;" @click="teamManagementAcceptRequest(request)">
+                      Accept
+                    </el-button>
+                  </div>
+                </div>
+              </span>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
 </template>

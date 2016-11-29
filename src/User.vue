@@ -15,9 +15,9 @@
                   <img src="./assets/images/avatar.png" alt="">
                 </div>
                 <div class="content">
-                  <a class="header">
+                  <p class="header">
                     {{viewingUser.name}}
-                  </a>
+                  </p>
                   <div class="meta">
                     No Team Yet
                   </div>
@@ -154,14 +154,6 @@
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
-  }
-
-  .el-tabs__item.is-active {
-    color: #00FA9A;
-  }
-
-  .el-tabs__active-bar {
-    background-color: #00FA9A;
   }
 
   .User {
