@@ -155,14 +155,14 @@ const actions = {
             commit(types.EVENT_NAME_UPDATED, payload)
         })
     },
-    addRecruitCriteria({commit}, payload){
+    addRecruitCriteria({commit, state}, payload){
         let updatedCriteria = state.criteria.map(a=>a);
         updatedCriteria.push(payload)
         api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
             //commit(types.EVENT_ADD_RECRUIT_CRITERIA, payload)
         })
     },
-    discardRecruitCriteria({commit}, payload){
+    discardRecruitCriteria({commit, state}, payload){
         let updatedCriteria = state.criteria.map(a=>a);
         updatedCriteria.splice(updatedCriteria.indexOf(payload), 1)
         api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
