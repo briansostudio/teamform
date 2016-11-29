@@ -12,7 +12,7 @@
             <el-col :span="4">
               <div class="ui card">
                 <div class="image">
-                  <img src="http://placehold.it/180x180" alt="">
+                  <img src="./assets/images/avatar.png" alt="">
                 </div>
                 <div class="content">
                   <a class="header">
@@ -25,19 +25,26 @@
                     {{viewingUser.description}}
                   </div>
                 </div>
-                <div class="extra content">
-                  <a>
-                    <i class="inbox icon"></i>
-                    Contact
-                  </a>
+                <div v-if="isViewingCurrentUser" class="extra content">
+                  <span class="right floated">
+                    <a @click="editUser">
+                      <i class="edit icon"></i>
+                      Edit
+                    </a>
+                  </span>
+                  <span>
+                    <a @click="viewRequests">
+                      <i class="add user icon"></i>
+                      Requests
+                    </a>
+                  </span>
                 </div>
               </div>
+              <UserEditForm :user="viewingUser" :present="isEditingUser"></UserEditForm>
+              <MyRequests :requests="currentUserRequests" :present="isRequestViewDisplaying"></MyRequests>
             </el-col>
             <el-col :span="12">
                 <el-tabs :active-name="activeName" style="width:100%" @tab-click="tabClicked">
-                  <el-tab-pane label="Overview" name="first">
-                    <UserStatus :user="viewingUser"></UserStatus>
-                  </el-tab-pane>
                   <el-tab-pane label="Skill" name="second">
                     <Radar :chartData="viewingUser.radarChartData" :options="radarOptions"></Radar>
                     <div v-if="isViewingCurrentUser">
@@ -46,10 +53,7 @@
                     </div>
                   </el-tab-pane>
                   <el-tab-pane label="Schedule" name="third"></el-tab-pane>
-                  <el-tab-pane v-show="isViewingCurrentUser" label="Request" name="fourth">
-                  </el-tab-pane>
-                </el-tabs>
-              <MyRequests v-show="currentTab === 'fourth'" :requests="currentUserRequests"></MyRequests>
+                </el-tabs> 
               <WeeklySchedule v-if="currentTab == 'third'" :editMode="true" :users="scheduleUsers" :currentUserId="viewingUser.id"></WeeklySchedule>
             </el-col>
         </el-row>
@@ -57,9 +61,9 @@
 </template>
 
 <script>
-  import UserStatus from './components/UserStatus.vue'
   import WeeklySchedule from './components/WeeklySchedule/WeeklySchedule.vue'
-  import MyRequests from './components/MyRequests.vue'
+  import MyRequests from './components/MyRequests'
+  import UserEditForm from './components/UserEditForm'
   import { mapGetters } from 'vuex'
   import Radar from './components/Radar.vue'
   import RadarSlideInput from './components/RadarSlideInput'
@@ -67,8 +71,8 @@
   export default {
     data(){
       return {
-        activeName:"first",
-        currentTab:"first",
+        activeName:"second",
+        currentTab:"second",
         userId: null,
         radarOptions:{
           legend:{
@@ -96,16 +100,24 @@
         "isViewingCurrentUser",
         'currentUserRequests',
         'eventId',
-        'eventName'
+        'eventName',
+        'isEditingUser',
+        'isRequestViewDisplaying'
       ])
     },
     methods: {
+      editUser(){
+        this.$store.dispatch('toggleEditMode')
+      },
+      viewRequests(){
+        this.$store.dispatch('toggleRequestView')
+      },
       tabClicked(tab){
           this.currentTab = tab.name;
       }
     },
     props: {},
-    components: {UserStatus, WeeklySchedule, MyRequests, Radar, RadarSlideInput}
+    components: {UserEditForm, WeeklySchedule, MyRequests, Radar, RadarSlideInput}
   }
 </script>
 
