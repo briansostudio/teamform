@@ -27,7 +27,7 @@
         </div>
         <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
 
-          Sort Result By: <el-select v-model="localSortingCriteria" placeholder="Sort By">
+          Sort Result By:&nbsp;<el-select style="margin-right: 10px;" v-model="localSortingCriteria" placeholder="Sort By">
             <el-option
               v-for="item in sortingOptions"
               :label="item.label"
@@ -35,7 +35,7 @@
             </el-option>
           </el-select>
 
-          <button v-if="userStatus === 'NO_TEAM'" class="ui teal labeled icon button" @click="addTeam">
+          <button v-if="userStatus === 'NO_TEAM'" :style="filteredTeams.length === 0 ? 'opacity:1;' : 'opacity:0'" class="ui teal labeled icon button" @click="addTeam">
             <i class="add user icon"></i>
             Add Team
           </button>
