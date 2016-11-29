@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import Element from 'element-ui'
 import 'vue2-animate/dist/vue2-animate.min.css'
-
+import '../theme/index.css'
 
 Vue.use(VueRouter)
 Vue.use(Element)
