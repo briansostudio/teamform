@@ -72,6 +72,7 @@ import Countdown from './components/Countdown.vue'
 export default {
 	data(){
 		return {
+      localTeamFilterString: '',
       eventDeadline: new Date(Date.now() + 86400000),
       localSortingCriteria: 'name',
       sortingOptions:[

@@ -3,7 +3,10 @@
     <router-link :to="{ name: 'team', params: { eventId: $route.params.eventId, teamId: team.id }}">
       <div class="teamCard">
         <div class="teamCard-details">
-          <a class="ui teal left ribbon label">{{team.name}}</a>
+          <div>
+            <a class="ui teal left ribbon label">{{team.name}}</a>
+            <el-tag v-for="tag in team.tags" style="margin-right: 3px;" type="primary">{{tag}}</el-tag>
+          </div>
           <div style="display:flex">
             <div style="flex:1; padding-left: 20px; padding-top:5px;">
               <table class="ui very basic table">
