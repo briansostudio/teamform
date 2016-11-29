@@ -10,7 +10,13 @@
           <div class="content">
             <div class="header">{{team.name}}</div>
             <div class="meta">
-              Leader: {{team.leader.name}}
+            <span class="right floated">
+              <i class="users icon"></i>
+              {{team.members.length}} / 7
+            </span>
+            <span class="left floated">
+               Leader: {{team.leader.name}}
+            </span>
             </div>
             <div class="description">
             {{team.description}}
@@ -18,11 +24,7 @@
           </div>
           <div class="extra content">
             <span>
-              <i class="users icon"></i>
-              {{team.members.length}}
-            </span>
-            <span>
-              <br>
+              
               <TeamActions></TeamActions>
             </span>
           </div>
