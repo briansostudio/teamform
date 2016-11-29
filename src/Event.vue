@@ -19,13 +19,28 @@
 		</div>
 
 		<div class="row">
-			<div :class="userStatus === 'NO_TEAM' ? 'ui large action input' : 'ui large input'">
-				<input type="text" placeholder="Enter your team name" class="add-team-input" v-model="teamName">
-				<button v-if="userStatus === 'NO_TEAM'" class="ui teal left labeled icon button" @click="addTeam">
-					<i class="add user icon"></i>
-					Add Team
-				</button>
-			</div>
+      <div class="column">
+        <div style="width: 400px; margin: 0 auto;">
+          <div class="ui large input" style="width: 400px;">
+            <input type="text" placeholder="Enter Team name to search" class="add-team-input" :value="teamFilterString" @input="teamFilterStringUpdate($event.target.value)">
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
+
+          Sort Result By: <el-select v-model="localSortingCriteria" placeholder="Sort By">
+            <el-option
+              v-for="item in sortingOptions"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+
+          <button v-if="userStatus === 'NO_TEAM'" class="ui teal labeled icon button" @click="addTeam">
+            <i class="add user icon"></i>
+            Add Team
+          </button>
+        </div>
+      </div>
 		</div>
 
     <div v-if="userStatus !== 'NO_TEAM'" class="row">
@@ -46,7 +61,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import TeamList from './components/TeamList'
 import EventOverview from './components/EventOverview'
 import swal from 'sweetalert2'
@@ -58,30 +73,33 @@ export default {
 	data(){
 		return {
 			teamName: '',
-      eventDeadline: new Date(Date.now() + 86400000)
+      eventDeadline: new Date(Date.now() + 86400000),
+      localSortingCriteria: 'name',
+      sortingOptions:[
+        {label: 'Name', value: 'name'},
+        {label: 'Influence', value: 'influence'},
+        {label: 'Schedule Matched', value: 'schedule_matching'}
+      ]
 		}
 	},
   computed:{
-    ...mapGetters(['userStatus', 'userTeam','currentUser','filteredTeams', 'currentEvent'])
+    ...mapGetters(['userStatus', 'userTeam','currentUser','filteredTeams', 'currentEvent','sortingCriteria','teamFilterString'])
   },
 	methods:{
-		fetchEvent: function(){
-//			let _this = this
-//			let ref = this.$root.$firebaseRefs.root
-//			ref.on('value', (snapshot) => {
-//				_this.event = snapshot.child(_this.$route.params.id).val()
-//			})
-		},
-		updateEvent: function(){
-			let update = {}
-			let ref = this.$root.$firebaseRefs.root
-			update[this.$route.params.id] = this.event
-			ref.update(update)
-		},
 		addTeam: function(){
 			this.$store.dispatch("team/createTeam",{name: this.teamName});
-		}
+		},
+    ...mapActions({
+      'updateEventName':'updateEventName',
+      'updateEventDescription':'updateEventDescription',
+      "teamFilterStringUpdate":"event/dispatchFilterStringChanged"
+    })
 	},
+  watch:{
+    localSortingCriteria(val){
+          this.$store.dispatch('event/dispatchSortCriteriaChanged',val);
+      }
+  },
 	components:{
 		TeamList, EventOverview, BasicUserStatus, TeamCard, Countdown
 	}
