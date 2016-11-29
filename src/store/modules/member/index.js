@@ -107,8 +107,11 @@ const actions = {
     })
   },
   "member/socialLogin"({state, commit, rootState, dispatch}, platform){
-    let eventId = rootState.event.id
-    api.member.socialLogin(platform, eventId).then(({userId, firstTimeUser})=>{
+    let eventId = rootState.event.id;
+    let user = lib.mockMember();
+    user.description = "no description yet";
+
+    api.member.socialLogin(platform, eventId, user).then(({userId, firstTimeUser})=>{
       sessionStorage.setItem('firebase.user.uid', userId);
       commit('member/USER_ID_CHANGED',{userId});
       $('body').css("overflow","");

@@ -52,7 +52,7 @@ export default {
       }
     }
   },
-  async socialLogin(platform ,eventId){
+  async socialLogin(platform ,eventId, user){
     let provider
     switch(platform){
       case 'google':
@@ -63,12 +63,11 @@ export default {
         break
     }
     let result = await auth.signInWithPopup(provider)
-    let user = {
+    user = Object.assign(user, {
       name: result.user.displayName,
-      description: "no description yet",
       id: result.user.uid,
       avatar: result.user.photoURL
-    }
+    });
 
     let exist = await this.getFirebaseRef(result.user.uid, eventId).once("value");
     if(exist.val() === null){
