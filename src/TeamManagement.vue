@@ -4,13 +4,13 @@
         <el-col :span="16">
           <el-tabs>
             <br>
-            <el-tab-pane label="Overview" name="overview">
-              <TeamOverviewEdit :team="viewingTeam"></TeamOverviewEdit>
-            </el-tab-pane>
-            <el-tab-pane label="Member Management" name="second">
-              <MemberListEdit :team="viewingTeam"></MemberListEdit>
-              <br>
+            <el-tab-pane label="Overview" name="overview" style="width: 800px;">
+            <TeamOverviewEdit :team="viewingTeam" style="width: 600px;"></TeamOverviewEdit>
+          </el-tab-pane>
+          <el-tab-pane label="Member Management" name="second" style="width: 800px;">
               <RequestList :requests="viewingTeamRequests"></RequestList>
+              <br>
+              <MemberListEdit :team="viewingTeam"></MemberListEdit>
               <br>
             </el-tab-pane>
           </el-tabs>
@@ -25,6 +25,7 @@
   import TeamOverviewEdit from './components/TeamOverviewEdit.vue'
   import MemberListEdit from './components/MemberListEdit.vue'
   import RequestList from './components/RequestList.vue'
+
   export default {
       data(){
           return {}

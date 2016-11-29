@@ -9,23 +9,23 @@
               <table class="ui very basic table">
                 <tbody>
                   <tr>
-                    <td><i class="user icon"></i>Leader</td>
+                    <td class="label"><i class="user icon"></i>Leader</td>
                     <td>{{team.leader.name}}</td>
                   </tr>
                   <tr>
-                    <td><i class="users icon"></i>Member</td>
-                    <td>{{team.members.length}}/{{maxMember}}</td>
+                    <td class="label"><i class="users icon"></i>Member</td>
+                    <td>{{team.members.length}}/{{currentEvent.limits.max}}</td>
                   </tr>
                   <tr>
-                    <td><i class="wait icon"></i>Free Hours</td>
+                    <td class="label"><i class="wait icon"></i>Free Hours</td>
                     <td>{{team.freeHours}}</td>
                   </tr>
                   <tr>
-                    <td><i class="warning sign icon"></i>Talent Wanted</td>
+                    <td class="label"><i class="warning sign icon"></i>Talent Wanted</td>
                     <td>{{team.weakness}}</td>
                   </tr>
                   <tr>
-                    <td><i class="info icon"></i>Description</td>
+                    <td class="label"><i class="info icon"></i>Description</td>
                     <td>{{team.description}}</td>
                   </tr>
                 </tbody>
@@ -44,6 +44,7 @@
 
 <script>
   import Radar from './Radar'
+  import {mapGetters} from 'vuex'
     export default {
         data(){
             return {
@@ -66,21 +67,7 @@
             }
         },
         computed: {
-          freeHours(){
-              return 120; // 120 hours
-          },
-          weakness(){
-              return "Desgin";
-          },
-          leaderName(){
-              return "Clement";
-          },
-          numOfMember(){
-              return 4;
-          },
-          maxMember(){
-              return 7;
-          }
+          ...mapGetters(["currentEvent"])
         },
         methods: {},
         props: ["team"],
@@ -127,4 +114,9 @@
     height: 38px;
     font-size: 17px
   }
+  td.label
+  {
+    width:150px;
+  }
+
 </style>

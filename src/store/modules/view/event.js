@@ -1,4 +1,5 @@
 import eventLib from '../../../lib/event'
+import Vue from 'vue'
 
 const state = {
   sortingCriteria:'',
@@ -15,6 +16,8 @@ const getters = {
     });
   },
   filteredTeams:(state,getters,rootState)=>{
+
+    let currentUser = getters.currentUser;
 
     let sortingCriteria = state.sortingCriteria;
     let filterString = state.filter;
@@ -43,20 +46,27 @@ const getters = {
         break;
       case 'schedule_matching':
         preprocessFunc = (team)=>{
-          console.log(team);
+          team = Object.assign({},team);
+          Vue.set(team,'deltaMember', currentUser);
+          Vue.set(team,'deltaTeam', eventLib.deltaTeam(team, currentUser, rootState.event));
+          Vue.set(team,'deltaFreeTime',team.deltaTeam.freeHours - team.freeHours);
           return team;
         };
         sortFunc = (teamA, teamB)=>{
-          return 0;
+          return -((teamA.deltaTeam.freeHours - teamA.freeHours) - (teamB.deltaTeam.freeHours - teamB.freeHours));
         };
         break;
       case 'influence':
         preprocessFunc = (team)=>{
-          console.log(team);
+          team = Object.assign({},team);
+          Vue.set(team,'deltaMember', currentUser);
+          Vue.set(team,'deltaTeam', eventLib.deltaTeam(team, currentUser, rootState.event));
           return team;
         };
         sortFunc = (teamA, teamB)=>{
-          return 0;
+          let influenceA = teamA.deltaTeam.skillValues[teamA.weaknessIndex] - teamA.skillValues[teamA.weaknessIndex];
+          let influenceB = teamB.deltaTeam.skillValues[teamB.weaknessIndex] - teamB.skillValues[teamB.weaknessIndex];
+          return influenceB - influenceA;
         };
         break;
       default:
@@ -72,6 +82,9 @@ const getters = {
     if(sortFunc){
       sortedTeams = processedTeams.sort(sortFunc);
     }
+    // if(sortedTeams.length > 0 && sortedTeams[0].deltaTeam){
+    //   sortedTeams = sortedTeams.map(m => m.deltaTeam);
+    // }
     return sortedTeams;
   },
 };
