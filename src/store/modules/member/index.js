@@ -151,8 +151,19 @@ const actions = {
     api.member.updateMember(state.id, rootState.event.id, update).then(()=> {
       commit(types.USER_UPDATE_CRITERION, payload);  
     })
-    
-  }
+  },
+  updateUserDisplayName({commit, rootState, dispatch}, payload){
+    api.member.updateMember(state.id, rootState.event.id, payload).then(() => {
+      commit(types.USER_MODIFY_DISPLAYNAME, payload)
+      dispatch('toggleEditMode')
+    })
+	},
+  updateUserDescription({commit, rootState}, payload){
+    api.member.updateMember(state.id, rootState.event.id, payload).then(() => {
+      commit(types.USER_MODIFY_DESCRIPTION, payload)
+      
+    })
+	}
 };
 
 const mutations = {
@@ -173,6 +184,12 @@ const mutations = {
   },
   [types.USER_UPDATE_CRITERION](state, {index, value}) {
     state.criteria[index] = value;
+  },
+  [types.USER_MODIFY_DISPLAYNAME](state, { name }){
+    state.name = name
+  },
+  [types.USER_MODIFY_DESCRIPTION](state, { description }){
+    state.description = description
   }
 };
 

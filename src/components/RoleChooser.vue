@@ -1,5 +1,5 @@
 <template>
-    <el-row type="flex" class="row-bg" justify="space-around">
+    <el-row type="flex" class="row" justify="space-around">
         <el-col :span="9">
             <el-card :body-style="{ padding: '0px' }" @click.native="selectRoleForLogin('organizer')">
                 <img src="../assets/images/organizer.png" class="image" style="width: 180px; height:auto">

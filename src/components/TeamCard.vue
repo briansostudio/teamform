@@ -9,23 +9,23 @@
               <table class="ui very basic table">
                 <tbody>
                   <tr>
-                    <td><i class="user icon"></i>Leader</td>
+                    <td class="label"><i class="user icon"></i>Leader</td>
                     <td>{{team.leader.name}}</td>
                   </tr>
                   <tr>
-                    <td><i class="users icon"></i>Member</td>
+                    <td class="label"><i class="users icon"></i>Member</td>
                     <td>{{team.members.length}}/{{maxMember}}</td>
                   </tr>
                   <tr>
-                    <td><i class="wait icon"></i>Free Hours</td>
+                    <td class="label"><i class="wait icon"></i>Free Hours</td>
                     <td>{{team.freeHours}}</td>
                   </tr>
                   <tr>
-                    <td><i class="warning sign icon"></i>Talent Wanted</td>
+                    <td class="label"><i class="warning sign icon"></i>Talent Wanted</td>
                     <td>{{team.weakness}}</td>
                   </tr>
                   <tr>
-                    <td><i class="info icon"></i>Description</td>
+                    <td class="label"><i class="info icon"></i>Description</td>
                     <td>{{team.description}}</td>
                   </tr>
                 </tbody>
@@ -127,4 +127,9 @@
     height: 38px;
     font-size: 17px
   }
+  td.label
+  {
+    width:150px;
+  }
+
 </style>
