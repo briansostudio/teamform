@@ -46,6 +46,11 @@ export default {
             window.clearInterval(intervalID);
         }
     },
+  watch:{
+        Date(val){
+          this.eventDate = Math.trunc(Date.parse(val) / 1000)
+        }
+  },
     props:['Date'],
     computed: {
             seconds() {

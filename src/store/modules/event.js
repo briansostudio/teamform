@@ -17,7 +17,7 @@ const state = {
     teams: [],
     members: {},
     errors: [],
-    due: Date(),
+    due: Date.now() + 60 * 1000,
   requests: {},
 }
 
@@ -47,6 +47,7 @@ const mutations = {
       state.teams = util.toArray(event.teams)
       state.criteria = event.criteria;
       state.requests = event.requests || {};
+      state.due = event.due;
     },
     [types.EVENT_NAME_UPDATED](state, name){
         state.name = name

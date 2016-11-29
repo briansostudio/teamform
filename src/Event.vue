@@ -6,7 +6,7 @@
       <EventOverview :events = "currentEvent"></EventOverview>
     </div>
     <div class="row">
-      <Countdown :Date="eventDeadline"></Countdown>
+      <Countdown :Date="new Date(currentEvent.due)"></Countdown>
     </div>
 
 		<div class="row">
