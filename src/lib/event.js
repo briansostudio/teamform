@@ -140,7 +140,33 @@ export default{
       },
       schedule: this.convertSchedule(member.schedule)
     };
-    //TODO compute weakness, strength, freeHours...
+    let strengthMap = member.criteria || [];
+    let weaknessMap = member.criteria || [];
+    let labels = eventState.criteria;
+    let wi = 0;
+    let si = 0;
+    let weak = weaknessMap[0];
+    let strong = strengthMap[0];
+    for(let index in weaknessMap){
+      if(weaknessMap[index] < weak){
+        wi = index;
+        weak = weaknessMap[index];
+      }
+      if(strengthMap[index] > strong){
+        si = index;
+        strong = strengthMap[index];
+      }
+    }
+
+    result.weakness = labels[wi];
+    result.strength = labels[si];
+
+    let intervals = [];
+    for(let intervalId in member.schedule.intervals){
+      intervals.push(member.schedule.intervals[intervalId]);
+    }
+    let masterTeamSchedule = new Schedule(intervals);
+    result.freeHours = masterTeamSchedule.calculateRemainingTimeInWeek() / 3600000;
     return result;
   },
   fillUpCriteria(userCriteria, eventCriteria){

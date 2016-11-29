@@ -1,8 +1,6 @@
 <template>
   <div class="ui centered grid">
-    <div class="row event-page">
-    </div>
-    <div class = "ui header">
+    <div class = "ui header" style="margin-top:90px;">
       <h2 style="font-family: 'Varela Round', sans-serif;">
         <i class="map outline icon"></i>
         Event Details
@@ -22,7 +20,7 @@
                 </span>
               </div>
             </div>
-            <Countdown></Countdown>
+            <Countdown :Date="new Date(events.due)"></Countdown>
       </div>
     </div>
     <div style="clear:both"></div>
