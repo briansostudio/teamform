@@ -1,25 +1,42 @@
 <template>
-	<div style="display:flex;">
-    <div class="ui items">
-        <div class="item">
+	<div class="ui grid">
+  <div class="two column row">
+    <div class="column">
+      <div class="ui link cards">
+        <div class="card">
           <div class="image">
             <i class="users icon massive teal"></i>
           </div>
-          <div class="content ui left aligned segment">
-            <a class="header">Team Name: {{team.name}}</a>
+          <div class="content">
+            <div class="header">{{team.name}}</div>
             <div class="meta">
-              <span>Description: {{team.description}}</span>
+              Leader: {{team.leader.name}}
             </div>
             <div class="description">
-              <p>Leader Name: {{team.leader.name}}</p>
-              <p>Number of members: {{team.members.length}}</p>
+            {{team.description}}
             </div>
-            <TeamActions></TeamActions>
+          </div>
+          <div class="extra content">
+            <span>
+              <i class="users icon"></i>
+              {{team.members.length}}
+            </span>
+            <span>
+              <br>
+              <TeamActions></TeamActions>
+            </span>
           </div>
         </div>
+      </div>
+    
+    
     </div>
-    <div>
-      <Radar :chartData="team.radarChartData" :options="options"></Radar>
+    <div class="column">
+      <div style="height: 420px; display: flex; align-items: center; flex-direction: column;">
+        <div style="flex: 1;"></div>
+        <Radar style="width: 300px; height:300px;" :chartData="team.radarChartData" :options="options"></Radar>
+        <div style="flex: 1;"></div>
+      </div>
     </div>
 	</div>
 </template>
@@ -59,5 +76,11 @@ export default {
 </script>
 
 <style>
+
+.users.icon.massive.teal
+{
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
 
 </style>
