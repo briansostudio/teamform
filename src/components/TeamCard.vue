@@ -21,11 +21,11 @@
                     <td>{{team.freeHours}}</td>
                   </tr>
                   <tr>
-                    <td class="label"><i class="warning sign icon"></i>Talent Wanted</td>
+                    <td class="label"><i class="child icon"></i>Talent Wanted</td>
                     <td>{{team.weakness}}</td>
                   </tr>
                   <tr>
-                    <td class="label"><i class="info icon"></i>Description</td>
+                    <td class="label"><i class="comment outline icon"></i>Description</td>
                     <td>{{team.description}}</td>
                   </tr>
                 </tbody>

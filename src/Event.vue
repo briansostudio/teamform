@@ -5,9 +5,9 @@
     <div class="row">
       <EventOverview :events = "currentEvent"></EventOverview>
     </div>
-    <div class="row">
+    <!--<div class="row">
       <Countdown :Date="eventDeadline"></Countdown>
-    </div>
+    </div>-->
 
     <div v-if="userStatus !== 'NO_TEAM'" class="ui message">
       <div class="header">

@@ -1,23 +1,24 @@
 <template>
     <div>
         <div id="clockdiv">
-                <h1 v-if="eventDate-now < 0">Event ended</h1>
-                <h1 v-if="eventDate-now > 0">Time remaining:</h1>
-        <div class="block">
-            <span class="digit">{{ days }}</span>
-            <div class="text">Days</div>
-        </div>
-        <div class="block">
-            <span class="digit">{{ hours }}</span>
-            <div class="text">Hours</div>
-        </div>
-        <div class="block">
-            <span class="digit">{{ minutes }}</span>
-            <div class="text">Minutes</div>
-        </div>
-        <div class="block">
-            <span class="digit">{{ seconds }}</span>
-            <div class="text">Seconds</div>
+                <!--<h1 v-if="eventDate-now < 0">Event ended</h1>
+                <h1 v-if="eventDate-now > 0">Time remaining:</h1>-->
+            <div class="block">
+                <span class="digit">{{ days }}</span>
+                <div class="text">Days</div>
+            </div>
+            <div class="block">
+                <span class="digit">{{ hours }}</span>
+                <div class="text">Hours</div>
+            </div>
+            <div class="block">
+                <span class="digit">{{ minutes }}</span>
+                <div class="text">Minutes</div>
+            </div>
+            <div class="block">
+                <span class="digit">{{ seconds }}</span>
+                <div class="text">Seconds</div>
+            </div>
         </div>
     </div>
 
