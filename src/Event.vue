@@ -5,9 +5,6 @@
     <div class="row">
       <EventOverview :events = "currentEvent"></EventOverview>
     </div>
-    <div class="row">
-      <Countdown :Date="eventDeadline"></Countdown>
-    </div>
 
     <div v-if="userStatus !== 'NO_TEAM'" class="ui message">
       <div class="header">
@@ -80,6 +77,7 @@ import Countdown from './components/Countdown.vue'
 export default {
 	data(){
 		return {
+      localTeamFilterString: '',
       eventDeadline: new Date(Date.now() + 86400000),
       localSortingCriteria: 'name',
       sortingOptions:[

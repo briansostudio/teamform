@@ -13,11 +13,11 @@
                     <td>{{member.freeHours}}</td>
                   </tr>
                   <tr>
-                    <td><i class="warning sign icon"></i>Talent Wanted</td>
-                    <td>{{member.weakness}}</td>
+                    <td><i class="hand rock icon"></i>Strength</td>
+                    <td>{{member.strength}}</td>
                   </tr>
                   <tr>
-                    <td><i class="info icon"></i>Description</td>
+                    <td><i class="comment outline icon"></i>Description</td>
                     <td>{{member.description}}</td>
                   </tr>
                 </tbody>

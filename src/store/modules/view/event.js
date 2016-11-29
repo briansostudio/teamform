@@ -27,7 +27,7 @@ const getters = {
         return true;
       }
       if(team.tags){
-        for(tag of team.tags){
+        for(let tag of team.tags){
           if(regex.test(tag)){
             return true;
           }
