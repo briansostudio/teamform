@@ -156,17 +156,17 @@ const actions = {
         })
     },
     addRecruitCriteria({commit}, payload){
-        let updatedCriteria = state.criteria
+        let updatedCriteria = state.criteria.map(a=>a);
         updatedCriteria.push(payload)
         api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
-            commit(types.EVENT_ADD_RECRUIT_CRITERIA, payload)
+            //commit(types.EVENT_ADD_RECRUIT_CRITERIA, payload)
         })
     },
     discardRecruitCriteria({commit}, payload){
-        let updatedCriteria = state.criteria
+        let updatedCriteria = state.criteria.map(a=>a);
         updatedCriteria.splice(updatedCriteria.indexOf(payload), 1)
         api.event.updateEvent(state.id, {criteria: updatedCriteria}).then( () => {
-            commit(types.EVENT_DISCARD_RECRUIT_CRITERIA, payload)
+            //commit(types.EVENT_DISCARD_RECRUIT_CRITERIA, payload)
         })
     },
     setEventDeadline({commit}, payload){
