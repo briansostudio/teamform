@@ -22,12 +22,12 @@
       <div class="column">
         <div style="width: 400px; margin: 0 auto;">
           <div class="ui large input" style="width: 400px;">
-            <input type="text" placeholder="Enter Team name to search" class="add-team-input" :value="teamFilterString" @input="teamFilterStringUpdate($event.target.value)">
+            <input type="text" placeholder="Enter Team name to search" class="add-team-input" :value="localTeamFilterString" @input="onTeamNameInput($event.target.value)">
           </div>
         </div>
         <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
 
-          Sort Result By: <el-select v-model="localSortingCriteria" placeholder="Sort By">
+          Sort Result By:&nbsp;<el-select style="margin-right: 10px;" v-model="localSortingCriteria" placeholder="Sort By">
             <el-option
               v-for="item in sortingOptions"
               :label="item.label"
@@ -35,7 +35,7 @@
             </el-option>
           </el-select>
 
-          <button v-if="userStatus === 'NO_TEAM'" class="ui teal labeled icon button" @click="addTeam">
+          <button v-if="userStatus === 'NO_TEAM'" :style="filteredTeams.length === 0 ? 'opacity:1;' : 'opacity:0'" class="ui teal labeled icon button add-team-button" @click="addTeam">
             <i class="add user icon"></i>
             Add Team
           </button>
@@ -72,7 +72,6 @@ import Countdown from './components/Countdown.vue'
 export default {
 	data(){
 		return {
-			teamName: '',
       eventDeadline: new Date(Date.now() + 86400000),
       localSortingCriteria: 'name',
       sortingOptions:[
@@ -87,14 +86,26 @@ export default {
   },
 	methods:{
 		addTeam: function(){
-			this.$store.dispatch("team/createTeam",{name: this.teamName});
+			this.$store.dispatch("team/createTeam",{name: this.localTeamFilterString});
 		},
+    onTeamNameInput(val){
+		    this.localTeamFilterString = val;
+      let text = val;
+      setTimeout(()=>{
+          if(this.localTeamFilterString === val){
+            this.$store.dispatch('event/dispatchFilterStringChanged',val);
+          }
+      },250);
+    },
     ...mapActions({
       'updateEventName':'updateEventName',
       'updateEventDescription':'updateEventDescription',
       "teamFilterStringUpdate":"event/dispatchFilterStringChanged"
     })
 	},
+  mounted(){
+    this.$store.dispatch('event/dispatchFilterStringChanged','');
+  },
   watch:{
     localSortingCriteria(val){
           this.$store.dispatch('event/dispatchSortCriteriaChanged',val);
@@ -107,6 +118,9 @@ export default {
 </script>
 
 <style>
+  .add-team-button{
+    transition: all .5s ease;
+  }
   .ui.grid.event-page-main{
     max-width: 800px;
     margin-left: auto;
