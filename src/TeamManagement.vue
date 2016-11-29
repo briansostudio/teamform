@@ -8,10 +8,9 @@
             <TeamOverviewEdit :team="viewingTeam" style="width: 600px;"></TeamOverviewEdit>
           </el-tab-pane>
           <el-tab-pane label="Member Management" name="second" style="width: 800px;">
-            <MemberListEdit :team="viewingTeam"></MemberListEdit>
-              <MemberListEdit :team="viewingTeam"></MemberListEdit>
-              <br>
               <RequestList :requests="viewingTeamRequests"></RequestList>
+              <br>
+              <MemberListEdit :team="viewingTeam"></MemberListEdit>
               <br>
             </el-tab-pane>
           </el-tabs>
