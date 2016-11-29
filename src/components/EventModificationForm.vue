@@ -15,6 +15,12 @@
             <el-form-item label="Team Size Limit">
                 <TeamSizeControl :size="currentEvent.limits"></TeamSizeControl>
             </el-form-item>
+            <el-form-item label="Grouping Deadline">
+                <el-date-picker v-model="deadlineDate" type="date" placeholder="Pick a day">
+                </el-date-picker>
+                <el-time-picker v-model="deadlineTime" placeholder="Pick an hour">
+                </el-time-picker>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -29,7 +35,9 @@ export default {
     data(){
         return {
             name:0,
-            description:0
+            description:0,
+            deadlineDate: '2016-11-22',
+            deadlineTime: new Date(2016, 9, 10, 18, 40)
         }
     },
 	computed: {

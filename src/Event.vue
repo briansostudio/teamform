@@ -9,6 +9,20 @@
       <Countdown :Date="new Date(currentEvent.due)"></Countdown>
     </div>
 
+    <div v-if="userStatus !== 'NO_TEAM'" class="ui message">
+      <div class="header">
+      Welcome back!
+      </div>
+      <p>This is the team you are currently in, if you wish the leave, go to the team page for more operations</p>
+    </div>
+
+    <div v-if="userStatus !== 'NO_TEAM'" class="row">
+      <div class="column">
+        <TeamCard :team="userTeam"></TeamCard>
+      </div>
+    </div>
+
+
 		<div class="row">
 			<h2 class="ui header">
 				<i class="users icon"></i>
@@ -42,12 +56,6 @@
         </div>
       </div>
 		</div>
-
-    <div v-if="userStatus !== 'NO_TEAM'" class="row">
-      <div class="column">
-        <TeamCard :team="userTeam"></TeamCard>
-      </div>
-    </div>
 
     <div class="row">
       <div class="column">

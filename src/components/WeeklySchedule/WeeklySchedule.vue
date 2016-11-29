@@ -1,13 +1,13 @@
 <template>
   <div>
     <full-calendar :defaultDate="baseDate" :events="events" :callback="callback" :editable="false"></full-calendar>
-    <div class="ui left floated compact segment">
-      <div class="ui slider checkbox">
+    <div class="ui left floated compact segment"  style="width:814px; margin-left:10px;">
+      <div class="ui slider checkbox" style="padding-right:35px;padding-left:15px;">
         <input type="checkbox" v-model="mergeMode">
-        <label>View schedule together</label>
+        <label><span style="color:#00876c;">View schedule together</span></label>
       </div>
-      total hours : {{totalHours}} |
-      free hours : {{availableHours}} |
+      <span style="padding-right:35px; color:#00876c;"><i class="checked calendar icon"></i> total hours : {{totalHours}}</span>
+      <span style="padding-right:35px; color:#00876c;"><i class="calendar outline icon"></i> free hours : {{availableHours}}</span>
 
     </div>
     <div v-if="selectedInterval !== null" class="ui right floated compact segment">
