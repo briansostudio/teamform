@@ -17,7 +17,7 @@
 
 <script>
 export default{
-  
+
 	props:["user",'team'],
   computed:{
 	  statusString(){
@@ -30,7 +30,7 @@ export default{
   },
   methods:{
     signOut(){
-      this.$router.push('home');
+      this.$router.push('/');
     }
   }
 }

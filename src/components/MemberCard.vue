@@ -17,7 +17,7 @@
                     <td>{{member.strength}}</td>
                   </tr>
                   <tr>
-                    <td><i class="comment outline icon"></i>Description</td>
+                    <td><i class="comment outlinegit  icon"></i>Description</td>
                     <td>{{member.description}}</td>
                   </tr>
                 </tbody>
