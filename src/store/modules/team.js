@@ -18,6 +18,7 @@ const state = {
 }
 
 const getters = {
+  currentTeamTags: state => state.tags,
   viewingTeam: state => state,
   isLeaderOfViewingTeam: (state, getters, rootState) => getters.currentUser.id === state.leader.id,
   isMemberOfViewingTeam: (state, getters, rootState) => {
@@ -54,6 +55,12 @@ const mutations = {
 	    Vue.set(state, key, team[key]);
     }
     console.log("team/updateTeam",state);
+  },
+  [types.TEAM_UPDATE_NAME](state, name){
+    state.name = name
+  },
+  [types.TEAM_UPDATE_DESCRIPTION](state, description){
+    state.description = description
   }
 }
 
@@ -75,7 +82,35 @@ const actions = {
 	},
 	"request/acceptJoinTeamRequest"({commit, state, rootState}, {requestId}){
     api.acceptJoinTeamRequest(rootState.event.id, requestId);
-	}
+	},
+  updateTeamName({commit, rootState, state}, name){
+    api.team.updateTeam(rootState.event.id, state.id, {
+      name
+    }).then(() => {
+      commit(types.TEAM_UPDATE_NAME, name)
+    })
+  },
+  updateTeamDescription({commit, rootState, state}, description){
+    api.team.updateTeam(rootState.event.id, state.id, {
+      description
+    }).then(() => {
+      commit(types.TEAM_UPDATE_DESCRIPTION, description)
+    })
+  },
+  addCurrentTeamTags({commit, state, rootState}, payload){
+      let updatedCriteria = state.tags
+      updatedCriteria.push(payload)
+      api.team.updateTeam(rootState.event.id, state.id, {tags: updatedCriteria}).then( () => {
+          
+      })
+  },
+  discardCurrentTeamTags({commit, state, rootState}, payload){
+      let updatedCriteria = state.tags
+      updatedCriteria.splice(updatedCriteria.indexOf(payload), 1)
+      api.team.updateEvent(rootState.event.id, state.id, {tags: updatedCriteria}).then( () => {
+          
+      })
+  },
 }
 
 export default {

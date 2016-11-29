@@ -3,10 +3,10 @@
       <el-row :gutter="24" type="flex" justify="center" align="center">
         <el-tabs>
           <br>
-          <el-tab-pane label="Overview" name="overview">
-            <TeamOverviewEdit :team="viewingTeam"></TeamOverviewEdit>
+          <el-tab-pane label="Overview" name="overview" style="width: 800px;">
+            <TeamOverviewEdit :team="viewingTeam" style="width: 600px;"></TeamOverviewEdit>
           </el-tab-pane>
-          <el-tab-pane label="Member Management" name="second">
+          <el-tab-pane label="Member Management" name="second" style="width: 800px;">
             <MemberListEdit :team="viewingTeam"></MemberListEdit>
             <br>
             <RequestList :requests="viewingTeamRequests"></RequestList>
@@ -23,6 +23,7 @@
   import TeamOverviewEdit from './components/TeamOverviewEdit.vue'
   import MemberListEdit from './components/MemberListEdit.vue'
   import RequestList from './components/RequestList.vue'
+
   export default {
       data(){
           return {}
