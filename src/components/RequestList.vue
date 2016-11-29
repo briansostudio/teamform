@@ -10,7 +10,7 @@
       </div>
 
       <div v-for="(request, index) in requests">
-        <div class="ui cards" style="padding-top:20px;">
+        <div class="ui cards" style="padding-top:25px;">
           <div class="card"  style="width:700px;">
             <div class="content">
               <MemberCard style="flex:1" :member="request.member"></MemberCard>
@@ -27,7 +27,7 @@
               <span class="right floated">
                 <div class="ui two buttons">
                   <div class="ui basic">
-                    <el-button icon="close" type="danger" style="width:140px; flex: none;" @click="teamManagementRejectRequest(request)">
+                    <el-button icon="close" type="danger" style="width:140px;flex: none;" @click="teamManagementRejectRequest(request)">
                       Reject
                     </el-button>
                     <el-button icon="check" type="success" style="width:140px; margin-left:10px;" @click="teamManagementAcceptRequest(request)">

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import Manage from  './components/Manage'
+  import Manage from './components/Manage'
   import {mapGetters} from 'vuex'
   import TeamOverviewEdit from './components/TeamOverviewEdit.vue'
   import MemberListEdit from './components/MemberListEdit.vue'
