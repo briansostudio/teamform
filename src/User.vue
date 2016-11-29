@@ -15,9 +15,9 @@
                   <img src="http://placehold.it/180x180" alt="">
                 </div>
                 <div class="content">
-                  <a class="header">
+                  <p class="header">
                     {{viewingUser.name}}
-                  </a>
+                  </p>
                   <div class="meta">
                     No Team Yet
                   </div>
