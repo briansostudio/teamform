@@ -2,6 +2,20 @@ import {Schedule} from './schedule'
 import memberLib from '../store/modules/member/lib'
 import util from '../store/util'
 export default{
+  deltaTeam(teamComputed, member, eventState){
+    if(teamComputed.members.find(m => m.id === member.id)){
+      // remove this member
+      // throw new Error('not implemented');
+      return teamComputed;
+    }else{
+      let deltaTeam = Object.assign({},teamComputed);
+      deltaTeam.members = deltaTeam.members.map(a=>a);
+      deltaTeam.members.push(member);
+
+      this.addTeamMeta(deltaTeam, eventState);
+      return deltaTeam;
+    }
+  },
   computeTeamMeta(team, eventState){
     let result =  {
       leader: eventState.members[team.leader],
@@ -12,6 +26,11 @@ export default{
       radarChartData: [],
       requests:util.filter(eventState.requests, (request)=>request.team === team.id, true),
     };
+    this.addTeamMeta(result, eventState);
+
+    return result;
+  },
+  addTeamMeta(result, eventState){
     result.radarChartData = {
       labels: eventState.criteria.map((s)=>s.substring(0,3)),
       datasets: result.members.map((member)=>this.getMemberRadarChartData(member))
@@ -25,8 +44,8 @@ export default{
     let intervals = [];
     for(let member of members){
       if(member.schedule){
-        for(let index in member.schedule){
-          intervals.push(member.schedule[index]);
+        for(let index in member.schedule.intervals){
+          intervals.push(member.schedule.intervals[index]);
         }
       }
 
@@ -53,12 +72,12 @@ export default{
       }
     }
     result.weakness = labels[wi];
+    result.weaknessIndex = wi;
+    result.skillValues = weaknessMap;
     result.strength = labels[si];
 
     let masterTeamSchedule = new Schedule(intervals).resolve();
     result.freeHours = masterTeamSchedule.calculateRemainingTimeInWeek() / 3600000;
-
-    return result;
   },
   getMembersInTeam(team, eventState){
     let members = [];

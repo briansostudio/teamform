@@ -25,7 +25,7 @@
     </div>
 
     <br>
-    <el-row type="flex" class="row-bg" justify="space-between">
+    <el-row type="flex" class="row" justify="space-between">
       <el-col :span="16" :offset="3">
         <el-form class="" ref="form" :model="form" label-width="90px">
           <el-form-item label="Email">

@@ -3,16 +3,25 @@
     <router-link :to="{ name: 'user', params: { eventId: $route.params.eventId, userId: member.id }}">
       <div class="member-card">
         <div class="member-card-details">
-          <h3 class="ui header teal">{{member.name}}</h3>
+          <h3 class="ui header teal" style="padding-left: 20px; padding-top:5px;"><i class="user icon"></i>{{member.name}}</h3>
           <div style="display:flex">
-            <div style="width: 200px">
-              <span>Free Hours: {{member.freeHours}}</span><br>
-              <span>Weakness: {{member.weakness}}</span><br>
-              <span> [[Or maybe other attributes/data to show]]</span>
-            </div>
-            <div>
-              <span>Description: {{member.description}}</span><br>
-              <span> [[Description can be multiple lines, so give an area to it]]</span><br>
+            <div style="flex:1; padding-left: 20px; padding-top:1px; ">
+              <table class="ui very basic table">
+                <tbody>
+                  <tr>
+                    <td><i class="wait icon"></i>Free Hours:</td>
+                    <td>{{member.freeHours}}</td>
+                  </tr>
+                  <tr>
+                    <td><i class="warning sign icon"></i>Talent Wanted</td>
+                    <td>{{member.weakness}}</td>
+                  </tr>
+                  <tr>
+                    <td><i class="info icon"></i>Description</td>
+                    <td>{{member.description}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -84,7 +93,7 @@
     margin: 1rem 0;
     border-radius: .28571429rem;
     border: 1px solid rgba(34,36,38,.15);
-    height: 220px;
+    height: 260px;
     align-items: center;
     transition: all .5s ease;
   }
@@ -93,17 +102,18 @@
   .member-card-details{
     flex:1;
     height: 200px;
+    width: 450px;
     padding: 1em;
   }
   .member-card-radar{
     width: 243px;
-    height: 218px;
+    height: 258px;
     background: #FFF;
     border-radius: 0 5px 5px 0;
     border-left:1px solid #ddd;
     padding-left: 8px;
     padding-right: 8px;
-    padding-top: 5px;
+    padding-top: 10px;
     /*margin-right: 2px;*/
   }
 </style>
